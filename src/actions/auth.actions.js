@@ -12,7 +12,6 @@ import {
 } from "../firebase/firebase.config";
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui.actions";
-import { FirebaseError } from "firebase/app";
 
 
 export const googleLogin = () => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { SyncProScreen } from '../components/syncpro/SyncProScreen'
 import AuthScreen from '../components/auth/AuthScreen'
 import SignUpScreen from '../components/auth/SignUpScreen'
 

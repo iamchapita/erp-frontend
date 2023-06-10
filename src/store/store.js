@@ -1,6 +1,7 @@
 import {compose, configureStore} from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { authReducer } from '../reducers/authReducer';
+import { uiReducer } from '../reducers/uiReducer';
 
 
 const composeEnhancers =
@@ -12,6 +13,7 @@ const composeEnhancers =
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        ui: uiReducer
     },
     middleware: [thunk],
     devTools: composeEnhancers()

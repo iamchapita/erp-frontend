@@ -4,6 +4,10 @@ import { SyncProScreen } from '../components/syncpro/SyncProScreen'
 import { useDispatch } from 'react-redux'
 import { AuthRouter } from './AuthRouter'
 import { Spinner } from '../components/spinner/Spinner'
+import { PublicRouter } from './PublicRouter'
+import { Route, Routes } from 'react-router-dom'
+import { login } from '../actions/auth.actions'
+import { PrivateRouter } from './PrivateRouter'
 
 export const AppRouter = () => {
 
@@ -12,12 +16,17 @@ export const AppRouter = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-
         onAuthStateChanged(auth, (user) => {
             if (user?.uid) {
-                console.log(user);
+                dispatch(login(user.uid, user.displayName, user.email, user.photoURL))
+                setIsLoggedIn(true)
+
+            } else {
+                setIsLoggedIn(false)
+
             }
         })
+        setChecking(false)
 
     }, [dispatch, setChecking, setIsLoggedIn])
 
@@ -33,6 +42,13 @@ export const AppRouter = () => {
     }
 
     return (
-        <Spinner></Spinner>
+        checking
+            ?
+            <Spinner />
+            :
+            <Routes>
+                <Route path='/*' element={<PrivateRouter {...privateRoute} />} />
+                <Route path='/auth/*' element={<PublicRouter {...publicRoute} />} />
+            </Routes>
     )
 }

@@ -1,12 +1,24 @@
 
-import { provider, auth, signInWithPopup } from "../firebase/firebase.config";
+import Swal from "sweetalert2";
+import {
+    provider,
+    auth,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    RecaptchaVerifier,
+    sendEmailVerification
+} from "../firebase/firebase.config";
 import { types } from "../types/types";
+import { uiFinishLoading, uiStartLoading } from "./ui.actions";
+
 
 export const googleLogin = () => {
     return (dispatch) => {
         signInWithPopup(auth, provider)
             .then(({ user }) => {
-                dispatch(log(user.uid, user.displayName, user.email, user.photoURL))
+                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified))
                 console.log()
             }).catch((error) => {
                 console.log(error);
@@ -15,7 +27,23 @@ export const googleLogin = () => {
 }
 
 
-export const log = (uid, displayName, email, photoURL) => ({
+export const signInWithEmailPassword = (email, password) => {
+    return (dispatch) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(({ user }) => {
+                console.log(user);
+                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified))
+                dispatch(uiStartLoading())
+                Swal.fire('Success', 'Welcome', 'success')
+            }).catch(e => {
+                dispatch(uiFinishLoading())
+                Swal.fire('Error', e.message, 'error')
+            })
+    }
+}
+
+
+export const login = (uid, displayName, email, photoURL) => ({
     type: types.login,
     payload: {
         uid,
@@ -26,6 +54,24 @@ export const log = (uid, displayName, email, photoURL) => ({
 })
 
 
+export const signUpWithEmailPasswordName = (displayName, email, password) => {
+    return (dispatch) => {
+        dispatch(uiStartLoading())
 
-/* export const login = () => {} */
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async ({ user }) => {
+                await updateProfile(user, { displayName })
+                sendEmailVerification(user);
+                
+                dispatch(
+                    login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified)
+                )
+            })
+            .catch(e => {
+                console.log(e)
+                Swal.fire('Error', e.message, 'error')
+                dispatch(uiFinishLoading())
+            })
+    }
+}
 

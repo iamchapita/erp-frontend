@@ -2,6 +2,6 @@ import React from 'react'
 
 export const SyncProScreen = () => {
   return (
-    <div>Pantalla inicial</div>
+    <div className='place-self-start self-start'>Pantalla inicial</div>
   )
 }

@@ -1,6 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth,  GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+    getAuth,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    updateProfile,
+    createUserWithEmailAndPassword,
+    RecaptchaVerifier,
+    sendEmailVerification
+    
+} from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,6 +39,13 @@ export {
     provider,
     signInWithEmailAndPassword,
     signInWithPopup,
-    onAuthStateChanged
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    RecaptchaVerifier,
+    sendEmailVerification
+    
+    
+
 
 }

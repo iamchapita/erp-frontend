@@ -21,4 +21,4 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          scp -r -i ../../ssh/SyncPro.pem ./build/* ec2-user@18.191.244.79:/var/www/html/
+          scp -r -i ./ssh/SyncPro.pem ./build/* ec2-user@18.191.244.79:/var/www/html/

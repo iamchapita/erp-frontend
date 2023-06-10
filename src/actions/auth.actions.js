@@ -7,11 +7,12 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     updateProfile,
-    RecaptchaVerifier,
-    sendEmailVerification
+    sendEmailVerification,
+
 } from "../firebase/firebase.config";
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui.actions";
+import { FirebaseError } from "firebase/app";
 
 
 export const googleLogin = () => {
@@ -37,7 +38,8 @@ export const signInWithEmailPassword = (email, password) => {
                 Swal.fire('Success', 'Welcome', 'success')
             }).catch(e => {
                 dispatch(uiFinishLoading())
-                Swal.fire('Error', e.message, 'error')
+                const message = e.message === 'Firebase: Error (auth/user-not-found).' && 'El usuario no existe'
+                Swal.fire('Error', message, 'error')
             })
     }
 }
@@ -57,15 +59,11 @@ export const login = (uid, displayName, email, photoURL) => ({
 export const signUpWithEmailPasswordName = (displayName, email, password) => {
     return (dispatch) => {
         dispatch(uiStartLoading())
-
         createUserWithEmailAndPassword(auth, email, password)
             .then(async ({ user }) => {
                 await updateProfile(user, { displayName })
                 sendEmailVerification(user);
-                
-                dispatch(
-                    login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified)
-                )
+                console.log(user);
             })
             .catch(e => {
                 console.log(e)

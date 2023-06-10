@@ -4,10 +4,13 @@ import AuthButton from "../button/AuthButton";
 import SocialNetworkBottom from "../button/SocialNetworkBottom";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
-import validator from 'validator'
 import { useDispatch, useSelector } from "react-redux";
-import { uiRemoveError, uiSetError } from "../../actions/ui.actions";
-import { signUpWithEmailPasswordName } from '../../actions/auth.actions';
+import { googleLogin, signUpWithEmailPasswordName } from '../../actions/auth.actions';
+
+import validator from 'validator'
+import { uiRemoveError, uiSetError } from '../../actions/ui.actions';
+
+
 
 const SignUpScreen = () => {
 
@@ -31,7 +34,7 @@ const SignUpScreen = () => {
         type: 'text',
         name: 'name',
         value: name,
-        placeholder: 'Name',
+        placeholder: 'Nombre',
         required: false,
         handleInputChange
     }
@@ -41,7 +44,7 @@ const SignUpScreen = () => {
         type: 'text',
         name: 'email',
         value: email,
-        placeholder: 'Email',
+        placeholder: 'Correo electrónico',
         required: false,
         handleInputChange
     }
@@ -50,7 +53,7 @@ const SignUpScreen = () => {
         type: 'password',
         name: 'password',
         value: password,
-        placeholder: 'Password',
+        placeholder: 'Contraseña',
         required: false,
         handleInputChange
     }
@@ -59,29 +62,37 @@ const SignUpScreen = () => {
         type: 'password',
         name: 'passwordConfirm',
         value: passwordConfirm,
-        placeholder: 'Confirm Password',
+        placeholder: 'Confirmar contraseña',
         required: false,
         handleInputChange
     }
 
 
+
+
     const isFormValid = () => {
         if (name.trim().length === 0) {
-            dispatch(uiSetError("Name is required"))
+            dispatch(uiSetError("Nombre es un campo obligatorio"))
+            return false
+        } else if (validator.isEmpty(email)) {
+            dispatch(uiSetError("El campo de correo electrónico es obligatorio"))
             return false
         } else if (!validator.isEmail(email)) {
-            dispatch(uiSetError("Email is not valid"))
+            dispatch(uiSetError("El correo no es válido"))
             return false
         } else if (password !== passwordConfirm) {
-            dispatch(uiSetError('Password must be same as confirmation'));
+            dispatch(uiSetError('La contraseña no es la misma'));
             return false
         } else if (password.length < 8) {
-            dispatch(uiSetError('Password must be at least 8 characters.'));
+            dispatch(uiSetError('La contraseña debe contener al menos 8 caracteres.'));
             return false
         }
         dispatch(uiRemoveError())
         return true
     }
+
+
+
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -90,12 +101,16 @@ const SignUpScreen = () => {
         }
     }
 
+    const handleGoogleSignUp = () => {
+        dispatch(googleLogin())
+    }
+
 
     return (
-        <form onSubmit={handleRegister} className={'flex items-center justify-center h-screen text-black'}>
+        <form onSubmit={handleRegister} className={'flex items-center justify-center h-screen bg-custom-100 text-black'}>
             <div
-                className='relative rounded space-y-4 opacity-90 flex flex-col bg-white text-gray-500 font-normal p-4 w-80'>
-                <p className={'self-baseline text-2xl'}>Sign Up</p>
+                className='relative rounded space-y-4 opacity-90 flex flex-col bg-custom-400  font-normal p-4 w-80'>
+                <p className={'self-baseline text-2xl '}>Registrarse</p>
 
                 {msgError && <span className={'left-15 absolute top-9 font-normal self-center text-red-500 text-[13px] '}>{msgError}</span>}
 
@@ -104,14 +119,11 @@ const SignUpScreen = () => {
                 <InputComponent {...emailInput} />
                 <InputComponent {...passwordInput} />
                 <InputComponent {...passwordConfirmInput} />
-                <AuthButton content='Sign Up' disabled={loading} id='signUpButton' />
-                <p>Sign up with social networks</p>
-                <SocialNetworkBottom action={'Sign up'} handleAction={() => {
-                    console.log('Hi')
-                }} />
+                <AuthButton content='Registrarse' disabled={loading} id='signUpButton' />
+                <p>Registrarse a través de otras redes</p>
+                <SocialNetworkBottom action={'Registrarse'} handleAction={handleGoogleSignUp} />
                 <Link to={'/auth/login'}
-                    className={'underline hover:text-yellow-600 transition-all cursor-pointer self-start text-amber-400'}>Already
-                    have an account? Sign in</Link>
+                    className={'underline hover:text-custom-500 transition-all cursor-pointer self-start'}>¿Ya tienes una cuenta? Iniciar sesión</Link>
             </div>
         </form>
     );

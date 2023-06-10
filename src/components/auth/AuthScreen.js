@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useForm } from "../../hooks/useForm";
 import AuthButton from "../button/AuthButton";
 import { Link } from "react-router-dom";
@@ -10,9 +9,6 @@ import { googleLogin, signInWithEmailPassword } from '../../actions/auth.actions
 import validator from "validator";
 import { uiRemoveError, uiSetError } from '../../actions/ui.actions';
 import InputComponent from '../InputComponent';
-/* import {signInWithEmailPassword, startGoogleLogin} from "../../actions/auth";
-import {uiRemoveError, uiSetError} from "../../actions/ui";
- */
 
 
 /**
@@ -38,7 +34,7 @@ const LoginScreen = () => {
         type: 'text',
         name: 'email',
         value: email,
-        placeholder: 'Email',
+        placeholder: 'Correo Electrónico',
         required: true,
         handleInputChange
     }
@@ -47,10 +43,29 @@ const LoginScreen = () => {
         type: 'password',
         name: 'password',
         value: password,
-        placeholder: 'Password',
+        placeholder: 'Contraseña',
         required: true,
         handleInputChange
     }
+
+
+
+    const isFormValid = () => {
+        if (validator.isEmpty(email)) {
+            dispatch(uiSetError("El campo de correo electrónico es obligatorio"))
+            return false
+        } else if (!validator.isEmail(email)) {
+            dispatch(uiSetError("El correo no es válido"))
+            return false
+        }
+        else if (password.length < 8) {
+            dispatch(uiSetError('La contraseña debe contener al menos 8 caracteres.'));
+            return false
+        }
+        dispatch(uiRemoveError())
+        return true
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,17 +74,7 @@ const LoginScreen = () => {
         }
     }
 
-    const isFormValid = () => {
-        if (!validator.isEmail(email)) {
-            dispatch(uiSetError("Email is not valid"))
-            return false
-        } else if (!password) {
-            dispatch(uiSetError('Password is required'));
-            return false
-        }
-        dispatch(uiRemoveError())
-        return true
-    }
+
 
     const handleGoogleLogin = () => {
         dispatch(googleLogin())
@@ -80,21 +85,19 @@ const LoginScreen = () => {
 
 
     return (
-        <form onSubmit={handleSubmit} className={'flex items-center justify-center h-screen text-black'}>
+        <form onSubmit={handleSubmit} className={'flex bg-custom-100 items-center justify-center h-screen text-black'}>
             <div
-                className='relative rounded space-y-4 opacity-90 flex flex-col bg-custom-300  font-normal p-4 w-80 '>
-                <p className={'self-baseline text-2xl'}>Login</p>
+                className='relative rounded space-y-4 opacity-90 flex flex-col bg-custom-400  font-normal p-4 w-80 '>
+                <p className={'self-baseline text-2xl'}>Iniciar Sesión</p>
                 {msgError && <span className={'left-15 absolute top-6 font-normal self-center text-red-500 text-[13px] '}>{msgError}</span>}
                 <InputComponent {...emailInput} />
                 <InputComponent {...passwordInput} />
-                <p className={'underline self-end cursor-pointer transition-all hover:text-yellow-600'}>Forgot your
-                    password?</p>
+                <p className={'underline self-end cursor-pointer transition-all hover:text-custom-500'}>¿Olvidaste tu contraseña?</p>
                 <AuthButton content='Login' handleSubmit={handleSubmit} disabled={loading} />
-                <p>Login with social networks</p>
-                <SocialNetworkBottom action={'Sign in'} handleAction={handleGoogleLogin} />
+                <p>Iniciar sesión con redes sociales</p>
+                <SocialNetworkBottom action={'Iniciar sesión'} handleAction={handleGoogleLogin} />
                 <Link to={'/auth/register'}
-                    className={'underline hover:text-yellow-600 transition-all cursor-pointer self-start text-amber-400'}>Don't
-                    have an account? Sign up</Link>
+                    className={'underlinetransition-all cursor-pointer self-start hover:text-custom-500'}>¿No tienes una cuente? Regístrate</Link>
             </div>
         </form>
     );

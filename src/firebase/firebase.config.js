@@ -8,9 +8,7 @@ import {
     signInWithPopup,
     updateProfile,
     createUserWithEmailAndPassword,
-    RecaptchaVerifier,
-    sendEmailVerification
-    
+    sendEmailVerification,
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,10 +40,5 @@ export {
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     updateProfile,
-    RecaptchaVerifier,
     sendEmailVerification
-    
-    
-
-
 }

@@ -19,7 +19,7 @@ export const googleLogin = () => {
         signInWithPopup(auth, provider)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified))
-                console.log()
+                console.log(user)
             }).catch((error) => {
                 console.log(error);
             });

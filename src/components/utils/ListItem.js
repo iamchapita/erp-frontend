@@ -1,10 +1,11 @@
 import { IconButton, Tooltip } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-export const ListItem = ({ Icon, Title, ClassName }) => {
-    console.log(ClassName);
+export const ListItem = ({ Icon, Title, ClassName, path }) => {
+    console.log(path);
     return (
-        <li className={`text-center transition ${ClassName}`}>
+        <Link to={path} className={`text-center transition ${ClassName}`}>
             <Tooltip
                 componentsProps={
                     {
@@ -31,6 +32,6 @@ export const ListItem = ({ Icon, Title, ClassName }) => {
                     <Icon fontSize='large' className='text-white' />
                 </IconButton>
             </Tooltip>
-        </li>
+        </Link>
     )
 }

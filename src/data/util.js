@@ -3,31 +3,38 @@ import { AddCard, Home, LocalShipping, Logout, Paid, Person, Person4, PersonAdd,
 export const items = [
     {
         Icon: Home,
-        Title: 'Dashboard'
+        Title: 'Dashboard',
+        path: 'dashboard'
     },
     {
         Icon: Person,
-        Title: 'Clientes'
+        Title: 'Clientes',
+        path: 'clientes'
     },
     {
         Icon: Receipt,
-        Title: 'Facturas'
+        Title: 'Facturas',
+        path: 'facturas'
     },
     {
         Icon: LocalShipping,
-        Title: 'Proveedores'
+        Title: 'Proveedores',
+        path: 'proveedores'
     },
     {
         Icon: AddCard,
-        Title: 'Compras'
+        Title: 'Compras',
+        path: 'compras'
     },
     {
         Icon: PointOfSale,
-        Title: 'Ventas'
+        Title: 'Ventas',
+        path: 'ventas'
     },
     {
         Icon: Settings,
-        Title: 'Configuración'
+        Title: 'Configuración',
+        path: 'configuracion'
     },
     {
         Icon: Logout,

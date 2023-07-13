@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { SyncProScreen } from '../components/syncpro/SyncProScreen'
 import { Customer } from '../components/syncpro/modules/Customer/Customer'
 
 import { SideBar } from '../components/syncpro/SideBar'
@@ -15,14 +14,14 @@ export const PrivateRouter = ({ isLoggedIn }) => {
                 <SideBar />
                 <Routes>
                     <Route
-                        path='customer'
+                        path='clientes'
                         element={<Customer />}
                     />
                     <Route
-                        path='home'
+                        path='dashboard'
                         element={<Dashboard />}
                     />
-                    <Route path='*' element={<Dashboard />} />
+                    <Route path='*' element={<Navigate to={'dashboard'} />} />
                 </Routes>
             </div>
             :

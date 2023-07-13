@@ -5,7 +5,7 @@ import { ListItem } from '../utils/ListItem'
 
 export const SideBar = () => {
     return (
-        <div className='hidden sm:flex bg-custom-300 border-r-2 w-16 h-auto'>
+        <div className='hidden sm:flex bg-custom-300 border-r-2 w-16 h-screen'>
             <ol className='text-center flex flex-col flex-1 items-center  [&>*]:py-2 font-normal hover:cursor-pointer [&>*]:mx-1 space-y-1'>
                 {
                     items.map((item, index) => (

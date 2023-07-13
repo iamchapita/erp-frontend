@@ -122,7 +122,7 @@ const SignUpScreen = () => {
                 <AuthButton content='Registrarse' disabled={loading} id='signUpButton' />
                 <p>Registrarse a través de otras redes</p>
                 <SocialNetworkBottom action={'Registrarse'} handleAction={handleGoogleSignUp} />
-                <Link to={'/auth/login'}
+                <Link to={'/login'}
                     className={'underline hover:text-custom-500 transition-all cursor-pointer self-start'}>¿Ya tienes una cuenta? Iniciar sesión</Link>
             </div>
         </form>

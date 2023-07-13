@@ -19,7 +19,7 @@ import InputComponent from '../InputComponent';
  * @return {JSX.Element}
  **/
 const LoginScreen = () => {
-
+    
     const dispatch = useDispatch()
     const { loading, msgError } = useSelector(state => state.ui)
 
@@ -82,8 +82,6 @@ const LoginScreen = () => {
 
 
 
-
-
     return (
         <form onSubmit={handleSubmit} className={'flex bg-custom-100 items-center justify-center h-screen text-black'}>
             <div
@@ -96,7 +94,7 @@ const LoginScreen = () => {
                 <AuthButton content='Login' handleSubmit={handleSubmit} disabled={loading} />
                 <p>Iniciar sesión con redes sociales</p>
                 <SocialNetworkBottom action={'Iniciar sesión'} handleAction={handleGoogleLogin} />
-                <Link to={'/auth/register'}
+                <Link to={'/register'}
                     className={'underlinetransition-all cursor-pointer self-start hover:text-custom-500'}>¿No tienes una cuente? Regístrate</Link>
             </div>
         </form>

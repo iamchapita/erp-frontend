@@ -16,12 +16,15 @@ import { uiFinishLoading, uiStartLoading } from "./ui.actions";
 
 export const googleLogin = () => {
     return (dispatch) => {
+        dispatch(uiStartLoading())
         signInWithPopup(auth, provider)
             .then(({ user }) => {
-                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified))
+                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified, user.accessToken))
+                dispatch(uiFinishLoading())
                 console.log(user)
             }).catch((error) => {
                 console.log(error);
+                dispatch(uiFinishLoading())
             });
     }
 }
@@ -29,28 +32,34 @@ export const googleLogin = () => {
 
 export const signInWithEmailPassword = (email, password) => {
     return (dispatch) => {
+        dispatch(uiStartLoading())
         signInWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
                 console.log(user);
-                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified))
-                dispatch(uiStartLoading())
+                dispatch(login(user.uid, user.displayName, user.email, user.photoURL, user.emailVerified, user.accessToken))
                 Swal.fire('Success', 'Welcome', 'success')
-            }).catch(e => {
                 dispatch(uiFinishLoading())
+
+            }).catch(e => {
+
                 const message = e.message === 'Firebase: Error (auth/user-not-found).' && 'El usuario no existe'
                 Swal.fire('Error', message, 'error')
+                console.log(e)
+                dispatch(uiFinishLoading())
             })
     }
 }
 
 
-export const login = (uid, displayName, email, photoURL) => ({
+export const login = (uid, displayName, email, photoURL, emailVerified, accessToken) => ({
     type: types.login,
     payload: {
         uid,
         displayName,
         email,
-        photoURL
+        photoURL,
+        emailVerified,
+        accessToken
     }
 })
 

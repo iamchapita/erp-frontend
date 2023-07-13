@@ -1,23 +1,14 @@
 import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import AuthScreen from '../components/auth/AuthScreen'
-import SignUpScreen from '../components/auth/SignUpScreen'
+import { Navigate, Routes } from 'react-router-dom'
 
-export const PublicRouter = ({ isLoggedIn, component: Component, ...rest }) => {
+export const PublicRouter = ({ isLoggedIn, children }) => {
 
     return (
         isLoggedIn
-            ? Navigate({ to: '/', replace: true })
+            ? <Navigate to={`/syncpro/home`} />
             :
             <Routes>
-                <Route
-                    path='register'
-                    element={<SignUpScreen />}
-                />
-                <Route
-                    path='login'
-                    element={<AuthScreen />}
-                />
+                {children}
             </Routes>
     )
 }

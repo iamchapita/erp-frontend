@@ -10,6 +10,7 @@ import { Pagination } from '../Pagination'
 import { Table } from '@mui/material'
 import { FetchData } from '../utils/fetch'
 import { useSelector } from 'react-redux'
+import { Breadcrumbs } from './BreadCrums'
 
 export const Dashboard = () => {
     const { accessToken } = useSelector(state => state.auth);
@@ -27,8 +28,8 @@ export const Dashboard = () => {
             {/* <NavBar /> */}
 
             <div className='flex-1 p-5 space-y-3'>
-                <Pagination {...routes} />
-
+                {/* <Pagination {...routes} /> */}
+                <Breadcrumbs />
                 <SearchSection />
                 {/* Items */}
                 <div className='sm:grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 space-y-2 sm:space-y-0 gap-2 sm:mt-5 flex-1 justify-between [&>*]:sm:px-5 [&>*]:px-1 [&>*]:rounded-xl [&>*]:w-auto [&>*]:h-20 [&>*]:bg-white [&>*]:shadow-sm' >

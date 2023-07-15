@@ -16,6 +16,7 @@ export const AppRouter = () => {
     const dispatch = useDispatch()
     const { loading } = useSelector(state => state.ui)
 
+    
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           if (user?.uid) {

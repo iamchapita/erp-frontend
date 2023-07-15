@@ -4,9 +4,9 @@ import { Customer } from '../components/syncpro/modules/Customer/Customer'
 
 import { SideBar } from '../components/syncpro/SideBar'
 import { Dashboard } from '../components/syncpro/Dashboard'
+import { Product } from '../components/syncpro/modules/Product/Product'
 
 export const PrivateRouter = ({ isLoggedIn }) => {
-
     return (
         isLoggedIn
             ?
@@ -20,6 +20,10 @@ export const PrivateRouter = ({ isLoggedIn }) => {
                     <Route
                         path='dashboard'
                         element={<Dashboard />}
+                    />
+                    <Route
+                        path='productos'
+                        element={<Product />}
                     />
                     <Route path='*' element={<Navigate to={'dashboard'} />} />
                 </Routes>

@@ -1,4 +1,4 @@
-import { AddCard, Home, LocalShipping, Logout, Paid, Person, Person4, PersonAdd, PointOfSale, Receipt, Settings, Wallet } from "@mui/icons-material";
+import { AddCard, Home, Inventory, LocalShipping, Logout, Paid, Person, Person4, PersonAdd, PointOfSale, Receipt, Settings, Wallet } from "@mui/icons-material";
 
 export const items = [
     {
@@ -10,6 +10,11 @@ export const items = [
         Icon: Person,
         Title: 'Clientes',
         path: 'clientes'
+    },
+    {
+        Icon: Inventory,
+        Title: 'Productos',
+        path: 'productos'
     },
     {
         Icon: Receipt,

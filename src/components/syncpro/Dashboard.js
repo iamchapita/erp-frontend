@@ -19,14 +19,9 @@ export const Dashboard = () => {
     }, [accessToken])
 
 
-    const routes = {
-        parentRoute: 'Pages', childRoute: 'Dashboard'
-    }
 
     return (
         <div className='relative'>
-            {/* <NavBar /> */}
-
             <div className='flex-1 p-5 space-y-3'>
                 {/* <Pagination {...routes} /> */}
                 <Breadcrumbs />

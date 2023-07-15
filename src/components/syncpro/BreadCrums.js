@@ -1,20 +1,31 @@
-import { Link } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-
-
-
-
+import {useEffect, useState} from "react";
+import {useLocation, Link} from "react-router-dom";
 
 export const Breadcrumbs = () => {
-  const location = useLocation()
-  const [currentPath, setCurrentPath] = useState('');
+    const location = useLocation();
+    const currentLocation = (location.pathname.split('/').slice(2))
+    console.log(currentLocation)
+    return (
+        <div>
+            {
 
-  useEffect(() => {
-    setCurrentPath(location.pathname.toUpperCase().split('/').slice(2));
-  }, [location.pathname, setCurrentPath])
+                currentLocation.map((locat, index) => <Link key={index} to={`/syncpro/${locat}`}>{locat}</Link>)
+            }
 
-  return (
-    <p className="text-start mx-5 sm:mx-0 sm:mt-0 font-medium"><span className="text-gray-400">SYNCPRO</span> / {currentPath}</p>
-  );
+        </div>
+    )
 }
+
+
+//export const Breadcrumbs = () => {
+//  const location = useLocation()
+//  const [currentPath, setCurrentPath] = useState('');
+//
+//  useEffect(() => {
+//    setCurrentPath(location.pathname.toUpperCase().split('/').slice(2));
+//  }, [location.pathname, setCurrentPath])
+//
+//  return (
+//    <p className="text-start mx-5 sm:mx-0 sm:mt-0 font-medium"><span className="text-gray-400">SYNCPRO</span> / {currentPath}</p>
+//  );
+//}

@@ -15,7 +15,7 @@ import { Breadcrumbs } from "./BreadCrums";
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
 	useEffect(() => {
-		FetchData("/product/getProduct/1", accessToken);
+		FetchData("product/getProduct/1", accessToken);
 	}, [accessToken]);
 
 	return (

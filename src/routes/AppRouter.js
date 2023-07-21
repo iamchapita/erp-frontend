@@ -14,9 +14,9 @@ export const AppRouter = () => {
     const [checking, setChecking] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const dispatch = useDispatch()
-    const { loading } = useSelector(state => state.ui)
+/*     const { loading } = useSelector(state => state.ui)
 
-    
+     */
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           if (user?.uid) {

@@ -9,7 +9,7 @@ export const SideBar = () => {
             <ol className='text-center flex flex-col flex-1 items-center  [&>*]:py-2 font-normal hover:cursor-pointer [&>*]:mx-1 space-y-1'>
                 {
                     items.map((item, index) => (
-                        <ListItem ClassName={item?.className} key={index} Icon={item.Icon} Title={item.Title} path={item.path}/>
+                        <ListItem ClassName={item?.className} key={index} Icon={item.Icon} Title={item.Title} path={item.path} />
                     ))
                 }
             </ol>

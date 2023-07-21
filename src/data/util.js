@@ -71,3 +71,52 @@ export const dashBoardItems = [
         icon: Paid
     }
 ]
+
+
+export const productTabs = [
+    'Productos',
+    'Categorías',
+    'Marcas',
+    'Proveedores'
+]
+
+
+export const productTableHead = [
+    {
+        field: 'id',
+        headerName: 'ID',
+        width: 100,
+        editable: true
+    },
+    {
+        field: 'name',
+        headerName: 'Nombre',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'description',
+        headerName: 'Descripción',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'salePrice',
+        headerName: 'Precio de venta (L.)',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'taxExemptPrice',
+        headerName: 'Precio sin impuestos (L.)',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'taxablePrice',
+        headerName: 'Precio sujeto a impuestos (L. )',
+        width: 200,
+        editable: true
+    },
+    
+]

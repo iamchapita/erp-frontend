@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <div className='flex flex-col bg-custom-800 font-thin  text-center h-auto'>
+        <div className='flex flex-col bg-custom-800 font-thin text-center h-auto'>
           <AppRouter />
         </div>
       </BrowserRouter>

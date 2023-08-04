@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { chargeCategories } from '../actions/product.actions';
-import { Autocomplete } from '@mui/joy';
-import CategoryIcon from '@mui/icons-material/Category';
+import { Autocomplete, FormControl } from '@mui/joy';
 
-
-export const AutocompleteComponent = ({ handleInputChange }) => {
+export const AutocompleteComponent = ({ dispatchProp, handleInputChange, name, items, optionName, icon }) => {
 
     const dispatch = useDispatch();
     const accessToken = useSelector(state => state.auth.accessToken);
-    const categories = useSelector(state => state.productCategories);
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (accessToken) {
-            dispatch(chargeCategories(accessToken))
-
+            setLoading(false);
+            dispatch(dispatchProp(accessToken));
         }
-    }, [accessToken, dispatch])
+    }, [accessToken, dispatch, dispatchProp])
 
-    const handleCategorySelect = (event, selectedOption) => {
+
+
+
+
+    const handleSelect = (event, selectedOption) => {
         if (selectedOption) {
             handleInputChange(
                 {
                     target:
                     {
-                        name: 'idProductCategoryFK',
+                        name,
                         value: selectedOption.id
                     }
                 });
@@ -34,7 +34,7 @@ export const AutocompleteComponent = ({ handleInputChange }) => {
                 {
                     target:
                     {
-                        name: 'idProductCategoryFK',
+                        name,
                         value: ''
                     }
                 });
@@ -43,21 +43,20 @@ export const AutocompleteComponent = ({ handleInputChange }) => {
 
 
     return (
-        <Autocomplete
-            options={categories}
-            getOptionLabel={(option) => option.name}
-            name='idProductCategoryFK'
-            onChange={handleCategorySelect}
-            className='bg-inherit'
-            startDecorator={<CategoryIcon className='text-custom-300' />}
-            sx={{
-                /* bg */
-                '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
-                    backgroundColor: 'inherit',
-                }
-            }
-            }
-        />
+        Array.isArray(items) && items.length > 0 && (
+            <Autocomplete
+                loading={loading}
+                loadingText='Cargando...'
+                options={items.sort((a, b) => -b[optionName].localeCompare(a[optionName]))}
+                groupBy={(option) => option[optionName][0]}
+                getOptionLabel={(option) => option[optionName]}
+                name={name}
+                clearText='Limpiar'
+                onChange={handleSelect}
+                startDecorator={icon}
+            />)
+
+
 
     )
 }

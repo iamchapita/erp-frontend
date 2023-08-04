@@ -25,3 +25,21 @@
     background-color: #4fd1c5;
     /* Color del pulgar de la barra de desplazamiento en estado de hover */
 }
+
+option:not(:checked) {
+    background-color: #4fd1c5;
+}
+
+option:checked {
+    background-color: #4fd1c5;
+}
+
+option:hover {
+    background-color: #4fd1c5;
+}
+
+/* Estilo personalizado para el select */
+
+
+/* Estilo personalizado para el select */
+

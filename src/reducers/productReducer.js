@@ -1,7 +1,20 @@
 import { types } from "../types/types";
 
 const productInitialState = {
-    
+    id: null,
+    name: null,
+    description: null,
+    idProductCategoryFK: null,
+    idProductUnityFK: null,
+    taxablePrice: null,
+    taxExcemptPrice: null,
+    salePrice: null,
+    images: null,
+    status: null,
+    elaborationDate: null,
+    expirationDate: null,
+    createdAt: null,
+
 }
 
 
@@ -13,6 +26,12 @@ const productCategoriesInitialState = {
     updatedAt: null,
 }
 
+const productUnitiesInitialState = {
+    id: null,
+    name: null,
+    symbol: null,
+    createdAt: null
+}
 
 
 
@@ -41,3 +60,14 @@ export const productCategoriesReducer = (state = productCategoriesInitialState, 
             return state;
     }
 }
+
+
+export const productUnitiesReducer = (state = productUnitiesInitialState, action) => {
+    switch (action?.type) {
+        case types.productUnitiesLoaded:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+

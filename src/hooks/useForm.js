@@ -12,11 +12,20 @@ handleRememberMeCheck: A function to update the formState object when the "Remem
 handleSubmit: A function to handle the form submission.
 */
 
-export const useForm = (initialState = {}) => {
+export const useForm = (initialState = {
+}) => {
   const [formState, setFormState] = useState(initialState)
 
-  const handleInputChange = ({ target }) => {
-    setFormState({ ...formState, [target.name]: target.value })
+  const handleInputChange = ({ target }, limit = 0) => {
+    if (limit > 0) {
+      if (target.value.length <= limit) {
+        setFormState({ ...formState, [target.name]: target.value })
+      }
+    }
+    else {
+      setFormState({ ...formState, [target.name]: target.value })
+    }
+
   }
   const handleRememberMeCheck = ({ target }) => {
     setFormState({ ...formState, [target.name]: target.checked })
@@ -28,7 +37,7 @@ export const useForm = (initialState = {}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    console.log('Submitted form data:', formState)
   }
 
   return [formState, handleInputChange, handleRememberMeCheck, handleSubmit, reset]

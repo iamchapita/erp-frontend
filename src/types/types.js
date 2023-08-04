@@ -10,8 +10,6 @@ export const types = {
 
     productCategoriesLoaded: '[Product Categories] Categories loaded',
 
-
-
-
+    productUnitiesLoaded: '[Product Unities] Unities loaded',
 
 }

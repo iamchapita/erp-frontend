@@ -11,13 +11,24 @@ export const chargeCategories = (token) => {
     };
 }
 
+export const chargeUnities = (token) => {
+    return async dispatch => {
+        FetchData('product/getProductUnities/', token)
+            .then(data => {
+                dispatch(unitiesLoaded(data))
+            }
+            )
+    };
+}
+
+
 export const categoriesLoaded = (categories) => ({
     type: types.productCategoriesLoaded,
     payload: categories
 });
 
-
-
-
-
+export const unitiesLoaded = (unities) => ({
+    type: types.productUnitiesLoaded,
+    payload: unities
+});
 

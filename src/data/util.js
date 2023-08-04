@@ -44,7 +44,7 @@ export const items = [
     {
         Icon: Logout,
         Title: 'Cerrar Sesión',
-        className: 'justify-self-end absolute bottom-16'
+        className: 'justify-self-end absolute bottom-0'
     }
 ]
 
@@ -118,5 +118,5 @@ export const productTableHead = [
         width: 200,
         editable: true
     },
-    
+
 ]

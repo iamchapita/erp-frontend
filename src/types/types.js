@@ -21,4 +21,12 @@ export const types = {
 
     productUnitiesLoaded: '[Product Unities] Unities loaded',
 
+    InvoiceLoaded: '[Invoice] Loaded',
+    InvoiceImageLoaded: '[Invoice] Image Loaded',
+    InvoiceActive: '[Invoice] Active',
+    InvoiceAdd: '[Invoice] Add',
+    InvoiceUpdate: '[Invoice] Update',
+    InvoiceDelete: '[Invoice] Delete',
+    InvoiceClear: '[Invoice] Clear'
 }
+

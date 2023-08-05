@@ -120,3 +120,43 @@ export const productTableHead = [
     },
 
 ]
+
+export const invoiceTableHead = [
+    {
+        field: 'id',
+        headerName: 'ID',
+        width: 100,
+        editable: true
+    },
+    {
+        field: 'cai',
+        headerName: 'CAI',
+        width: 100,
+        editable: true
+    },
+    {
+        field: 'rtn',
+        headerName: 'RTN',
+        width: 100,
+        editable: true
+    },
+    {
+        field: 'saleDate',
+        headerName: 'Fecha de venta',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'dueDate',
+        headerName: 'Fecha de vencimiento',
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'creditDays',
+        headerName: 'Días de crédito',
+        width: 200,
+        editable: true
+    },
+
+]

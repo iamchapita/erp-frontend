@@ -1,42 +1,44 @@
 import { types } from "../types/types";
 
-const productInitialState = {
-    id: null,
-    name: null,
-    description: null,
-    idProductCategoryFK: null,
-    idProductUnityFK: null,
-    taxablePrice: null,
-    taxExcemptPrice: null,
-    salePrice: null,
-    images: null,
-    status: null,
-    elaborationDate: null,
-    expirationDate: null,
-    createdAt: null,
-
-}
-
-
-const productCategoriesInitialState = {
-    id: null,
-    name: null,
-    status: null,
-    createdAt: null,
-    updatedAt: null,
-}
-
-const productUnitiesInitialState = {
-    id: null,
-    name: null,
-    symbol: null,
-    createdAt: null
+const initialState = {
+    products: [],
+    productCategories: [],
+    productUnities: [],
+    product: {
+        id: '',
+        productCode: '',
+        name: '',
+        description: '',
+        idProductCategoryFK: '',
+        idProductUnityFK: '',
+        taxablePrice: '',
+        taxExemptPrice: '',
+        salePrice: '',
+        images: '',
+        status: '',
+        elaborationDate: '',
+        expirationDate: ''
+    },
 }
 
 
 
-export const productReducer = (state = productInitialState, action) => {
+
+export const productReducer = (state = initialState, action) => {
     switch (action?.type) {
+        case types.productActive:
+            return {
+                ...state,
+                product: {
+                    ...state.product,
+                    ...action.payload
+                }
+            }
+        case types.productLoaded:
+            return {
+                ...state,
+                products: [...action.payload]
+            }
         case types.product:
             return action.payload;
         case types.productAdd:
@@ -45,27 +47,19 @@ export const productReducer = (state = productInitialState, action) => {
             return action.payload;
         case types.productDelete:
             return action.payload;
-        default:
-            return state;
-    }
-}
-
-
-
-export const productCategoriesReducer = (state = productCategoriesInitialState, action) => {
-    switch (action?.type) {
+        case types.productClear:
+            return initialState;
         case types.productCategoriesLoaded:
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
-
-export const productUnitiesReducer = (state = productUnitiesInitialState, action) => {
-    switch (action?.type) {
+            return {
+                ...state,
+                productCategories: action.payload
+            }
         case types.productUnitiesLoaded:
-            return action.payload;
+            return {
+                ...state,
+                productUnities: action.payload
+            }
+
         default:
             return state;
     }

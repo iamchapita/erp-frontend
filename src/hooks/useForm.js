@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { productActive } from "../actions/product.actions";
 
 
 /**
@@ -17,6 +19,7 @@ export const useForm = (initialState = {
   const [formState, setFormState] = useState(initialState)
 
   const handleInputChange = ({ target }, limit = 0) => {
+
     if (limit > 0) {
       if (target.value.length <= limit) {
         setFormState({ ...formState, [target.name]: target.value })
@@ -35,9 +38,29 @@ export const useForm = (initialState = {
     setFormState(newFormState);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, msg, dispatch = null) => {
+    console.log(msg);
     e.preventDefault()
-    console.log('Submitted form data:', formState)
+    /* Sweet alerŧ*/
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: { msg }
+    })
+    if (dispatch) {
+      productActive({ ...formState });
+    }
   }
 
   return [formState, handleInputChange, handleRememberMeCheck, handleSubmit, reset]

@@ -2,7 +2,7 @@ import { compose, configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { authReducer } from '../reducers/authReducer';
 import { uiReducer } from '../reducers/uiReducer';
-import { productCategoriesReducer, productReducer, productUnitiesReducer } from '../reducers/productReducer';
+import { productReducer } from '../reducers/productReducer';
 
 
 const composeEnhancers =
@@ -16,8 +16,6 @@ export const store = configureStore({
         auth: authReducer,
         ui: uiReducer,
         product: productReducer,
-        productCategories: productCategoriesReducer,
-        productUnities: productUnitiesReducer
     },
     middleware: [thunk],
     devTools: composeEnhancers()

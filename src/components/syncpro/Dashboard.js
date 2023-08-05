@@ -18,6 +18,7 @@ export const Dashboard = () => {
 		FetchData("product/getProduct/1", accessToken);
 	}, [accessToken]);
 
+
 	return (
 		<div className="relative">
 			<div className="flex-1 p-5 space-y-3">

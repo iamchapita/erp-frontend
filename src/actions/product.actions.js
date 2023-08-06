@@ -93,9 +93,10 @@ export const uploadImage = (files, handleInputChange) => {
 };
 
 
-export const uploadProduct = (token) => {
-    return async (dispatch, getState) => {
-        const { product } = getState().product;
+export const uploadProduct = (formState, token) => {
+    /* Urls to string join by , */
+    
+    return async (dispatch) => {
         try {
             Swal.fire({
                 title: 'Subiendo producto',
@@ -114,11 +115,13 @@ export const uploadProduct = (token) => {
                 text: 'An error occurred during the upload.',
             });
         }
-        FetchData('product/addProduct', token, 'POST', product)
+
+        /* Images is an array */
+
+        FetchData('product/addProduct', token, 'POST', formState)
             .then(data => {
-                console.log(product);
                 console.log(data);
-                dispatch(productActive(product));
+                /* dispatch(productActive(form)); */
                 Swal.close();
                 Swal.fire({
                     icon: 'success',
@@ -144,3 +147,5 @@ export const imageUploaded = (fileURL) => ({
     type: types.productActive,
     payload: { images: fileURL }
 });
+
+

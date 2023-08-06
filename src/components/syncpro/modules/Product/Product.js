@@ -18,42 +18,59 @@ export const Product = React.memo(() => {
     const products = useSelector(state => state.product.products);
     const categories = useSelector(state => state.product.productCategories);
     const unities = useSelector(state => state.product.productUnities);
-    const productActive = useSelector(state => state.product.product);
     useEffect(() => {
         accessToken && dispatch(loadProducts(accessToken))
     }, [accessToken, dispatch])
 
-    const handlePost = (e) => {
+    const handlePost = async (e) => {
         e.preventDefault();
         console.log('Form', formState);
-        dispatch(uploadProduct(formState, accessToken))
+        await dispatch(uploadProduct(formState, accessToken))
+        reset();
+        handleClearImageInput();
     }
 
+
+    const handleClearImageInput = () => {
+        document.getElementById('#imageInput').value = ''
+    }
 
     const handleFileChange = (e) => {
         const files = e.target.files
         if (files) {
             dispatch(uploadImage(files, handleInputChange))
-
         }
     }
 
 
-    const [formState, handleInputChange, , handleSubmit] =
+    const [formState, handleInputChange, handleCheck, handleSubmit, reset] =
         useForm({
-            productCode: '',
             name: '',
             description: '',
-            idProductCategoryFK: '',
-            idProductUnityFK: '',
-            taxablePrice: '',
-            taxExemptPrice: '',
-            salePrice: '',
+            idProductCategoryFK: 0.00,
+            idProductUnityFK: 0.00,
+            taxablePrice: 0.00,
+            taxExemptPrice: 0.00,
+            salePrice: 0.00,
             images: '',
             status: '',
             elaborationDate: '',
             expirationDate: ''
         })
+
+    const {
+        name,
+        description,
+        idProductCategoryFK,
+        idProductUnityFK,
+        taxablePrice,
+        taxExemptPrice,
+        salePrice,
+        images,
+        status,
+        elaborationDate,
+        expirationDate
+    } = formState;
 
 
 
@@ -106,6 +123,9 @@ export const Product = React.memo(() => {
                     <div className=''>
                         <p className='text-custom-150 font-normal'>Nombre del producto: </p>
                         <InputComponent handleInputChange={handleInputChange}
+                            maxLength={45}
+                            value={name}
+                            type={'text'}
                             name={'name'}
 
                             className={'w-full'} required={true} placeholder={'Nombre del producto'} />
@@ -114,7 +134,10 @@ export const Product = React.memo(() => {
                         <p className='text-custom-150 font-normal'>Descripción: </p>
 
                         <textarea
+
+                            maxLength={150}
                             required={true}
+                            value={description}
                             className='w-full
                             h-20
                             p-2
@@ -129,16 +152,16 @@ export const Product = React.memo(() => {
                         focus:border-custom-400'
                             placeholder='Descripción del producto'
                             name='description'
-                            value={formState.description}
-                            onChange={(e) => { handleInputChange(e, 100) }}
+                            onChange={(e) => { handleInputChange(e, 150) }}
                         />
                         <p className='text-sm text-custom-300 font-normal'>
-                            Caracteres restantes: {100 - formState.description.length}
+                            Caracteres restantes: {150 - formState.description.length}
                         </p>
                     </div>
                     <div>
                         <p className='text-custom-150 font-normal'>Categoría: </p>
                         <AutocompleteComponent
+
                             {...autoCompleteCategories}
                             handleInputChange={handleInputChange} />
                     </div>
@@ -149,7 +172,7 @@ export const Product = React.memo(() => {
                             handleInputChange={handleInputChange} />
 
                     </div>
-                    <div>
+                    {/* <div>
                         <p className='text-custom-150 font-normal'>Código de producto </p>
                         <InputComponent
                             required={true}
@@ -157,11 +180,14 @@ export const Product = React.memo(() => {
                             className={'w-full'} name={'productCode'} handleInputChange={handleInputChange}
                             placeholder={'Código de producto'} />
 
-                    </div>
+                    </div> */}
 
                     <div>
                         <p className='text-custom-150 font-normal'>Precio sujeto a impuestos: </p>
                         <InputComponent
+                            value={taxablePrice}
+                            step={'.01'}
+                            type={'number'}
                             required={true}
                             className={'w-full'} name={'taxablePrice'} handleInputChange={handleInputChange}
                             placeholder={'Precio de venta'} />
@@ -170,6 +196,9 @@ export const Product = React.memo(() => {
                     <div>
                         <p className='text-custom-150 font-normal'>Precio exento de impuestos: </p>
                         <InputComponent
+                            value={taxExemptPrice}
+                            step={'.01'}
+                            type={'number'}
                             required={true}
                             className={'w-full'} name={'taxExemptPrice'} handleInputChange={handleInputChange}
                             placeholder={'Precio excento de impuestos'} />
@@ -179,6 +208,9 @@ export const Product = React.memo(() => {
                     <div>
                         <p className='text-custom-150 font-normal'>Precio de venta: </p>
                         <InputComponent
+                            value={salePrice}
+                            step={'.01'}
+                            type={'number'}
                             required={true}
                             className={'w-full'} name={'salePrice'} handleInputChange={handleInputChange}
                             placeholder={'Precio de venta'} />
@@ -187,8 +219,10 @@ export const Product = React.memo(() => {
                     <div>
                         <p className='text-custom-150 font-normal'>Fecha de elaboración: </p>
                         <InputComponent
+                            value={elaborationDate}
                             required={true}
                             type={'date'}
+                            min={'2000-01-01'}
                             className={'w-full'} name={'elaborationDate'} handleInputChange={handleInputChange}
                             placeholder={'Fecha de elaboración'} />
 
@@ -197,6 +231,7 @@ export const Product = React.memo(() => {
                     <div>
                         <p className='text-custom-150 font-normal'>Fecha de expiración: </p>
                         <InputComponent
+                            value={expirationDate}
                             required={true}
                             type={'date'}
                             className={'w-full'} name={'expirationDate'} handleInputChange={handleInputChange}
@@ -205,6 +240,7 @@ export const Product = React.memo(() => {
                     <div>
                         <p className='text-custom-150 font-normal'>Imagenes: </p>
                         <InputComponent
+                            id={'imageInput'}
                             required={true}
                             className={'w-full'} name={'imageUrls'}
                             handleInputChange={handleFileChange}
@@ -220,45 +256,33 @@ export const Product = React.memo(() => {
 
                     <div />
 
-                    <div>
+                    <div className='flex items-center space-x-2 justify-center'>
                         <p className='text-custom-150 font-normal'>Estado: </p>
-                        <select
-                            className='w-full
-                        h-10
-                        p-2
-                        rounded
-                        placeholder:text-custom-100
-                        bg-inherit
-                        border-custom-100
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400
-
-                        '
-                            name='status'
-                            value={formState.status}
-                            onChange={handleInputChange}
-
-                        >
-                            <option
-                                className='
+                        <InputComponent
+                            value={status}
+                            onChange={handleCheck}
+                            type={'checkbox'}
+                            className='
+                            w-5
+                            h-5
+                            p-2
+                            rounded
                             text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
+                            cursor-pointer
+                            focus:outline-none
+                            ring-0
+                            focus:ring-0
+                            outline-none
                             
+                            font-semibold
+
                             '
-                                value='1'>Activo</option>
-                            <option className=' text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
-                        
-            
-                            ' value='0'>Inactivo</option>
-                        </select>
+                            name={'status'}
+                            handleInputChange={handleCheck}
+                            placeholder={'Estado'}
+                            checked={formState.status ? 1 : 0}
+                        />
+
                     </div>
                     <div>
                         <button

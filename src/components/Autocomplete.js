@@ -17,6 +17,7 @@ export const AutocompleteComponent = ({ dispatchProp, handleInputChange, name, i
 
 
     const handleSelect = (event, selectedOption) => {
+        
         if (selectedOption) {
             handleInputChange(
                 {

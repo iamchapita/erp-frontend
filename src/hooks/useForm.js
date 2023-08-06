@@ -19,7 +19,7 @@ export const useForm = (initialState = {
   const [formState, setFormState] = useState(initialState)
 
   const handleInputChange = ({ target }, limit = 0) => {
-
+    console.log(target.value);
     if (limit > 0) {
       if (target.value.length <= limit) {
         setFormState({ ...formState, [target.name]: target.value })
@@ -30,9 +30,12 @@ export const useForm = (initialState = {
     }
 
   }
-  const handleRememberMeCheck = ({ target }) => {
-    setFormState({ ...formState, [target.name]: target.checked })
-  }
+  const handleCheck = ({ target }) => {
+    console.log(target.checked);
+    const value = target.checked ? 1 : 0; // Convertir true a 1 y false a 0
+    setFormState({ ...formState, [target.name]: value });
+  };
+
 
   const reset = (newFormState = initialState) => {
     setFormState(newFormState);
@@ -63,7 +66,7 @@ export const useForm = (initialState = {
     }
   }
 
-  return [formState, handleInputChange, handleRememberMeCheck, handleSubmit, reset]
+  return [formState, handleInputChange, handleCheck, handleSubmit, reset]
 }
 
 /* *

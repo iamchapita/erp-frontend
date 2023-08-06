@@ -8,11 +8,11 @@ const initialState = {
 	naturalCustomerTypeDetails: [],
 	customer: {
 		id: "",
-		customerFirstName: "",
-		customerLastName: "",
-		customerCountry: "",
-		customerCity: "",
-		customerDirection: "",
+		customerType: "",
+		firstNames: "",
+		lastNames: "",
+		country: "",
+		city: "",
 	},
 };
 

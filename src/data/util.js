@@ -1,5 +1,6 @@
 import {
 	AddCard,
+	FlashlightOffRounded,
 	Home,
 	Inventory,
 	LocalShipping,
@@ -128,40 +129,46 @@ export const productTableHead = [
 
 export const customerTabs = [
 	"Clientes",
-	// "Clientes Empresariales",
-	// "Clientes Naturales",
+	"Clientes Empresariales",
+	"Clientes Naturales",
 ];
 
 export const customerTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		width: 100,
+		width: 50,
 		editable: false,
 	},
 	{
 		field: "firstNames",
 		headerName: "Nombres",
-		width: 200,
+		width: 150,
 		editable: true,
 	},
 	{
 		field: "lastNames",
 		headerName: "Apellidos",
-		width: 200,
+		width: 150,
 		editable: true,
 	},
 	{
 		field: "country",
 		headerName: "País",
-		width: 200,
+		width: 150,
 		editable: true,
 	},
 	{
 		field: "city",
 		headerName: "Ciudad",
-		width: 200,
+		width: 150,
 		editable: true,
+	},
+	{
+		field: "customerType",
+		headerName: "Tipo de Cliente",
+		width: 150,
+		editable: false,
 	},
 ];
 

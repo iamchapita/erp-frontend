@@ -2,7 +2,7 @@ import { Mail, Search } from '@mui/icons-material'
 import { Button, Input } from '@mui/material'
 import React from 'react'
 
-export const SearchSection = () => {
+export const    SearchSection = () => {
     return (
         <div className="relative ms-5 sm:ms-0 w-2/3 mt-2 rounded-lg">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">

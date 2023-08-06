@@ -4,6 +4,7 @@ import { authReducer } from "../reducers/authReducer";
 import { uiReducer } from "../reducers/uiReducer";
 import { productReducer } from "../reducers/productReducer";
 import { customerReducer } from "../reducers/customerReducer";
+import {invoiceReducer } from "../reducers/invoiceReducer";
 
 const composeEnhancers =
 	typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -16,6 +17,7 @@ export const store = configureStore({
 		ui: uiReducer,
 		product: productReducer,
 		customer: customerReducer,
+		invoice: invoiceReducer	
 	},
 	middleware: [thunk],
 	devTools: composeEnhancers(),

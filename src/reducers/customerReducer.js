@@ -7,12 +7,12 @@ const initialState = {
 	businessCustomerTypeDetails: [],
 	naturalCustomerTypeDetails: [],
 	customer: {
-		id: "",
-		customerType: "",
+		idCustomerTypeFK: "",
 		firstNames: "",
 		lastNames: "",
 		country: "",
 		city: "",
+		direction: "",
 	},
 };
 

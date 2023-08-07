@@ -1,76 +1,86 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "../../../Tab";
-import { productTableHead, productTabs } from "../../../../data/util";
 import { customerTableHead, customerTabs } from "../../../../data/util";
 import { Title } from "../../../Title";
 import { DataGrid } from "@mui/x-data-grid";
 import InputComponent from "../../../InputComponent";
 import { AutocompleteComponent } from "../../../Autocomplete";
 import { useForm } from "../../../../hooks/useForm";
-import { loadCustomers } from "../../../../actions/customer.action";
-import CategoryIcon from "@mui/icons-material/Category";
-import StraightenIcon from "@mui/icons-material/Straighten";
+import {
+	loadCustomers,
+	loadCustomerType,
+	uploadCustomer,
+} from "../../../../actions/customer.action";
+import PeopleIcon from "@mui/icons-material/People";
 
 export const Customer = React.memo(() => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const customers = useSelector((state) => state.customer.customers);
-	const customerActive = useSelector(
-		(state) => state.customer.customerActive
-	);
-	// const categories = useSelector((state) => state.product.productCategories);
-	// const unities = useSelector((state) => state.product.productUnities);
+	const customerTypes = useSelector((state) => state.customer.customerTypes);
+	const [customerTypeValue, setCustomerTypeValue] = useState();
+
+	// const customerActive = useSelector(
+	// 	(state) => state.customer.customerActive
+	// );
 
 	useEffect(() => {
 		accessToken && dispatch(loadCustomers(accessToken));
 	}, [accessToken, dispatch]);
 
-	// const handlePost = (e) => {
-	// 	e.preventDefault();
-	// 	console.log("Form", formState);
-	// 	dispatch(uploadProduct(formState, accessToken));
-	// };
+	const handlePost = (e) => {
+		e.preventDefault();
 
-	// const handleFileChange = (e) => {
-	// 	const files = e.target.files;
-	// 	if (files) {
-	// 		dispatch(uploadImage(files, handleInputChange));
-	// 	}
-	// };
+		// Limpiando campos según el tipo de cliente
+		if (formState.id === 1) {
+			formState.businessName = "";
+			formState.businessRtn = "";
+			formState.hasCredit = "";
+			formState.creditAmount = "";
+		}
+
+		if (formState.id === 2) {
+			formState.naturalRtn = "";
+			if (formState.hasCredit === "0") {
+				formState.creditAmount = "";
+			}
+		}
+
+		// console.log("Form", formState);
+
+		dispatch(uploadCustomer(formState, accessToken));
+	};
 
 	const [formState, handleInputChange, , handleSubmit] = useForm({
-		productCode: "",
-		name: "",
-		description: "",
-		idProductCategoryFK: "",
-		idProductUnityFK: "",
-		taxablePrice: "",
-		taxExemptPrice: "",
-		salePrice: "",
-		images: "",
-		status: "",
-		elaborationDate: "",
-		expirationDate: "",
+		// Customer
+		idCustomerTypeFK: "",
+		firstNames: "",
+		lastNames: "",
+		country: "",
+		city: "",
+		direction: "",
+		// ContactInfo
+		phoneNumber: "",
+		email: "",
+		// BusinessCustomerType
+		businessName: "",
+		businessRtn: "",
+		hasCredit: "",
+		creditAmount: "",
+		// NaturalCustomerType
+		naturalRtn: "",
 	});
 
-	// const autoCompleteCategories = {
-	// 	name: "idProductCategoryFK",
-	// 	handleInputChange,
-	// 	dispatchProp: chargeCategories,
-	// 	items: categories,
-	// 	optionName: "name",
-	// 	icon: <CategoryIcon className="text-custom-300" />,
-	// };
-
-	// const autoCompleteUnities = {
-	// 	name: "idProductUnityFK",
-	// 	handleInputChange,
-	// 	dispatchProp: chargeUnities,
-	// 	items: unities,
-	// 	optionName: "name",
-	// 	icon: <StraightenIcon className="text-custom-300" />,
-	// };
+	const autoCompleteCustomerType = {
+		name: "idCustomerTypeFK",
+		handleInputChange,
+		dispatchProp: loadCustomerType,
+		items: customerTypes,
+		optionName: "name",
+		required: true,
+		icon: <PeopleIcon className="text-custom-300" />,
+	};
 
 	return (
 		<div className="p-5 text-start w-full">
@@ -93,240 +103,262 @@ export const Customer = React.memo(() => {
 					/>
 				)}
 			</div>
-			{/* <form onSubmit={handlePost} className="my-2">
-				<Title title={"Agregar producto"} />
+			<form onSubmit={handlePost} className="my-2">
+				<Title title={"Agregar Cliente"} />
 				<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
 					<div className="">
 						<p className="text-custom-150 font-normal">
-							Nombre del producto:{" "}
+							Nombres del Cliente:{" "}
 						</p>
 						<InputComponent
 							handleInputChange={handleInputChange}
-							name={"name"}
+							name={"firstNames"}
 							className={"w-full"}
 							required={true}
-							placeholder={"Nombre del producto"}
+							placeholder={"Juan Antonio"}
 						/>
 					</div>
-					<div>
+
+					<div className="">
 						<p className="text-custom-150 font-normal">
-							Descripción:{" "}
+							Apellidos del Cliente:{" "}
+						</p>
+						<InputComponent
+							handleInputChange={handleInputChange}
+							name={"lastNames"}
+							className={"w-full"}
+							required={true}
+							placeholder={"Pérez Molina"}
+						/>
+					</div>
+
+					<div>
+						<p className="text-custom-150 font-normal">País </p>
+						<InputComponent
+							handleInputChange={handleInputChange}
+							name={"country"}
+							className={"w-full"}
+							required={true}
+							placeholder={"Honduras"}
+						/>
+					</div>
+
+					<div>
+						<p className="text-custom-150 font-normal">Ciudad: </p>
+						<InputComponent
+							handleInputChange={handleInputChange}
+							name={"city"}
+							className={"w-full"}
+							required={true}
+							placeholder={"Distrito Central"}
+						/>
+					</div>
+
+					<div className="col-span-2">
+						<p className="text-custom-150 font-normal">
+							Dirección:{" "}
 						</p>
 
 						<textarea
-							required={true}
 							className="w-full
-                            h-20
-                            p-2
-                            rounded
-                        placeholder:text-custom-100
-                            bg-inherit
-                        border-custom-100
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400"
-							placeholder="Descripción del producto"
-							name="description"
-							value={formState.description}
+								h-20
+								p-2
+								rounded
+                        		placeholder:text-custom-100
+                            	bg-inherit
+								border-custom-100
+								focus:outline-none
+								ring-0
+								focus:ring-0
+								outline-none
+								focus:border-custom-400
+							"
+							placeholder="Calle Principal, 2do bloque, apartamento 240"
+							name="direction"
+							value={formState.direction}
 							onChange={(e) => {
-								handleInputChange(e, 100);
+								handleInputChange(e, 150);
 							}}
 						/>
 						<p className="text-sm text-custom-300 font-normal">
 							Caracteres restantes:{" "}
-							{100 - formState.description.length}
+							{150 - formState.direction.length}
 						</p>
 					</div>
+
 					<div>
 						<p className="text-custom-150 font-normal">
-							Categoría:{" "}
+							Teléfono:{" "}
+						</p>
+						<InputComponent
+							handleInputChange={handleInputChange}
+							className={"w-full"}
+							name={"phoneNumber"}
+							placeholder={"33959171"}
+						/>
+					</div>
+
+					<div>
+						<p className="text-custom-150 font-normal">
+							Correo Electrónico:{" "}
+						</p>
+						<InputComponent
+							handleInputChange={handleInputChange}
+							className={"w-full"}
+							name={"email"}
+							// type={'email'}
+							placeholder={"correo@ejemplo.com"}
+						/>
+					</div>
+
+					<div>
+						<p className="text-custom-150 font-normal">
+							Tipo de Cliente:{" "}
 						</p>
 						<AutocompleteComponent
-							{...autoCompleteCategories}
+							{...autoCompleteCustomerType}
 							handleInputChange={handleInputChange}
 						/>
 					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Unidad de medida:{" "}
-						</p>
-						<AutocompleteComponent
-							{...autoCompleteUnities}
-							handleInputChange={handleInputChange}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Código de producto{" "}
-						</p>
-						<InputComponent
-							required={true}
-							limit={5}
-							className={"w-full"}
-							name={"productCode"}
-							handleInputChange={handleInputChange}
-							placeholder={"Código de producto"}
-						/>
-					</div>
 
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio sujeto a impuestos:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"taxablePrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio de venta"}
-						/>
-					</div>
+					{formState.idCustomerTypeFK === 1 ? (
+						<div>
+							<p className="text-custom-150 font-normal">RTN: </p>
+							<InputComponent
+								handleInputChange={handleInputChange}
+								className={"w-full"}
+								name={"naturalRtn"}
+								maxLength={14}
+								placeholder={
+									"14 caracteres máximo, sin guiones"
+								}
+							/>
+						</div>
+					) : null}
 
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio exento de impuestos:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"taxExemptPrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio excento de impuestos"}
-						/>
-					</div>
+					{formState.idCustomerTypeFK === 2 ? (
+						<>
+							<div>
+								<p className="text-custom-150 font-normal">
+									Nombre de Empresa:{" "}
+								</p>
+								<InputComponent
+									handleInputChange={handleInputChange}
+									className={"w-full"}
+									name={"businessName"}
+									required={true}
+									placeholder={"Empresa SA"}
+								/>
+							</div>
 
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio de venta:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"salePrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio de venta"}
-						/>
-					</div>
+							<div>
+								<p className="text-custom-150 font-normal">
+									RTN:{" "}
+								</p>
+								<InputComponent
+									handleInputChange={handleInputChange}
+									className={"w-full"}
+									name={"businessRtn"}
+									required={true}
+									maxLength={"14"}
+									placeholder={
+										"14 caracteres máximo, sin guiones"
+									}
+								/>
+							</div>
 
-					<div>
-						<p className="text-custom-150 font-normal">
-							Fecha de elaboración:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							type={"date"}
-							className={"w-full"}
-							name={"elaborationDate"}
-							handleInputChange={handleInputChange}
-							placeholder={"Fecha de elaboración"}
-						/>
-					</div>
+							<div>
+								<p className="text-custom-150 font-normal">
+									Posee Crédito:{" "}
+								</p>
+								<select
+									className="w-full
+										h-10
+										p-2
+										rounded
+										placeholder:text-custom-100
+										bg-inherit
+										border-custom-100
+										focus:outline-none
+										ring-0
+										focus:ring-0
+										outline-none
+										focus:border-custom-400
+										"
+									name="hasCredit"
+									value={formState.hasCredit}
+									onChange={handleInputChange}
+									required={true}
+								>
+									<option
+										className="
+											text-custom-100
+											bg-custom-300
+											hover:bg-custom-250
+											active:bg-custom-200			
+											"
+										value={0}
+									>
+										No Posee Crédito
+									</option>
+									<option
+										className=" text-custom-100
+											bg-custom-300
+											hover:bg-custom-250
+											active:bg-custom-200
+                            			"
+										value={1}
+									>
+										Posee Crédito
+									</option>
+								</select>
+							</div>
 
-					<div>
-						<p className="text-custom-150 font-normal">
-							Fecha de expiración:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							type={"date"}
-							className={"w-full"}
-							name={"expirationDate"}
-							handleInputChange={handleInputChange}
-							placeholder={"Fecha de expiración"}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Imagenes:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"imageUrls"}
-							handleInputChange={handleFileChange}
-							placeholder={"Imagenes"}
-							type={"file"}
-							multiple={true}
-							accept={"image/*"}
-						/>
-					</div>
-
-					<div />
-
-					<div>
-						<p className="text-custom-150 font-normal">Estado: </p>
-						<select
-							className="w-full
-                        h-10
-                        p-2
-                        rounded
-                        placeholder:text-custom-100
-                        bg-inherit
-                        border-custom-100
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400
-
-                        "
-							name="status"
-							value={formState.status}
-							onChange={handleInputChange}
-						>
-							<option
-								className="
-                            text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
-                            
-                            "
-								value="1"
-							>
-								Activo
-							</option>
-							<option
-								className=" text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
-                        
-            
-                            "
-								value="0"
-							>
-								Inactivo
-							</option>
-						</select>
-					</div>
-					<div>
+							<div>
+								{formState.hasCredit === "1" ? (
+									<div>
+										<p className="text-custom-150 font-normal">
+											Monto de Crédito:{" "}
+										</p>
+										<InputComponent
+											handleInputChange={
+												handleInputChange
+											}
+											className={"w-full"}
+											name={"creditAmount"}
+											required={true}
+											placeholder={"10000"}
+										/>
+									</div>
+								) : null}
+							</div>
+						</>
+					) : null}
+					<div className="col-start-1">
 						<button
 							type="submit"
 							className="
-                        w-full
-                        h-10
-                        p-2
-                        rounded
-                        text-custom-100
-                        bg-custom-300
-                        hover:bg-custom-250
-                        active:bg-custom-200
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400
-                        font-semibold
-                        "
+							w-full
+							h-10
+							p-2
+							rounded
+							text-custom-100
+							bg-custom-300
+							hover:bg-custom-250
+							active:bg-custom-200
+							focus:outline-none
+							ring-0
+							focus:ring-0
+							outline-none
+							focus:border-custom-400
+							font-semibold
+							"
 						>
 							Agregar cliente
 						</button>
 					</div>
 				</div>
-			</form> */}
+			</form>
 		</div>
 	);
 });

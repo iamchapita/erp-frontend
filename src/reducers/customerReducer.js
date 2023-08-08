@@ -4,8 +4,8 @@ const initialState = {
 	customers: [],
 	customerTypes: [],
 	customersContactInfo: [],
-	businessCustomerTypeDetails: [],
-	naturalCustomerTypeDetails: [],
+	businessCustomers: [],
+	naturalCustomers: [],
 	customer: {
 		idCustomerTypeFK: "",
 		firstNames: "",
@@ -51,15 +51,15 @@ export const customerReducer = (state = initialState, action) => {
 				...state,
 				customersContactInfo: action.payload,
 			};
-		case types.businessCustomerTypeDetailsLoaded:
+		case types.businessCustomersLoaded:
 			return {
 				...state,
-				businessCustomerTypeDetails: action.payload,
+				businessCustomers: action.payload,
 			};
-		case types.naturalCustomerTypeDetailsLoaded:
+		case types.naturalCustomersLoaded:
 			return {
 				...state,
-				naturalCustomerTypeDetails: action.payload,
+				naturalCustomers: action.payload,
 			};
 		default:
 			return state;

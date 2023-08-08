@@ -98,3 +98,29 @@ export const customerActive = (customer) => ({
 	type: types.customerActive,
 	payload: customer,
 });
+
+export const loadBusinessCustomers = (token) => {
+	return async (dispatch) => {
+		FetchData("customer/getBusinessCustomers", token).then((data) => {
+			dispatch(businessCustomersLoaded(data));
+		});
+	};
+};
+
+export const businessCustomersLoaded = (businessCustomers) => ({
+	type: types.businessCustomersLoaded,
+	payload: businessCustomers,
+});
+
+export const loadNaturalCustomers = (token) => {
+	return async (dispatch) => {
+		FetchData("customer/getNaturalCustomers", token).then((data) => {
+			dispatch(naturalCustomersLoaded(data));
+		});
+	};
+};
+
+export const naturalCustomersLoaded = (naturalCustomers) => ({
+	type: types.naturalCustomersLoaded,
+	payload: naturalCustomers,
+});

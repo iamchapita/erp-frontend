@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "../../../Tab";
-import { customerTableHead, customerTabs } from "../../../../data/util";
+import {
+	customerTabs,
+	customerTableHead,
+	businessCustomerTableHead,
+	naturalCustomerTableHead,
+} from "../../../../data/util";
 import { Title } from "../../../Title";
 import { DataGrid } from "@mui/x-data-grid";
 import InputComponent from "../../../InputComponent";
 import { AutocompleteComponent } from "../../../Autocomplete";
 import { useForm } from "../../../../hooks/useForm";
 import {
+	uploadCustomer,
 	loadCustomers,
 	loadCustomerType,
-	uploadCustomer,
+	loadBusinessCustomers,
+	loadNaturalCustomers,
 } from "../../../../actions/customer.action";
 import PeopleIcon from "@mui/icons-material/People";
 
@@ -18,15 +25,23 @@ export const Customer = React.memo(() => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const customers = useSelector((state) => state.customer.customers);
+	const businessCustomers = useSelector(
+		(state) => state.customer.businessCustomers
+	);
+	const naturalCustomers = useSelector(
+		(state) => state.customer.naturalCustomers
+	);
+	const customerActive = useSelector(
+		(state) => state.customer.customerActive
+	);
 	const customerTypes = useSelector((state) => state.customer.customerTypes);
-	const [customerTypeValue, setCustomerTypeValue] = useState();
 
-	// const customerActive = useSelector(
-	// 	(state) => state.customer.customerActive
-	// );
+	const [activeTab, setActiveTab] = useState(0);
 
 	useEffect(() => {
 		accessToken && dispatch(loadCustomers(accessToken));
+		accessToken && dispatch(loadBusinessCustomers(accessToken));
+		accessToken && dispatch(loadNaturalCustomers(accessToken));
 	}, [accessToken, dispatch]);
 
 	const handlePost = (e) => {
@@ -46,8 +61,6 @@ export const Customer = React.memo(() => {
 				formState.creditAmount = "";
 			}
 		}
-
-		// console.log("Form", formState);
 
 		dispatch(uploadCustomer(formState, accessToken));
 	};
@@ -85,9 +98,10 @@ export const Customer = React.memo(() => {
 	return (
 		<div className="p-5 text-start w-full">
 			<Title title={"Clientes"} />
-			<Tab data={customerTabs} />
+			<Tab data={customerTabs} action={setActiveTab} />
+
 			<div className="grid grid-cols-1">
-				{customers && (
+				{customers && activeTab === 0 && (
 					<DataGrid
 						className="col-span-1"
 						autoHeight
@@ -102,7 +116,40 @@ export const Customer = React.memo(() => {
 						pageSizeOptions={[5, 10, 20]}
 					/>
 				)}
+
+				{businessCustomers && activeTab === 1 && (
+					<DataGrid
+						className="col-span-1"
+						autoHeight
+						density="compact"
+						columns={businessCustomerTableHead}
+						rows={businessCustomers}
+						initialState={{
+							pagination: {
+								paginationModel: { page: 0, pageSize: 5 },
+							},
+						}}
+						pageSizeOptions={[5, 10, 20]}
+					/>
+				)}
+
+				{naturalCustomers && activeTab === 2 && (
+					<DataGrid
+						className="col-span-1"
+						autoHeight
+						density="compact"
+						columns={naturalCustomerTableHead}
+						rows={naturalCustomers}
+						initialState={{
+							pagination: {
+								paginationModel: { page: 0, pageSize: 5 },
+							},
+						}}
+						pageSizeOptions={[5, 10, 20]}
+					/>
+				)}
 			</div>
+
 			<form onSubmit={handlePost} className="my-2">
 				<Title title={"Agregar Cliente"} />
 				<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
@@ -295,7 +342,7 @@ export const Customer = React.memo(() => {
 											text-custom-100
 											bg-custom-300
 											hover:bg-custom-250
-											active:bg-custom-200			
+											active:bg-custom-200
 											"
 										value={0}
 									>

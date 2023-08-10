@@ -10,9 +10,16 @@ const initialState = {
 		idCustomerTypeFK: "",
 		firstNames: "",
 		lastNames: "",
-		country: "",
 		city: "",
+		country: "",
 		direction: "",
+		phoneNumber: "",
+		email: "",
+		naturalRtn: "",
+		businessName: "",
+		businessRtn: "",
+		hasCredit: "",
+		creditAmount: "",
 	},
 };
 

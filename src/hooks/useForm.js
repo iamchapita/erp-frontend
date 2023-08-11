@@ -2,7 +2,6 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { productActive } from "../actions/product.actions";
 
-
 /**
 
 useForm is a custom hook that provides a form state object and methods to update it.
@@ -14,60 +13,63 @@ handleRememberMeCheck: A function to update the formState object when the "Remem
 handleSubmit: A function to handle the form submission.
 */
 
-export const useForm = (initialState = {
-}) => {
-  const [formState, setFormState] = useState(initialState)
+export const useForm = (initialState = {}) => {
+	const [formState, setFormState] = useState(initialState);
 
-  const handleInputChange = ({ target }, limit = 0) => {
-    console.log(target.value);
-    if (limit > 0) {
-      if (target.value.length <= limit) {
-        setFormState({ ...formState, [target.name]: target.value })
-      }
-    }
-    else {
-      setFormState({ ...formState, [target.name]: target.value })
-    }
+	const handleInputChange = ({ target }, limit = 0) => {
+		console.log(target.value);
+		if (limit > 0) {
+			if (target.value.length <= limit) {
+				setFormState({ ...formState, [target.name]: target.value });
+			}
+		} else {
+			setFormState({ ...formState, [target.name]: target.value });
+		}
+	};
+	const handleCheck = ({ target }) => {
+		console.log(target.checked);
+		const value = target.checked ? 1 : 0; // Convertir true a 1 y false a 0
+		setFormState({ ...formState, [target.name]: value });
+	};
 
-  }
-  const handleCheck = ({ target }) => {
-    console.log(target.checked);
-    const value = target.checked ? 1 : 0; // Convertir true a 1 y false a 0
-    setFormState({ ...formState, [target.name]: value });
-  };
+	const reset = (newFormState = initialState) => {
+		setFormState(newFormState);
+	};
 
+	const handleSubmit = (e, msg, dispatch = null) => {
+		console.log(msg);
+		e.preventDefault();
+		/* Sweet alerŧ*/
+		const Toast = Swal.mixin({
+			toast: true,
+			position: "bottom-end",
+			showConfirmButton: false,
+			timer: 3000,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+				toast.addEventListener("mouseenter", Swal.stopTimer);
+				toast.addEventListener("mouseleave", Swal.resumeTimer);
+			},
+		});
 
-  const reset = (newFormState = initialState) => {
-    setFormState(newFormState);
-  }
+		Toast.fire({
+			icon: "success",
+			title: { msg },
+		});
+		if (dispatch) {
+			productActive({ ...formState });
+		}
+	};
 
-  const handleSubmit = (e, msg, dispatch = null) => {
-    console.log(msg);
-    e.preventDefault()
-    /* Sweet alerŧ*/
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'bottom-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: { msg }
-    })
-    if (dispatch) {
-      productActive({ ...formState });
-    }
-  }
-
-  return [formState, handleInputChange, handleCheck, handleSubmit, reset]
-}
+	return [
+		formState,
+		handleInputChange,
+		handleCheck,
+		handleSubmit,
+		setFormState,
+		reset,
+	];
+};
 
 /* *
  * Example usage:

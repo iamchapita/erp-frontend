@@ -1,43 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Tab } from "../../../Tab";
-import {
-	customerTabs,
-	customerTableHead,
-	businessCustomerTableHead,
-	naturalCustomerTableHead,
-} from "../../../../data/util";
 import { Title } from "../../../Title";
 import { CustomerPageHeader } from "./CustomerPageHeader";
-import InputComponent from "../../../InputComponent";
+import { CustomerForm } from "./CustomerForm";
 import { useForm } from "../../../../hooks/useForm";
 import {
-	uploadCustomer,
-	updateCustomer,
 	loadCustomers,
 	loadBusinessCustomers,
 	loadNaturalCustomers,
-	loadCustomerById,
 } from "../../../../actions/customer.action";
 import { cleanFormsFields } from "../../../../data/cleanFormsFields";
-
 
 export const Customer = React.memo(() => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
-	const customers = useSelector((state) => state.customer.customers);
-	const businessCustomers = useSelector(
-		(state) => state.customer.businessCustomers
-	);
-	const naturalCustomers = useSelector(
-		(state) => state.customer.naturalCustomers
-	);
 	const customerActive = useSelector(
 		(state) => state.customer.customerActive
 	);
-	const customerTypes = useSelector((state) => state.customer.customerTypes);
-
-	const [activeTab, setActiveTab] = useState(0);
 	const [selectedRow, setSelectedRow] = useState(null);
 
 	useEffect(() => {
@@ -98,34 +77,19 @@ export const Customer = React.memo(() => {
 		}
 	}, [customerActive]);
 
-	const handleRowClick = (params) => {
-		setSelectedRow(params.row);
-		dispatch(loadCustomerById(params.row.id, accessToken));
-	};
-
-	const handleKeyDown = () => {
-		setSelectedRow(null);
-		setFormState({
-			id: "",
-			idCustomerTypeFK: "",
-			firstNames: "",
-			lastNames: "",
-			country: "",
-			city: "",
-			direction: "",
-			phoneNumber: "",
-			email: "",
-			businessName: "",
-			businessRtn: "",
-			hasCredit: "",
-			creditAmount: "",
-			naturalRtn: "",
-		});
-	};
-
 	return (
 		<div className="p-5 text-start w-full">
-			<CustomerPageHeader />
+			<Title title={"Clientes"} />
+			<CustomerPageHeader
+				selectedRow={selectedRow}
+				setSelectedRow={setSelectedRow}
+				reset={reset}
+			/>
+			<CustomerForm
+				formState={formState}
+				handleInputChange={handleInputChange}
+				selectedRow={selectedRow}
+			/>
 		</div>
 	);
 });

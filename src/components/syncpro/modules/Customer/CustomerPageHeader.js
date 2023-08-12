@@ -4,15 +4,22 @@ import { Tab } from "../../../Tab";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTab } from "../../../../actions/customer.action";
 import { customerTableHead, customerTabs } from "../../../../data/util";
+import { loadCustomerById } from "../../../../actions/customer.action";
 
-export const CustomerPageHeader = () => {
+export const CustomerPageHeader = ({ selectedRow, setSelectedRow, reset }) => {
 	const dispatch = useDispatch();
+	const { accessToken } = useSelector((state) => state.auth);
 	const { customers, businessCustomers, naturalCustomers } = useSelector(
 		(state) => state.customer
 	);
 
 	const [data, setData] = useState([]);
 	const [tableHead, setTableHead] = useState(customerTableHead);
+
+	useEffect(() => {
+		setData(customers);
+		dispatch(changeTab({ index: 0, tab: customerTabs[0] }));
+	}, [dispatch, customers]);
 
 	const handleTabClick = (index, tab) => {
 		if (tab === "Clientes") {
@@ -32,15 +39,20 @@ export const CustomerPageHeader = () => {
 		dispatch(changeTab({ index, tab }));
 	};
 
-	useEffect(() => {
-		setData(customers);
-		dispatch(changeTab({ index: 0, tab: customerTabs[0] }));
-	}, [dispatch, customers]);
-
 	const tabData = {
 		dataTabs: customerTabs,
 		handleTabClick,
 		reducer: "customer",
+	};
+
+	const handleRowClick = (params) => {
+		setSelectedRow(params.row);
+		dispatch(loadCustomerById(params.row.id, accessToken));
+	};
+
+	const handleKeyDown = () => {
+		setSelectedRow(null);
+		reset();
 	};
 
 	return (
@@ -59,6 +71,9 @@ export const CustomerPageHeader = () => {
 								paginationModel: { page: 0, pageSize: 5 },
 							},
 						}}
+						onRowDoubleClick={handleRowClick}
+						selectedRow={selectedRow}
+						onCellKeyDown={handleKeyDown}
 						pageSizeOptions={[5, 10, 20]}
 					/>
 				)}

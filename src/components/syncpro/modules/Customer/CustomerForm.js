@@ -5,9 +5,17 @@ import InputComponent from "../../../InputComponent";
 import {
 	uploadCustomer,
 	updateCustomer,
+	loadCustomers,
+	loadBusinessCustomers,
+	loadNaturalCustomers,
 } from "../../../../actions/customer.action";
 
-export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
+export const CustomerForm = ({
+	formState,
+	selectedRow,
+	handleInputChange,
+	reset,
+}) => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 
@@ -34,6 +42,11 @@ export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 		} else {
 			dispatch(uploadCustomer(formState, accessToken));
 		}
+
+		reset();
+		dispatch(loadCustomers(accessToken));
+		dispatch(loadBusinessCustomers(accessToken));
+		dispatch(loadNaturalCustomers(accessToken));
 	};
 
 	return (

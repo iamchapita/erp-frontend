@@ -4,7 +4,12 @@ import { Tab } from "../../../Tab";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTab } from "../../../../actions/customer.action";
 import { customerTableHead, customerTabs } from "../../../../data/util";
-import { loadCustomerById } from "../../../../actions/customer.action";
+import {
+	loadCustomerById,
+	loadCustomers,
+	loadBusinessCustomers,
+	loadNaturalCustomers,
+} from "../../../../actions/customer.action";
 
 export const CustomerPageHeader = ({ selectedRow, setSelectedRow, reset }) => {
 	const dispatch = useDispatch();
@@ -20,6 +25,10 @@ export const CustomerPageHeader = ({ selectedRow, setSelectedRow, reset }) => {
 		setData(customers);
 		dispatch(changeTab({ index: 0, tab: customerTabs[0] }));
 	}, [dispatch, customers]);
+
+	useEffect(() => {
+		setData(customers);
+	}, [customers, businessCustomers, naturalCustomers]);
 
 	const handleTabClick = (index, tab) => {
 		if (tab === "Clientes") {

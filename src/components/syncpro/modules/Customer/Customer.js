@@ -88,6 +88,7 @@ export const Customer = React.memo(() => {
 			<CustomerForm
 				formState={formState}
 				handleInputChange={handleInputChange}
+				reset={reset}
 				selectedRow={selectedRow}
 			/>
 		</div>

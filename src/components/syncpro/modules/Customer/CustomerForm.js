@@ -10,18 +10,19 @@ import {
 export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
+
 	const handlePost = (e) => {
 		e.preventDefault();
 
 		// Limpiando campos según el tipo de cliente
-		if (formState.id === 1) {
+		if (formState.idCustomerTypeFK === "1") {
 			formState.businessName = "";
 			formState.businessRtn = "";
 			formState.hasCredit = "";
 			formState.creditAmount = "";
 		}
 
-		if (formState.id === 2) {
+		if (formState.idCustomerTypeFK === "2") {
 			formState.naturalRtn = "";
 			if (formState.hasCredit === "0") {
 				formState.creditAmount = "";
@@ -208,7 +209,7 @@ export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 					</select>
 				</div>
 
-				{formState.idCustomerTypeFK === 1 ? (
+				{formState.idCustomerTypeFK === "1" ? (
 					<div>
 						<p className="text-custom-150 font-normal">RTN: </p>
 						<InputComponent
@@ -222,7 +223,7 @@ export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 					</div>
 				) : null}
 
-				{formState.idCustomerTypeFK === 2 ? (
+				{formState.idCustomerTypeFK === "2" ? (
 					<>
 						<div>
 							<p className="text-custom-150 font-normal">

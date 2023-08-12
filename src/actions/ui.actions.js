@@ -21,3 +21,7 @@ export const uiFinishLoading = () => ({
 })
 
 
+export const changeTab = (tab) => ({
+    type: types.currentTab,
+    payload: tab
+})

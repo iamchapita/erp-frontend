@@ -300,3 +300,18 @@ export const invoiceTableHead = [
 		minWidth: 150,
 	},
 ];
+
+
+const productCategoriesTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		width: 100,
+		editable: true,
+	},
+	{
+		field: "name",
+		headerName: "Nombre",
+		width: 200,
+		editable: true,
+	},

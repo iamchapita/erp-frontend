@@ -86,43 +86,43 @@ export const dashBoardItems = [
 	},
 ];
 
-export const productTabs = ["Productos", "Categorías", "Marcas", "Proveedores"];
+export const productTabs = ["Productos", "Categorías", "Unidades"];
 
 export const productTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		flex: 0.5,
+		width: 100,
 		editable: true,
 	},
 	{
 		field: "name",
 		headerName: "Nombre",
-		flex: 1,
+		width: 200,
 		editable: true,
 	},
 	{
 		field: "description",
 		headerName: "Descripción",
-		flex: 1,
+		width: 200,
 		editable: true,
 	},
 	{
 		field: "salePrice",
 		headerName: "Precio de venta (L.)",
-		flex: 1,
+		width: 200,
 		editable: true,
 	},
 	{
 		field: "taxExemptPrice",
 		headerName: "Precio sin impuestos (L.)",
-		flex: 1,
+		width: 200,
 		editable: true,
 	},
 	{
 		field: "taxablePrice",
 		headerName: "Precio sujeto a impuestos (L. )",
-		flex: 1,
+		width: 200,
 		editable: true,
 	},
 ];

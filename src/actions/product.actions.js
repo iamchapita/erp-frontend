@@ -121,3 +121,9 @@ export const imageUploaded = (fileURL) => ({
 });
 
 
+
+export const changeTab = (tab) => ({
+    type: types.currentTab,
+    payload: tab
+})
+

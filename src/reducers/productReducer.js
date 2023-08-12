@@ -19,6 +19,12 @@ const initialState = {
 		elaborationDate: "",
 		expirationDate: "",
 	},
+	currentTab: {
+		index: 0,
+		tab: '',
+		tabHeaders: {}
+	}
+
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -56,6 +62,14 @@ export const productReducer = (state = initialState, action) => {
 				...state,
 				productUnities: action.payload,
 			};
+		case types.currentTab:
+			return {
+				...state,
+				currentTab: {
+					...state.currentTab,
+					...action.payload
+				}
+			}
 
 		default:
 			return state;

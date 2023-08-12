@@ -25,7 +25,7 @@ export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 		if (formState.idCustomerTypeFK === "2") {
 			formState.naturalRtn = "";
 			if (formState.hasCredit === "0") {
-				formState.creditAmount = "";
+				formState.creditAmount = "0";
 			}
 		}
 
@@ -302,7 +302,7 @@ export const CustomerForm = ({ formState, selectedRow, handleInputChange }) => {
 						</div>
 
 						<div>
-							{formState.hasCredit === 1 ? (
+							{formState.hasCredit === "1" ? (
 								<div>
 									<p className="text-custom-150 font-normal">
 										Monto de Crédito:{" "}

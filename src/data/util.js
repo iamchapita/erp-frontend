@@ -315,3 +315,4 @@ const productCategoriesTableHead = [
 		width: 200,
 		editable: true,
 	},
+]

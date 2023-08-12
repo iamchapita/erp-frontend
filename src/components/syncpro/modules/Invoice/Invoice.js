@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "../../../Tab";
 import { invoiceTableHead } from "../../../../data/util";
@@ -11,7 +11,61 @@ import { loadInvoices } from "../../../../actions/invoice.actions";
 import CategoryIcon from "@mui/icons-material/Category";
 import StraightenIcon from "@mui/icons-material/Straighten";
 
+
 export const Invoice = React.memo(() => {
+	const [clientName, setClientName] = useState('');
+	const [invoiceDate, setInvoiceDate] = useState('');
+	const [products, setProducts] = useState([]);
+	const [selectedProducts, setSelectedProducts] = useState([]);
+	const [totalAmount, setTotalAmount] = useState(0);
+  
+	/*useEffect(() => {
+		const fetchProducts = async () => {
+		  try {
+			const productsData = await getProducts();
+			setProducts(productsData);
+		  } catch (error) {
+			console.error('Error al obtener la lista de productos', error);
+		  }
+		};
+	
+fetchProducts();
+  }, []);
+*/
+
+const handleProductSelection = (productId, price) => {
+    const updatedProducts = [...selectedProducts, { productId, price }];
+    setSelectedProducts(updatedProducts);
+    setTotalAmount(totalAmount + price);
+  };
+
+  const handleSubmit1= async (e) => {
+    e.preventDefault();
+
+    try {
+      const invoiceData = {
+        clientName,
+        invoiceDate,
+        products: selectedProducts,
+        totalAmount,
+      };
+
+      // Llamada a la función de la API para agregar la factura
+     // await addInvoice(invoiceData);
+
+      // Reiniciar el formulario después de enviar
+      setClientName('');
+      setInvoiceDate('');
+      setSelectedProducts([]);
+      setTotalAmount(0);
+
+      alert('Factura agregada exitosamente');
+    } catch (error) {
+      console.error('Error al agregar la factura', error);
+      alert('Error al agregar la factura');
+    }
+  };
+
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const invoices = useSelector((state) => state.invoice.invoices);
@@ -91,240 +145,71 @@ export const Invoice = React.memo(() => {
 					/>
 				)}
 			</div>
-			{/* <form onSubmit={handlePost} className="my-2">
-				<Title title={"Agregar producto"} />
-				<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
-					<div className="">
-						<p className="text-custom-150 font-normal">
-							Nombre del producto:{" "}
-						</p>
-						<InputComponent
-							handleInputChange={handleInputChange}
-							name={"name"}
-							className={"w-full"}
-							required={true}
-							placeholder={"Nombre del producto"}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Descripción:{" "}
-						</p>
-
-						<textarea
-							required={true}
-							className="w-full
-                            h-20
-                            p-2
-                            rounded
-                        placeholder:text-custom-100
-                            bg-inherit
-                        border-custom-100
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400"
-							placeholder="Descripción del producto"
-							name="description"
-							value={formState.description}
-							onChange={(e) => {
-								handleInputChange(e, 100);
-							}}
-						/>
-						<p className="text-sm text-custom-300 font-normal">
-							Caracteres restantes:{" "}
-							{100 - formState.description.length}
-						</p>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Categoría:{" "}
-						</p>
-						<AutocompleteComponent
-							{...autoCompleteCategories}
-							handleInputChange={handleInputChange}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Unidad de medida:{" "}
-						</p>
-						<AutocompleteComponent
-							{...autoCompleteUnities}
-							handleInputChange={handleInputChange}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Código de producto{" "}
-						</p>
-						<InputComponent
-							required={true}
-							limit={5}
-							className={"w-full"}
-							name={"productCode"}
-							handleInputChange={handleInputChange}
-							placeholder={"Código de producto"}
-						/>
-					</div>
-
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio sujeto a impuestos:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"taxablePrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio de venta"}
-						/>
-					</div>
-
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio exento de impuestos:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"taxExemptPrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio excento de impuestos"}
-						/>
-					</div>
-
-					<div>
-						<p className="text-custom-150 font-normal">
-							Precio de venta:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"salePrice"}
-							handleInputChange={handleInputChange}
-							placeholder={"Precio de venta"}
-						/>
-					</div>
-
-					<div>
-						<p className="text-custom-150 font-normal">
-							Fecha de elaboración:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							type={"date"}
-							className={"w-full"}
-							name={"elaborationDate"}
-							handleInputChange={handleInputChange}
-							placeholder={"Fecha de elaboración"}
-						/>
-					</div>
-
-					<div>
-						<p className="text-custom-150 font-normal">
-							Fecha de expiración:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							type={"date"}
-							className={"w-full"}
-							name={"expirationDate"}
-							handleInputChange={handleInputChange}
-							placeholder={"Fecha de expiración"}
-						/>
-					</div>
-					<div>
-						<p className="text-custom-150 font-normal">
-							Imagenes:{" "}
-						</p>
-						<InputComponent
-							required={true}
-							className={"w-full"}
-							name={"imageUrls"}
-							handleInputChange={handleFileChange}
-							placeholder={"Imagenes"}
-							type={"file"}
-							multiple={true}
-							accept={"image/*"}
-						/>
-					</div>
-
-					<div />
-
-					<div>
-						<p className="text-custom-150 font-normal">Estado: </p>
-						<select
-							className="w-full
-                        h-10
-                        p-2
-                        rounded
-                        placeholder:text-custom-100
-                        bg-inherit
-                        border-custom-100
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400
-
-                        "
-							name="status"
-							value={formState.status}
-							onChange={handleInputChange}
-						>
-							<option
-								className="
-                            text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
-                            
-                            "
-								value="1"
-							>
-								Activo
-							</option>
-							<option
-								className=" text-custom-100
-                            bg-custom-300
-                            hover:bg-custom-250
-                            active:bg-custom-200
-                        
-            
-                            "
-								value="0"
-							>
-								Inactivo
-							</option>
-						</select>
-					</div>
-					<div>
-						<button
-							type="submit"
-							className="
-                        w-full
-                        h-10
-                        p-2
-                        rounded
-                        text-custom-100
-                        bg-custom-300
-                        hover:bg-custom-250
-                        active:bg-custom-200
-                        focus:outline-none
-                        ring-0
-                        focus:ring-0
-                        outline-none
-                        focus:border-custom-400
-                        font-semibold
-                        "
-						>
-							Agregar cliente
-						</button>
-					</div>
-				</div>
-			</form> */}
-		</div>
+			<div>
+      <form className='my-2' onSubmit={handleSubmit}>
+	  <Title title={'Agregar factura'} />
+       <div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2"> 
+	    <div>
+		<p className='text-custom-150 font-normal'>Nombre del cliente: </p>
+          <input
+            type="text"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+			className={'w-full'}
+			required={false}
+			 placeholder={'Nombre del cliente'}
+          />
+        </div>
+        <div>
+		<p className='text-custom-150 font-normal'>Fecha de venta: </p>
+          <input
+            type="date"
+            value={invoiceDate}
+            onChange={(e) => setInvoiceDate(e.target.value)}
+			className={'w-full'}
+            required
+          />
+        </div>
+        <div>
+          <label>Productos:</label>
+          <ul>
+            {products.map((product) => (
+              <li key={product.id}>
+                {product.name} (${product.price})
+                <button
+                  type="button"
+                  onClick={() => handleProductSelection(product.id, product.price)}
+                >
+                  Agregar
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <label >Total:</label>
+          <span>${totalAmount}</span>
+        </div>
+        <button type='submit'
+            className='
+            w-full
+            h-10
+            p-2
+            rounded
+            text-custom-100
+            bg-custom-300
+            hover:bg-custom-250
+            active:bg-custom-200
+            focus:outline-none
+            ring-0
+            focus:ring-0
+            outline-none
+            focus:border-custom-400
+            font-semibold
+            '>Agregar Factura</button>
+			</div>
+      </form>
+    </div>	
+</div>
 	);
 });

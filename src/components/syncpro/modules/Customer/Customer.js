@@ -60,7 +60,7 @@ export const Customer = React.memo(() => {
 
 			setFormState({
 				id: ca.id,
-				idCustomerTypeFK: ca.idCustomerTypeFK,
+				idCustomerTypeFK: `${ca.idCustomerTypeFK}`,
 				firstNames: ca.firstNames,
 				lastNames: ca.lastNames,
 				country: ca.country,

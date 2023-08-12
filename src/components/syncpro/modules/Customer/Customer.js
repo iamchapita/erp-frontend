@@ -70,7 +70,7 @@ export const Customer = React.memo(() => {
 				email: ca.email,
 				businessName: ca.businessName,
 				businessRtn: ca.businessRtn,
-				hasCredit: ca.hasCredit,
+				hasCredit: `${ca.hasCredit}`,
 				creditAmount: ca.creditAmount,
 				naturalRtn: ca.naturalRtn,
 			});

@@ -20,7 +20,7 @@ const initialState = {
 
 export const invoiceReducer = (state = initialState, action) => {
     switch (action?.type) {
-        case invoiceTypes.invoiceActive:
+        case types.invoiceActive:
             return {
                 ...state,
                 invoice: {

@@ -43,8 +43,6 @@ export const types = {
 
 	customerTypesLoaded: "[Customer Types] Types Loaded",
 	customersContactInfoLoaded: "[Customers Contact Info] Contact Info Loaded",
-	businessCustomerTypeDetailsLoaded:
-		"[Business Customer Type Details] Business Details Loaded",
-	naturalCustomerTypeDetailsLoaded:
-		"[Nartural Customer Type Details] Natural Details Loaded",
+	businessCustomersLoaded: "[Business Customers] Business Customers Loaded",
+	naturalCustomersLoaded: "[Nartural Customers] Natural Customers Loaded",
 };

@@ -4,15 +4,23 @@ const initialState = {
 	customers: [],
 	customerTypes: [],
 	customersContactInfo: [],
-	businessCustomerTypeDetails: [],
-	naturalCustomerTypeDetails: [],
+	businessCustomers: [],
+	naturalCustomers: [],
 	customer: {
 		id: "",
-		customerType: "",
+		idCustomerTypeFK: "",
 		firstNames: "",
 		lastNames: "",
-		country: "",
 		city: "",
+		country: "",
+		direction: "",
+		phoneNumber: "",
+		email: "",
+		naturalRtn: "",
+		businessName: "",
+		businessRtn: "",
+		hasCredit: "",
+		creditAmount: "",
 	},
 };
 
@@ -21,10 +29,7 @@ export const customerReducer = (state = initialState, action) => {
 		case types.customerActive:
 			return {
 				...state,
-				customer: {
-					...state.customer,
-					...action.payload,
-				},
+				customerActive: action.payload,
 			};
 		case types.customerLoaded:
 			return {
@@ -51,15 +56,15 @@ export const customerReducer = (state = initialState, action) => {
 				...state,
 				customersContactInfo: action.payload,
 			};
-		case types.businessCustomerTypeDetailsLoaded:
+		case types.businessCustomersLoaded:
 			return {
 				...state,
-				businessCustomerTypeDetails: action.payload,
+				businessCustomers: action.payload,
 			};
-		case types.naturalCustomerTypeDetailsLoaded:
+		case types.naturalCustomersLoaded:
 			return {
 				...state,
-				naturalCustomerTypeDetails: action.payload,
+				naturalCustomers: action.payload,
 			};
 		default:
 			return state;

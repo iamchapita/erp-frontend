@@ -44,9 +44,6 @@ export const CustomerForm = ({
 		}
 
 		reset();
-		dispatch(loadCustomers(accessToken));
-		dispatch(loadBusinessCustomers(accessToken));
-		dispatch(loadNaturalCustomers(accessToken));
 	};
 
 	return (
@@ -290,6 +287,18 @@ export const CustomerForm = ({
 								onChange={handleInputChange}
 								required={true}
 							>
+								<option
+									className="
+											text-custom-100
+											bg-custom-300
+											hover:bg-custom-250
+											active:bg-custom-200
+											"
+									value={""}
+									defaultChecked={true}
+								>
+									Selccione una opción
+								</option>
 								<option
 									className="
 											text-custom-100

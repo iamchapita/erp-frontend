@@ -169,10 +169,9 @@ export const updateCustomer = (form, token) => {
 
 			FetchData("Customer/updateCustomer", token, "PUT", customer).then(
 				(data) => {
-					// console.log(data);
-					// loadCustomers();
-					// loadBusinessCustomers();
-					// loadNaturalCustomers();
+					dispatch(loadBusinessCustomers(token));
+					dispatch(loadNaturalCustomers(token));
+					dispatch(loadCustomers(token));
 					Swal.close();
 					Swal.fire({
 						icon: "success",

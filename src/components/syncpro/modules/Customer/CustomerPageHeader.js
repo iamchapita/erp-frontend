@@ -33,6 +33,7 @@ export const CustomerPageHeader = ({ selectedRow, setSelectedRow, reset }) => {
 
 	useEffect(() => {
 		setData(customers);
+		setTableHead(customerTableHead);
 	}, [customers, businessCustomers, naturalCustomers]);
 
 	const handleTabClick = (index, tab) => {

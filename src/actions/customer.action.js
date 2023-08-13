@@ -169,7 +169,7 @@ export const updateCustomer = (form, token) => {
 
 			FetchData("Customer/updateCustomer", token, "PUT", customer).then(
 				(data) => {
-					console.log(data);
+					// console.log(data);
 					// loadCustomers();
 					// loadBusinessCustomers();
 					// loadNaturalCustomers();

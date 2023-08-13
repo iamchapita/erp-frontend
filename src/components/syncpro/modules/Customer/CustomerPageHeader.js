@@ -3,7 +3,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Tab } from "../../../Tab";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTab } from "../../../../actions/customer.action";
-import { customerTableHead, customerTabs } from "../../../../data/util";
+import {
+	customerTableHead,
+	businessCustomerTableHead,
+	naturalCustomerTableHead,
+	customerTabs,
+} from "../../../../data/util";
 import {
 	loadCustomerById,
 	loadCustomers,
@@ -39,10 +44,12 @@ export const CustomerPageHeader = ({ selectedRow, setSelectedRow, reset }) => {
 		if (tab === "Clientes Empresariales") {
 			// console.log(businessCustomers);
 			setData(businessCustomers);
+			setTableHead(businessCustomerTableHead);
 		}
 		if (tab === "Clientes Naturales") {
 			// console.log(naturalCustomers);
 			setData(naturalCustomers);
+			setTableHead(naturalCustomerTableHead);
 		}
 
 		dispatch(changeTab({ index, tab }));

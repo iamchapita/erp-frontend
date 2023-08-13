@@ -36,7 +36,7 @@ export const customerTypeLoaded = (customerTypes) => ({
 
 export const uploadCustomer = (form, token) => {
 	return async (dispatch, getState) => {
-		const customer = {
+		let customer = {
 			idCustomerTypeFK: form.idCustomerTypeFK,
 			firstNames: form.firstNames,
 			lastNames: form.lastNames,
@@ -79,13 +79,15 @@ export const uploadCustomer = (form, token) => {
 
 		FetchData("Customer/addCustomer", token, "POST", customer)
 			.then((data) => {
-				// console.log(data);
+				dispatch(loadBusinessCustomers(token));
+				dispatch(loadNaturalCustomers(token));
+				dispatch(loadCustomers(token));
 				dispatch(customerActive(customer));
 				Swal.close();
 				Swal.fire({
 					icon: "success",
-					title: "Producto creado",
-					text: "El producto se ha creado correctamente.",
+					title: "Cliente creado",
+					text: "El cliente se ha creado correctamente.",
 				});
 			})
 			.catch((error) => {
@@ -136,19 +138,17 @@ export const loadCustomerById = (id, token) => {
 
 export const updateCustomer = (form, token) => {
 	return async (dispatch, getState) => {
-		const customer = {
+		let customer = {
+			id: form.id,
 			idCustomerTypeFK: form.idCustomerTypeFK,
 			firstNames: form.firstNames,
 			lastNames: form.lastNames,
 			city: form.city,
 			country: form.country,
 			direction: form.direction,
-			// ContactInfo
 			phoneNumber: form.phoneNumber,
 			email: form.email,
-			// naturalCustomerTypeDetails
 			naturalRtn: form.naturalRtn,
-			// businessCustomerTypeDetails
 			businessName: form.businessName,
 			businessRtn: form.businessRtn,
 			hasCredit: form.hasCredit,
@@ -160,7 +160,7 @@ export const updateCustomer = (form, token) => {
 
 		try {
 			Swal.fire({
-				title: "Guardando cliente",
+				title: "Actualizando cliente",
 				text: "Por favor espere...",
 				allowOutsideClick: false,
 				allowEnterKey: false,
@@ -168,32 +168,33 @@ export const updateCustomer = (form, token) => {
 					Swal.showLoading();
 				},
 			});
+
+			FetchData("Customer/updateCustomer", token, "PUT", customer).then(
+				(data) => {
+					dispatch(loadBusinessCustomers(token));
+					dispatch(loadNaturalCustomers(token));
+					dispatch(loadCustomers(token));
+					Swal.close();
+					Swal.fire({
+						icon: "success",
+						title: "Cliente actualizado",
+						text: "El cliente se ha actualizado correctamente.",
+					});
+				}
+			);
 		} catch (error) {
 			console.error(error);
+			Swal.close();
 			Swal.fire({
 				icon: "error",
-				title: "Fallo en Guardado",
-				text: `Ocurrió un error mientras de guardaba.`,
+				title: "Fallo en Actalización",
+				text: `Ocurrió un error mientras se actualizaba.`,
 			});
 		}
-
-		FetchData("Customer/addCustomer", token, "POST", customer)
-			.then((data) => {
-				// console.log(data);
-				dispatch(customerActive(customer));
-				Swal.close();
-				Swal.fire({
-					icon: "success",
-					title: "Producto creado",
-					text: "El producto se ha creado correctamente.",
-				});
-			})
-			.catch((error) => {
-				Swal.fire({
-					icon: "error",
-					title: "Fallo en Guardado",
-					text: `Ocurrió un error mientras de guardaba.`,
-				});
-			});
 	};
 };
+
+export const changeTab = (tab) => ({
+	type: types.currentTab,
+	payload: tab,
+});

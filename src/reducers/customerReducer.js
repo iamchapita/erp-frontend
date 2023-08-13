@@ -22,6 +22,11 @@ const initialState = {
 		hasCredit: "",
 		creditAmount: "",
 	},
+	currentTab: {
+		index: 0,
+		tab: "",
+		tabHeaders: {},
+	},
 };
 
 export const customerReducer = (state = initialState, action) => {
@@ -65,6 +70,15 @@ export const customerReducer = (state = initialState, action) => {
 			return {
 				...state,
 				naturalCustomers: action.payload,
+			};
+
+		case types.currentTab:
+			return {
+				...state,
+				currentTab: {
+					...state.currentTab,
+					...action.payload,
+				},
 			};
 		default:
 			return state;

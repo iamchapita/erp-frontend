@@ -36,7 +36,7 @@ export const customerTypeLoaded = (customerTypes) => ({
 
 export const uploadCustomer = (form, token) => {
 	return async (dispatch, getState) => {
-		const customer = {
+		let customer = {
 			idCustomerTypeFK: form.idCustomerTypeFK,
 			firstNames: form.firstNames,
 			lastNames: form.lastNames,
@@ -79,7 +79,9 @@ export const uploadCustomer = (form, token) => {
 
 		FetchData("Customer/addCustomer", token, "POST", customer)
 			.then((data) => {
-				// console.log(data);
+				dispatch(loadBusinessCustomers(token));
+				dispatch(loadNaturalCustomers(token));
+				dispatch(loadCustomers(token));
 				dispatch(customerActive(customer));
 				Swal.close();
 				Swal.fire({

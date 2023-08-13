@@ -13,6 +13,7 @@ import {
 	Receipt,
 	Settings,
 	Wallet,
+	FormatListNumberedRtlOutlined,
 } from "@mui/icons-material";
 
 export const items = [
@@ -50,6 +51,11 @@ export const items = [
 		Icon: PointOfSale,
 		Title: "Ventas",
 		path: "ventas",
+	},
+	{
+		Icon: FormatListNumberedRtlOutlined,
+		Title: "Bitácora",
+		path: "bitacora",
 	},
 	{
 		Icon: Settings,
@@ -307,7 +313,6 @@ export const invoiceTableHead = [
 	},
 ];
 
-
 export const productCategoriesTableHead = [
 	{
 		field: "id",
@@ -332,10 +337,8 @@ export const productCategoriesTableHead = [
 		headerName: "Creado",
 		width: 200,
 		editable: true,
-
-	}
+	},
 ];
-
 
 export const productUnitiesTableHead = [
 	{
@@ -362,5 +365,5 @@ export const productUnitiesTableHead = [
 		headerName: "Creado",
 		width: 200,
 		editable: true,
-	}
+	},
 ];

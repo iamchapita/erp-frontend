@@ -75,10 +75,10 @@ export const uploadImage = (files, handleInputChange) => {
 	};
 };
 
-export const uploadProduct = (token) => {
-	return async (dispatch, getState) => {
-		const { product } = getState().product;
+export const uploadProduct = (formState, token) => {
+	return async (dispatch) => {
 		try {
+			console.log('Form1', formState);
 			Swal.fire({
 				title: "Subiendo producto",
 				text: "Por favor espere...",
@@ -96,19 +96,76 @@ export const uploadProduct = (token) => {
 				text: "An error occurred during the upload.",
 			});
 		}
-		FetchData("product/addProduct", token, "POST", product).then((data) => {
-			console.log(product);
-			console.log(data);
-			dispatch(productActive(product));
-			Swal.close();
-			Swal.fire({
-				icon: "success",
-				title: "Producto creado",
-				text: "El producto se ha creado correctamente.",
-			});
+		FetchData("product/addProduct", token, "POST", formState).then((data) => {
+
+			if (data.msg === 'Producto agregado correctamente') {
+				Swal.fire({
+					icon: "success",
+					title: "Producto creado",
+					text: "El producto se ha creado correctamente.",
+				});
+				dispatch(loadProducts(token));
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Error",
+					text: "Ha ocurrido un error al crear el producto.",
+				});
+
+			}
+
 		});
+
+	};
+
+};
+
+export const uploadCategory = async (formState, token) => {
+	return async (dispatch) => {
+		try {
+			console.log('Form1', formState);
+			Swal.fire({
+				title: "Subiendo categoria",
+				text: "Por favor espere...",
+				allowOutsideClick: false,
+				allowEnterKey: false,
+				didOpen: () => {
+					Swal.showLoading();
+				},
+			});
+		} catch (error) {
+			console.error(error);
+			Swal.fire({
+				icon: "error",
+				title: "Upload Failed",
+				text: "An error occurred during the upload.",
+			});
+		}
+		FetchData("product/addCategory", token, "POST", formState).then((data) => {
+			
+			if (data.msg === 'Se ha creado la categoría de producto correctamente.') {
+				Swal.fire({
+					icon: "success",
+					title: "Categoria creada",
+					text: "La categoria se ha creado correctamente.",
+				});
+				dispatch(chargeCategories(token));
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Error",
+					text: "Ha ocurrido un error al crear la categoria.",
+				});
+		
+			}
+
+		});
+
 	};
 };
+
+
+
 
 export const productActive = (product) => ({
 	type: types.productActive,
@@ -123,7 +180,6 @@ export const imageUploaded = (fileURL) => ({
 
 
 export const changeTab = (tab) => ({
-    type: types.currentTab,
-    payload: tab
+	type: types.currentTab,
+	payload: tab
 })
-

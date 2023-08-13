@@ -70,7 +70,6 @@ export const productReducer = (state = initialState, action) => {
 					...action.payload
 				}
 			}
-
 		default:
 			return state;
 	}

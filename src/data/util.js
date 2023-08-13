@@ -125,6 +125,12 @@ export const productTableHead = [
 		width: 200,
 		editable: true,
 	},
+	{
+		field: "status",
+		headerName: "Estado",
+		width: 200,
+		editable: true,
+	},
 ];
 
 export const customerTabs = [
@@ -302,7 +308,7 @@ export const invoiceTableHead = [
 ];
 
 
-const productCategoriesTableHead = [
+export const productCategoriesTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
@@ -315,3 +321,46 @@ const productCategoriesTableHead = [
 		width: 200,
 		editable: true,
 	},
+	{
+		field: "status",
+		headerName: "Estado",
+		width: 200,
+		editable: true,
+	},
+	{
+		field: "createdAt",
+		headerName: "Creado",
+		width: 200,
+		editable: true,
+
+	}
+];
+
+
+export const productUnitiesTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		width: 100,
+		editable: true,
+	},
+	{
+		field: "name",
+		headerName: "Nombre",
+		width: 200,
+		editable: true,
+	},
+
+	{
+		field: "symbol",
+		headerName: "Símbolo",
+		width: 200,
+		editable: true,
+	},
+	{
+		field: "createdAt",
+		headerName: "Creado",
+		width: 200,
+		editable: true,
+	}
+];

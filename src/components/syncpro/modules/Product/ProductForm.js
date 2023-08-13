@@ -22,13 +22,12 @@ export const ProductForm = () => {
         e.preventDefault();
         console.log('Form', formState);
         await dispatch(uploadProduct(formState, accessToken))
-        reset();
         handleClearImageInput();
     }
 
 
     const handleClearImageInput = () => {
-        document.getElementById('#imageInput').value = ''
+        document.getElementById('imageInput').value = ''
     }
 
     const handleFileChange = (e) => {
@@ -49,7 +48,7 @@ export const ProductForm = () => {
             taxExemptPrice: 0.00,
             salePrice: 0.00,
             images: '',
-            status: '',
+            status: 0,
             elaborationDate: '',
             expirationDate: ''
         })

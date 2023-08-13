@@ -4,14 +4,15 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Tab } from '../../../Tab'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeTab } from '../../../../actions/product.actions'
-import { productTableHead, productTabs } from '../../../../data/util'
+import { productCategoriesTableHead, productTableHead, productTabs, productUnitiesTableHead } from '../../../../data/util'
+import { Box } from '@mui/joy'
 
 export const ProductPageHeader = () => {
     const dispatch = useDispatch();
     const { products, productCategories, productUnities } = useSelector(state => state.product)
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
     const [tableHead, setTableHead] = useState(productTableHead);
-
+    const { tab } = useSelector(state => state.product.currentTab)
 
     const handleTabClick = (index, tab) => {
         if (tab === 'Productos') {
@@ -22,10 +23,12 @@ export const ProductPageHeader = () => {
         if (tab === 'Categorías') {
             console.log(productCategories);
             setData(productCategories)
+            setTableHead(productCategoriesTableHead)
         }
         if (tab === 'Unidades') {
             console.log(productUnities);
             setData(productUnities)
+            setTableHead(productUnitiesTableHead)
         }
 
         dispatch(changeTab({ index, tab }));
@@ -35,7 +38,13 @@ export const ProductPageHeader = () => {
     useEffect(() => {
         setData(products)
         dispatch(changeTab({ index: 0, tab: productTabs[0] }));
-    }, [dispatch, products]);
+
+    }, [dispatch]);
+
+   
+            
+ 
+
 
     const tabData = {
         dataTabs: productTabs,
@@ -48,19 +57,42 @@ export const ProductPageHeader = () => {
         <>
             <Tab {...tabData} />
             <div className='grid grid-cols-1'>
-                {data && <DataGrid
-                    className='col-span-1' autoHeight density='compact' columns={tableHead}
-                    rows={data}
-                    initialState={
-                        {
-                            pagination: {
-                                paginationModel: { page: 0, pageSize: 5 },
-                            },
-                        }
-                    }
-                    pageSizeOptions={[5, 10, 20]}
+                {data && <Box
+                    sx={{
+                        height: 300,
+                        width: '100%',
+                        '& .activo': {
+                            backgroundColor: '#a5d6a7',
+                            color: '#1a3e72',
+                        },
+                        '& .inactivo': {
+                            backgroundColor: '#ef9a9a',
+                            color: '#1a3e72',
+                        },
+                    }}
+                > <DataGrid
+                        className='col-span-1' autoHeight density='compact' columns={tableHead}
+                        rows={data.map(row => {
 
-                />}
+                            return { ...row, status: (row.status === undefined) || (row.status === 1) ? 'Activo' : 'Inactivo' };
+                        })}
+                        getCellClassName={(params) => {
+
+                            return params.row.status === 'Activo' ? 'activo' : 'inactivo';
+                        }}
+                        getRowClassName={(params) => {
+
+                        }}
+                        initialState={
+                            {
+                                pagination: {
+                                    paginationModel: { page: 0, pageSize: 5 },
+                                },
+                            }
+                        }
+                        pageSizeOptions={[5, 10, 20]}
+
+                    /></Box>}
             </div>
         </>
     )

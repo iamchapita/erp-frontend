@@ -46,9 +46,7 @@ export const AutocompleteComponent = ({
 			<Autocomplete
 				loading={loading}
 				loadingText="Cargando..."
-				options={items.sort(
-					(a, b) => -b[optionName].localeCompare(a[optionName])
-				)}
+				options={items.slice().sort((a, b) => a[optionName].localeCompare(b[optionName]))}
 				groupBy={(option) => option[optionName][0]}
 				getOptionLabel={(option) => option[optionName]}
 				name={name}
@@ -57,6 +55,7 @@ export const AutocompleteComponent = ({
 				startDecorator={icon}
 				required={required}
 			/>
+
 		)
 	);
 };

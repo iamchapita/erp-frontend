@@ -56,6 +56,7 @@ export const items = [
 		Icon: FormatListNumberedRtlOutlined,
 		Title: "Bitácora",
 		path: "bitacora",
+		role: "Administrador",
 	},
 	{
 		Icon: Settings,

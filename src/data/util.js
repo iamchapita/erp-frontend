@@ -375,7 +375,7 @@ export const binacleTableHead = [
 	},
 	{
 		field: "actionOn",
-		headerName: "Realizado",
+		headerName: "Realizado sobre",
 		flex: 2,
 		minWidth: 130,
 	},

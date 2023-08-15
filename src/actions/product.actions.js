@@ -120,7 +120,7 @@ export const uploadProduct = (formState, token) => {
 
 };
 
-export const uploadCategory = async (formState, token) => {
+export const uploadCategory = (formState, token) => {
 	return async (dispatch) => {
 		try {
 			console.log('Form1', formState);

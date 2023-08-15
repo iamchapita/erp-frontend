@@ -21,7 +21,7 @@ const initialState = {
 	},
 	currentTab: {
 		index: 0,
-		tab: '',
+		tab: 'Productos',
 		tabHeaders: {}
 	}
 

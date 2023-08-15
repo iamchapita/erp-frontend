@@ -1,9 +1,9 @@
 
 import { DataGrid } from '@mui/x-data-grid'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Tab } from '../../../Tab'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeTab } from '../../../../actions/product.actions'
+import {changeTab, productActive} from '../../../../actions/product.actions'
 import { productCategoriesTableHead, productTableHead, productTabs, productUnitiesTableHead } from '../../../../data/util'
 import { Box } from '@mui/joy'
 
@@ -13,7 +13,7 @@ export const ProductPageHeader = () => {
     const [data, setData] = useState([]);
     const [tableHead, setTableHead] = useState(productTableHead);
     const { tab } = useSelector(state => state.product.currentTab)
-
+    const [selectedRow, setSelectedRow] = useState(null);
     const handleTabClick = (index, tab) => {
         if (tab === 'Productos') {
             console.log(products);
@@ -34,16 +34,30 @@ export const ProductPageHeader = () => {
         dispatch(changeTab({ index, tab }));
     };
 
+    const handleSelectRow = (params) => {
+        console.log(params.row)
+        dispatch(productActive(params.row))
+
+    }
+
 
     useEffect(() => {
-        setData(products)
-        dispatch(changeTab({ index: 0, tab: productTabs[0] }));
-
-    }, [dispatch]);
-
-   
-            
- 
+        if (tab === 'Productos') {
+            console.log(products);
+            setData(products)
+            setTableHead(productTableHead)
+        }
+        if (tab === 'Categorías') {
+            console.log(productCategories);
+            setData(productCategories)
+            setTableHead(productCategoriesTableHead)
+        }
+        if (tab === 'Unidades') {
+            console.log(productUnities);
+            setData(productUnities)
+            setTableHead(productUnitiesTableHead)
+        }
+    }, [ products, productCategories, productUnities]);
 
 
     const tabData = {
@@ -91,8 +105,9 @@ export const ProductPageHeader = () => {
                             }
                         }
                         pageSizeOptions={[5, 10, 20]}
-
-                    /></Box>}
+                        onRowDoubleClick={handleSelectRow}
+                    />
+                </Box>}
             </div>
         </>
     )

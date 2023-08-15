@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import InputComponent from '../../../InputComponent'
 import { useDispatch, useSelector } from 'react-redux';
-import { loadProducts, uploadCategory, uploadProduct } from '../../../../actions/product.actions';
+import {changeTab, loadProducts, uploadCategory, uploadProduct} from '../../../../actions/product.actions';
 import { useForm } from '../../../../hooks/useForm';
 import { Title } from '../../../Title';
+import {productTabs} from "../../../../data/util";
 
 export const CategoriesForm = () => {
     const dispatch = useDispatch();
@@ -18,10 +19,6 @@ export const CategoriesForm = () => {
         console.log('Form', formState);
         await dispatch(uploadCategory(formState, accessToken))
     }
-
-
-
-
 
 
     const [formState, handleInputChange, handleCheck] =

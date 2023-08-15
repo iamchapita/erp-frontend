@@ -2,6 +2,13 @@ import Swal from "sweetalert2";
 import { FetchData } from "../components/utils/fetch";
 import { imageUpload } from "../helpers/fileUpload";
 import { types } from "../types/types";
+import { getTransactType } from "../components/utils/getTransactType";
+import { uploadBinacleAction } from "./binacle.actions";
+
+// 	! FALTA IMPLEMENTAR ACTUALIZACIÓN
+
+const mainModule = "Productos";
+const firstChildModule = "Categoría de Productos";
 
 export const loadProducts = (token) => {
 	return async (dispatch) => {
@@ -78,7 +85,7 @@ export const uploadImage = (files, handleInputChange) => {
 export const uploadProduct = (formState, token) => {
 	return async (dispatch) => {
 		try {
-			console.log('Form1', formState);
+			console.log("Form1", formState);
 			Swal.fire({
 				title: "Subiendo producto",
 				text: "Por favor espere...",
@@ -96,34 +103,40 @@ export const uploadProduct = (formState, token) => {
 				text: "An error occurred during the upload.",
 			});
 		}
-		FetchData("product/addProduct", token, "POST", formState).then((data) => {
+		FetchData("product/addProduct", token, "POST", formState).then(
+			(data) => {
+				if (data.msg === "Producto agregado correctamente") {
+					// Acción sobre bitácora
+					dispatch(
+						uploadBinacleAction(
+							mainModule,
+							getTransactType(data),
+							token
+						)
+					);
 
-			if (data.msg === 'Producto agregado correctamente') {
-				Swal.fire({
-					icon: "success",
-					title: "Producto creado",
-					text: "El producto se ha creado correctamente.",
-				});
-				dispatch(loadProducts(token));
-			} else {
-				Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "Ha ocurrido un error al crear el producto.",
-				});
-
+					Swal.fire({
+						icon: "success",
+						title: "Producto creado",
+						text: "El producto se ha creado correctamente.",
+					});
+					dispatch(loadProducts(token));
+				} else {
+					Swal.fire({
+						icon: "error",
+						title: "Error",
+						text: "Ha ocurrido un error al crear el producto.",
+					});
+				}
 			}
-
-		});
-
+		);
 	};
-
 };
 
 export const uploadCategory = (formState, token) => {
 	return async (dispatch) => {
 		try {
-			console.log('Form1', formState);
+			console.log("Form1", formState);
 			Swal.fire({
 				title: "Subiendo categoria",
 				text: "Por favor espere...",
@@ -141,31 +154,37 @@ export const uploadCategory = (formState, token) => {
 				text: "An error occurred during the upload.",
 			});
 		}
-		FetchData("product/addCategory", token, "POST", formState).then((data) => {
-			
-			if (data.msg === 'Se ha creado la categoría de producto correctamente.') {
-				Swal.fire({
-					icon: "success",
-					title: "Categoria creada",
-					text: "La categoria se ha creado correctamente.",
-				});
-				dispatch(chargeCategories(token));
-			} else {
-				Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "Ha ocurrido un error al crear la categoria.",
-				});
-		
+		FetchData("product/addCategory", token, "POST", formState).then(
+			(data) => {
+				if (
+					data.msg ===
+					"Se ha creado la categoría de producto correctamente."
+				) {
+					// Acción sobre bitácora
+					dispatch(
+						uploadBinacleAction(
+							firstChildModule,
+							getTransactType(data),
+							token
+						)
+					);
+					Swal.fire({
+						icon: "success",
+						title: "Categoria creada",
+						text: "La categoria se ha creado correctamente.",
+					});
+					dispatch(chargeCategories(token));
+				} else {
+					Swal.fire({
+						icon: "error",
+						title: "Error",
+						text: "Ha ocurrido un error al crear la categoria.",
+					});
+				}
 			}
-
-		});
-
+		);
 	};
 };
-
-
-
 
 export const productActive = (product) => ({
 	type: types.productActive,
@@ -177,9 +196,7 @@ export const imageUploaded = (fileURL) => ({
 	payload: { images: fileURL },
 });
 
-
-
 export const changeTab = (tab) => ({
 	type: types.currentTab,
-	payload: tab
-})
+	payload: tab,
+});

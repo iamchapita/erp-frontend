@@ -1,4 +1,4 @@
-export const getTransactType = (transactInfo, insertedId = null) => {
+export const getTransactType = (transactInfo, updatedId = null) => {
 	// Insert
 	/* {
         "fieldCount": 0,
@@ -20,7 +20,13 @@ export const getTransactType = (transactInfo, insertedId = null) => {
         "changedRows": 1
     } */
 
-	return insertedId === null
-		? `Id insertado: ${transactInfo.insertId}.`
-		: `Id Actualizado: ${insertedId}, Filas Cambiadas: ${transactInfo.changedRows}.`;
+	return updatedId === null
+		? {
+				description: `Id insertado: ${transactInfo.insertId}.`,
+				actionType: "Inserción",
+		  }
+		: {
+				description: `Id Actualizado: ${updatedId}, Filas Cambiadas: ${transactInfo.changedRows}.`,
+				actionType: "Actualización",
+		  };
 };

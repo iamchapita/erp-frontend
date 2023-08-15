@@ -2,6 +2,10 @@ import Swal from "sweetalert2";
 import { FetchData } from "../components/utils/fetch";
 import { types } from "../types/types";
 import { cleanFormsFields } from "../data/cleanFormsFields";
+import { uploadBinacleAction } from "./binacle.actions";
+import { getTransactType } from "../components/utils/getTransactType";
+
+const module = "Customer";
 
 export const customerActive = (customer) => ({
 	type: types.customerActive,
@@ -10,7 +14,7 @@ export const customerActive = (customer) => ({
 
 export const loadCustomers = (token) => {
 	return async (dispatch) => {
-		FetchData("customer/getCustomers", token).then((data) => {
+		FetchData("Customer/getCustomers", token).then((data) => {
 			dispatch(customersLoaded(data));
 		});
 	};
@@ -23,7 +27,7 @@ export const customersLoaded = (customers) => ({
 
 export const loadCustomerType = (token) => {
 	return async (dispatch) => {
-		FetchData("customer/getCustomerTypes", token).then((data) => {
+		FetchData("Customer/getCustomerTypes", token).then((data) => {
 			dispatch(customerTypeLoaded(data));
 		});
 	};
@@ -83,6 +87,11 @@ export const uploadCustomer = (form, token) => {
 				dispatch(loadNaturalCustomers(token));
 				dispatch(loadCustomers(token));
 				dispatch(customerActive(customer));
+
+				dispatch(
+					uploadBinacleAction(module, getTransactType(data), token)
+				);
+
 				Swal.close();
 				Swal.fire({
 					icon: "success",
@@ -102,7 +111,7 @@ export const uploadCustomer = (form, token) => {
 
 export const loadBusinessCustomers = (token) => {
 	return async (dispatch) => {
-		FetchData("customer/getBusinessCustomers", token).then((data) => {
+		FetchData("Customer/getBusinessCustomers", token).then((data) => {
 			dispatch(businessCustomersLoaded(data));
 		});
 	};
@@ -115,7 +124,7 @@ export const businessCustomersLoaded = (businessCustomers) => ({
 
 export const loadNaturalCustomers = (token) => {
 	return async (dispatch) => {
-		FetchData("customer/getNaturalCustomers", token).then((data) => {
+		FetchData("Customer/getNaturalCustomers", token).then((data) => {
 			dispatch(naturalCustomersLoaded(data));
 		});
 	};
@@ -128,7 +137,7 @@ export const naturalCustomersLoaded = (naturalCustomers) => ({
 
 export const loadCustomerById = (id, token) => {
 	return async (dispatch) => {
-		FetchData("customer/getCustomerById", token, "POST", { id: id }).then(
+		FetchData("Customer/getCustomerById", token, "POST", { id: id }).then(
 			(data) => {
 				dispatch(customerActive(data));
 			}
@@ -174,6 +183,14 @@ export const updateCustomer = (form, token) => {
 					dispatch(loadBusinessCustomers(token));
 					dispatch(loadNaturalCustomers(token));
 					dispatch(loadCustomers(token));
+					dispatch(
+						uploadBinacleAction(
+							module,
+							getTransactType(data, customer.id),
+							token
+						)
+					);
+
 					Swal.close();
 					Swal.fire({
 						icon: "success",

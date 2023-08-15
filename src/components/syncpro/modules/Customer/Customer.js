@@ -11,7 +11,7 @@ import {
 } from "../../../../actions/customer.action";
 import { cleanFormsFields } from "../../../../data/cleanFormsFields";
 
-export const Customer = React.memo(() => {
+export const Customer = () => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const customerActive = useSelector(
@@ -93,4 +93,4 @@ export const Customer = React.memo(() => {
 			/>
 		</div>
 	);
-});
+};

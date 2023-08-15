@@ -13,6 +13,7 @@ import {
 	Receipt,
 	Settings,
 	Wallet,
+	FormatListNumberedRtlOutlined,
 } from "@mui/icons-material";
 
 export const items = [
@@ -50,6 +51,12 @@ export const items = [
 		Icon: PointOfSale,
 		Title: "Ventas",
 		path: "ventas",
+	},
+	{
+		Icon: FormatListNumberedRtlOutlined,
+		Title: "Bitácora",
+		path: "bitacora",
+		role: "Administrador",
 	},
 	{
 		Icon: Settings,
@@ -93,43 +100,83 @@ export const productTableHead = [
 		field: "id",
 		headerName: "ID",
 		width: 100,
-
 	},
 	{
 		field: "name",
 		headerName: "Nombre",
 		width: 200,
-
 	},
 	{
 		field: "description",
 		headerName: "Descripción",
 		width: 200,
-
 	},
 	{
 		field: "salePrice",
 		headerName: "Precio de venta (L.)",
 		width: 200,
-
 	},
 	{
 		field: "taxExemptPrice",
 		headerName: "Precio sin impuestos (L.)",
 		width: 200,
-
 	},
 	{
 		field: "taxablePrice",
 		headerName: "Precio sujeto a impuestos (L. )",
 		width: 200,
-
 	},
 	{
 		field: "status",
 		headerName: "Estado",
 		width: 200,
+	},
+];
 
+export const productCategoriesTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		width: 100,
+	},
+	{
+		field: "name",
+		headerName: "Nombre",
+		width: 200,
+	},
+	{
+		field: "status",
+		headerName: "Estado",
+		width: 200,
+	},
+	{
+		field: "createdAt",
+		headerName: "Creado",
+		width: 200,
+	},
+];
+
+export const productUnitiesTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		width: 100,
+	},
+	{
+		field: "name",
+		headerName: "Nombre",
+		width: 200,
+	},
+
+	{
+		field: "symbol",
+		headerName: "Símbolo",
+		width: 200,
+	},
+	{
+		field: "createdAt",
+		headerName: "Creado",
+		width: 200,
 	},
 ];
 
@@ -307,60 +354,48 @@ export const invoiceTableHead = [
 	},
 ];
 
-
-export const productCategoriesTableHead = [
+export const binacleTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		width: 100,
-		editable: true,
+		flex: 1,
+		minWidth: 80,
 	},
 	{
-		field: "name",
-		headerName: "Nombre",
-		width: 200,
-		editable: true,
+		field: "actionPerformedBy",
+		headerName: "Usuario",
+		flex: 2,
+		minWidth: 130,
 	},
 	{
-		field: "status",
-		headerName: "Estado",
-		width: 200,
-		editable: true,
+		field: "userRole",
+		headerName: "Rol",
+		flex: 2,
+		minWidth: 130,
 	},
 	{
-		field: "createdAt",
-		headerName: "Creado",
-		width: 200,
-		editable: true,
-
-	}
-];
-
-
-export const productUnitiesTableHead = [
-	{
-		field: "id",
-		headerName: "ID",
-		width: 100,
-		editable: true,
+		field: "actionOn",
+		headerName: "Realizado sobre",
+		flex: 2,
+		minWidth: 130,
 	},
 	{
-		field: "name",
-		headerName: "Nombre",
-		width: 200,
-		editable: true,
-	},
-
-	{
-		field: "symbol",
-		headerName: "Símbolo",
-		width: 200,
-		editable: true,
+		field: "actionDate",
+		headerName: "Fecha",
+		flex: 2,
+		minWidth: 150,
 	},
 	{
-		field: "createdAt",
-		headerName: "Creado",
-		width: 200,
-		editable: true,
-	}
+		field: "actionType",
+		headerName: "Tipo de Acción",
+		flex: 2,
+		minWidth: 120,
+	},
+	{
+		field: "description",
+		headerName: "Descripción",
+		flex: 2,
+		minWidth: 150,
+		maxWidth: 300,
+	},
 ];

@@ -9,6 +9,7 @@ const initialState = {
 		actionOn: "",
 		actionDate: "",
 		actionType: "",
+		description: "",
 	},
 };
 

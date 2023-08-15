@@ -365,19 +365,19 @@ export const binacleTableHead = [
 		field: "actionPerformedBy",
 		headerName: "Usuario",
 		flex: 2,
-		minWidth: 150,
+		minWidth: 130,
 	},
 	{
 		field: "userRole",
 		headerName: "Rol",
 		flex: 2,
-		minWidth: 150,
+		minWidth: 130,
 	},
 	{
 		field: "actionOn",
 		headerName: "Realizado",
 		flex: 2,
-		minWidth: 150,
+		minWidth: 130,
 	},
 	{
 		field: "actionDate",
@@ -389,16 +389,13 @@ export const binacleTableHead = [
 		field: "actionType",
 		headerName: "Tipo de Acción",
 		flex: 2,
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		field: "description",
 		headerName: "Descripción",
 		flex: 2,
 		minWidth: 150,
+		maxWidth: 300,
 	},
 ];
-
-// export const binacleTabs = [
-// 	"To",
-// ];

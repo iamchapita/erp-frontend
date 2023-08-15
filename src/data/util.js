@@ -99,37 +99,44 @@ export const productTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		width: 100,
+		flex: 1,
+		minWidth: 80,
 	},
 	{
 		field: "name",
 		headerName: "Nombre",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "description",
 		headerName: "Descripción",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "salePrice",
 		headerName: "Precio de venta (L.)",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "taxExemptPrice",
 		headerName: "Precio sin impuestos (L.)",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "taxablePrice",
 		headerName: "Precio sujeto a impuestos (L. )",
-		width: 200,
+		flex: 2,
+		minWidth: 200,
 	},
 	{
 		field: "status",
 		headerName: "Estado",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 ];
 
@@ -137,22 +144,26 @@ export const productCategoriesTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		width: 100,
+		flex: 1,
+		minWidth: 80,
 	},
 	{
 		field: "name",
 		headerName: "Nombre",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "status",
 		headerName: "Estado",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "createdAt",
 		headerName: "Creado",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 ];
 
@@ -160,23 +171,27 @@ export const productUnitiesTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		width: 100,
+		flex: 1,
+		minWidth: 80,
 	},
 	{
 		field: "name",
 		headerName: "Nombre",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 
 	{
 		field: "symbol",
 		headerName: "Símbolo",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 	{
 		field: "createdAt",
 		headerName: "Creado",
-		width: 200,
+		flex: 2,
+		minWidth: 150,
 	},
 ];
 

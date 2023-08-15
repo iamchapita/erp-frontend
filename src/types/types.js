@@ -9,7 +9,7 @@ export const types = {
 	uiFinishLoading: "[UI] Finish loading",
 	/* To tabs */
 	currentTab: "[Tab] Current Tab",
-	
+
 	// Products
 
 	productLoaded: "[Product] Loaded",
@@ -45,4 +45,8 @@ export const types = {
 	customersContactInfoLoaded: "[Customers Contact Info] Contact Info Loaded",
 	businessCustomersLoaded: "[Business Customers] Business Customers Loaded",
 	naturalCustomersLoaded: "[Nartural Customers] Natural Customers Loaded",
+
+	// Binacle
+	binacleLoaded: "[Binacle] Loaded",
+	binacleActive: "[Binacle] Active",
 };

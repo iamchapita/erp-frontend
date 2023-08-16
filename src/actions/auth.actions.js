@@ -8,9 +8,15 @@ import {
 	updateProfile,
 	sendEmailVerification,
 } from "../firebase/firebase.config";
+import { signOut } from "firebase/auth";
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui.actions";
 import { PostData, FetchData } from "../components/utils/fetch";
+import {
+	uploadLoginToBinacleAction,
+	uploadSignUpToBinacleAction,
+	uploadLogoutToBinacleAction,
+} from "./binacle.actions";
 
 export const googleLogin = () => {
 	return (dispatch) => {
@@ -33,7 +39,14 @@ export const googleLogin = () => {
 							data[0].name
 						)
 					);
-					Swal.fire("Success", "Welcome", "success");
+
+					dispatch(uploadLoginToBinacleAction(user.accessToken));
+
+					Swal.fire(
+						"Inicio de sesión Exitoso",
+						"Bienvenido",
+						"success"
+					);
 					dispatch(uiFinishLoading());
 				});
 			})
@@ -65,7 +78,14 @@ export const signInWithEmailPassword = (email, password) => {
 							data[0].name
 						)
 					);
-					Swal.fire("Success", "Welcome", "success");
+
+					dispatch(uploadLoginToBinacleAction(user.accessToken));
+
+					Swal.fire(
+						"Inicio de sesión Exitoso",
+						"Bienvenido",
+						"success"
+					);
 					dispatch(uiFinishLoading());
 				});
 			})
@@ -79,6 +99,56 @@ export const signInWithEmailPassword = (email, password) => {
 			});
 	};
 };
+
+export const signUpWithEmailPasswordName = (displayName, email, password) => {
+	return (dispatch) => {
+		dispatch(uiStartLoading());
+		createUserWithEmailAndPassword(auth, email, password)
+			.then(async ({ user }) => {
+				await updateProfile(user, { displayName });
+				sendEmailVerification(user);
+
+				// Se registra el usuario como inactivo y con rol "No Asignado"
+				// El administrador debe establecer elr rol del nuevo usuario
+				await PostData("user/addUser", null, {
+					uid: user.uid,
+					username: user.displayName,
+					email: user.email,
+					password: user.email,
+					idUserRoleFK: 6,
+					status: 0,
+				});
+
+				dispatch(uploadSignUpToBinacleAction(user.accessToken));
+			})
+			.catch((e) => {
+				Swal.fire("Error", e.message, "error");
+				dispatch(uiFinishLoading());
+			});
+	};
+};
+
+// Hay que probarla
+export const logoutAction = () => {
+	return async (dispatch) => {
+		try {
+			await signOut(auth)
+				.then(() => {
+					dispatch(logout());
+					dispatch(uploadLogoutToBinacleAction(user.accessToken));
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} catch (error) {
+			console.error("Error durante el logout:", error);
+		}
+	};
+};
+
+export const logout = () => ({
+	type: types.logout,
+});
 
 export const login = (
 	uid,
@@ -102,31 +172,3 @@ export const login = (
 		role,
 	},
 });
-
-export const signUpWithEmailPasswordName = (displayName, email, password) => {
-	return (dispatch) => {
-		dispatch(uiStartLoading());
-		createUserWithEmailAndPassword(auth, email, password)
-			.then(async ({ user }) => {
-				await updateProfile(user, { displayName });
-				sendEmailVerification(user);
-
-				// Se registra el usuario como inactivo y con rol "No Asignado"
-				// El administrador debe establecer elr rol del nuevo usuario
-				await PostData("user/addUser", null, {
-					uid: user.uid,
-					username: user.displayName,
-					email: user.email,
-					password: user.email,
-					idUserRoleFK: 6,
-					status: 0,
-				});
-
-				console.log(user);
-			})
-			.catch((e) => {
-				Swal.fire("Error", e.message, "error");
-				dispatch(uiFinishLoading());
-			});
-	};
-};

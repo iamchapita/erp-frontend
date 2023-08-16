@@ -31,6 +31,53 @@ export const uploadBinacleAction = (table, transactInfo, token) => {
 	};
 };
 
-// !TODO
-// ! 2. Acción para inicio/cierre de sesión
-// ! 3. Agregar a la ruta de cada FetchData una variable que contenta el modulo a consultar en el backendd
+export const uploadLoginToBinacleAction = (token) => {
+	return async (dispatch, getState) => {
+		const { auth } = getState();
+
+		const data = {
+			actionType: "Inicio de Sesión",
+			uid: auth.uid,
+			actionOn: "N/A",
+			description: "Inicio de Sesión de usuario en el Sistema.",
+		};
+
+		FetchData("binacle/addAction", token, "POST", data).then((data) => {
+			dispatch(binacleActive(data));
+		});
+	};
+};
+
+export const uploadLogoutToBinacleAction = (token) => {
+	return async (dispatch, getState) => {
+		const { auth } = getState();
+
+		const data = {
+			actionType: "Cierre de Sesión",
+			uid: auth.uid,
+			actionOn: "N/A",
+			description: "Cierre de sesión de usuario en el Sistema.",
+		};
+
+		FetchData("binacle/addAction", token, "POST", data).then((data) => {
+			dispatch(binacleActive(data));
+		});
+	};
+};
+
+export const uploadSignUpToBinacleAction = (token) => {
+	return async (dispatch, getState) => {
+		const { auth } = getState();
+
+		const data = {
+			actionType: "Registro",
+			uid: auth.uid,
+			actionOn: "N/A",
+			description: "Registro de usuario en el Sistema.",
+		};
+
+		FetchData("binacle/addAction", token, "POST", data).then((data) => {
+			dispatch(binacleActive(data));
+		});
+	};
+};

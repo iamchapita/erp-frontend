@@ -129,26 +129,26 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 };
 
 // Hay que probarla
-export const logoutAction = () => {
-	return async (dispatch) => {
-		try {
-			await signOut(auth)
-				.then(() => {
-					dispatch(logout());
-					dispatch(uploadLogoutToBinacleAction(user.accessToken));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		} catch (error) {
-			console.error("Error durante el logout:", error);
-		}
-	};
-};
+// export const logoutAction = () => {
+// 	return async (dispatch) => {
+// 		try {
+// 			await signOut(auth)
+// 				.then(() => {
+// 					dispatch(logout());
+// 					dispatch(uploadLogoutToBinacleAction(user.accessToken));
+// 				})
+// 				.catch((error) => {
+// 					console.log(error);
+// 				});
+// 		} catch (error) {
+// 			console.error("Error durante el logout:", error);
+// 		}
+// 	};
+// };
 
-export const logout = () => ({
-	type: types.logout,
-});
+// export const logout = () => ({
+// 	type: types.logout,
+// });
 
 export const login = (
 	uid,

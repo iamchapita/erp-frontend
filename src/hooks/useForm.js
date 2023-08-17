@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { productActive } from "../actions/product.actions";
 
 /**
-
+@author Marion Bustamante
 useForm is a custom hook that provides a form state object and methods to update it.
 @param {Object} [initialState={}] - An optional object to initialize the form state with.
 @returns {Object} An object containing:
@@ -15,9 +15,14 @@ handleSubmit: A function to handle the form submission.
 
 export const useForm = (initialState = {}) => {
 	const [formState, setFormState] = useState(initialState);
-
+	/**
+	 * @author Marion Bustamante
+	 * Maneja los cambios en un campo de entrada.
+	 * @param {Object} event - El evento del cambio.
+	 * @param {number} [limit=0] - Límite opcional de longitud del valor.
+	 */
 	const handleInputChange = ({ target }, limit = 0) => {
-		console.log(target.value);
+
 		if (limit > 0) {
 			if (target.value.length <= limit) {
 				setFormState({ ...formState, [target.name]: target.value });
@@ -26,6 +31,11 @@ export const useForm = (initialState = {}) => {
 			setFormState({ ...formState, [target.name]: target.value });
 		}
 	};
+
+	/**
+	 * Maneja el cambio de un campo de tipo checkbox.
+	 * @param {Object} event - El evento del cambio.
+	 */
 	const handleCheck = ({ target }) => {
 		console.log(target.checked);
 		const value = target.checked ? 1 : 0; // Convertir true a 1 y false a 0

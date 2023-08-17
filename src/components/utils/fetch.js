@@ -28,6 +28,10 @@ export const FetchData = async (url, authToken, method = 'GET', data = null) => 
 			case "PUT":
 				httpMethod = "PUT";
 				break;
+
+				case "PATCH":
+				httpMethod = "PATCH";
+				break;
 			case "DELETE":
 				httpMethod = "DELETE";
 				break;
@@ -43,7 +47,7 @@ export const FetchData = async (url, authToken, method = 'GET', data = null) => 
 			},
 		};
 
-		if (data && (httpMethod === "POST" || httpMethod === "PUT")) {
+		if (data && (httpMethod === "POST" || httpMethod === "PUT" || httpMethod === "PATCH")) {
 			requestOptions.body = JSON.stringify(data);
 		}
 

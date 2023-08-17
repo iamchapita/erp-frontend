@@ -10,6 +10,7 @@ export const AutocompleteComponent = ({
 	optionName,
 	icon,
 	required,
+	value,
 }) => {
 	const dispatch = useDispatch();
 	const accessToken = useSelector((state) => state.auth.accessToken);
@@ -44,6 +45,7 @@ export const AutocompleteComponent = ({
 		Array.isArray(items) &&
 		items.length > 0 && (
 			<Autocomplete
+				value={items.find((option) => option.id === value) || null}
 				loading={loading}
 				loadingText="Cargando..."
 				options={items.slice().sort((a, b) => a[optionName].localeCompare(b[optionName]))}
@@ -55,7 +57,6 @@ export const AutocompleteComponent = ({
 				startDecorator={icon}
 				required={required}
 			/>
-
 		)
 	);
 };

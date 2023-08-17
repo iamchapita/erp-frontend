@@ -11,6 +11,8 @@ export const Product = () => {
 
     const dispatch = useDispatch();
     const { currentTab } = useSelector(state => state.product)
+    const [editActive, setEditActive] = useState(false);
+
 
     useEffect(() => {
         dispatch(changeTab({ index: 0, tab: 'Productos' }));
@@ -21,8 +23,8 @@ export const Product = () => {
     return (
         <div className='p-5 text-start w-full'>
             <Title title={'Productos'} />
-            <ProductPageHeader />
-            {currentTab.tab === 'Productos' && <ProductForm />}
+            <ProductPageHeader editActive={editActive} setEditActive={setEditActive} />
+            {currentTab.tab === 'Productos' && <ProductForm  editActive={editActive} setEditActive={setEditActive} />}
             {currentTab.tab === 'Categorías' && <CategoriesForm />}
         </div>
 

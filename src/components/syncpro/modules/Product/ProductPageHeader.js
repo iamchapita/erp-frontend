@@ -7,26 +7,26 @@ import {changeTab, productActive} from '../../../../actions/product.actions'
 import { productCategoriesTableHead, productTableHead, productTabs, productUnitiesTableHead } from '../../../../data/util'
 import { Box } from '@mui/joy'
 
-export const ProductPageHeader = () => {
+export const ProductPageHeader = ({editActive, setEditActive}) => {
     const dispatch = useDispatch();
     const { products, productCategories, productUnities } = useSelector(state => state.product)
     const [data, setData] = useState([]);
     const [tableHead, setTableHead] = useState(productTableHead);
     const { tab } = useSelector(state => state.product.currentTab)
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedRow, setSelectedRow] = useState();
     const handleTabClick = (index, tab) => {
         if (tab === 'Productos') {
-            console.log(products);
+
             setData(products)
             setTableHead(productTableHead)
         }
         if (tab === 'Categorías') {
-            console.log(productCategories);
+
             setData(productCategories)
             setTableHead(productCategoriesTableHead)
         }
         if (tab === 'Unidades') {
-            console.log(productUnities);
+
             setData(productUnities)
             setTableHead(productUnitiesTableHead)
         }
@@ -37,23 +37,27 @@ export const ProductPageHeader = () => {
     const handleSelectRow = (params) => {
         console.log(params.row)
         dispatch(productActive(params.row))
-
+        setSelectedRow(params.row)
+        setEditActive(true)
     }
 
 
+
+
     useEffect(() => {
+
         if (tab === 'Productos') {
-            console.log(products);
+
             setData(products)
             setTableHead(productTableHead)
         }
         if (tab === 'Categorías') {
-            console.log(productCategories);
+
             setData(productCategories)
             setTableHead(productCategoriesTableHead)
         }
         if (tab === 'Unidades') {
-            console.log(productUnities);
+
             setData(productUnities)
             setTableHead(productUnitiesTableHead)
         }
@@ -106,6 +110,9 @@ export const ProductPageHeader = () => {
                         }
                         pageSizeOptions={[5, 10, 20]}
                         onRowDoubleClick={handleSelectRow}
+                        onCellKeyDown={()=>{
+                            setEditActive(false)
+                        }}
                     />
                 </Box>}
             </div>

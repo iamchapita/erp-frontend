@@ -186,6 +186,69 @@ export const uploadCategory = (formState, token) => {
 	};
 };
 
+
+export const updateProduct = (formState, token) => {
+	let product = {};
+	let id = formState.id;
+	delete formState.id;
+	delete formState.updatedAt;
+
+	product = {
+		...formState,
+		status: formState.status !== 0 ? 1 : 0,
+
+	}
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: "Actualizando producto",
+				text: "Por favor espere...",
+				allowOutsideClick: false,
+				allowEnterKey: false,
+				didOpen: () => {
+					Swal.showLoading();
+				},
+			});
+		} catch (e) {
+			Swal.fire({
+				icon: "error",
+				title: "Fallo al actualizar",
+				text: "Un error ocurrió durante la actualización.",
+			});
+		}
+		FetchData(`product/updateProduct/${id}`, token, "PATCH", product).then(
+			(data) => {
+				console.log('data', data);
+				if (
+					data.msg ===
+					"Se ha modificado el producto correctamente."
+				) {
+					// Acción sobre bitácora
+					dispatch(
+						uploadBinacleAction(
+							firstChildModule,
+							getTransactType(data),
+							token
+						)
+					);
+					Swal.fire({
+						icon: "success",
+						title: "Categoria creada",
+						text: "El producto se ha actualizado correctamente.",
+					});
+					dispatch(chargeCategories(token));
+				} else {
+					Swal.fire({
+						icon: "error",
+						title: "Error",
+						text: "Ha ocurrido un error al actualizar el producto.",
+					});
+				}
+			}
+		);
+	}
+}
+
 export const productActive = (product) => ({
 	type: types.productActive,
 	payload: product,

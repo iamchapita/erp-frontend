@@ -43,7 +43,6 @@ export const ProductForm = ({editActive, setEditActive}) => {
         e.preventDefault();
         console.log('Form', formState);
         await dispatch(updateProduct(formState, accessToken))
-        handleClearImageInput();
         setEditActive(false)
         reset();
     }
@@ -101,10 +100,10 @@ export const ProductForm = ({editActive, setEditActive}) => {
     }, [product])
 
 
-    const elaborationDateFormated = moment(elaborationDate).format('YYYY-MM-DD');
-    const expirationDateFormated = moment(expirationDate).format('YYYY-MM-DD');
 
-
+    const elaborationDateFormated = moment(elaborationDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+    const expirationDateFormated = moment(expirationDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+    
     /**
      * Objeto de Configuración para Autocompletado
      * @typedef {Object} AutoCompleteConfig
@@ -144,7 +143,6 @@ export const ProductForm = ({editActive, setEditActive}) => {
         icon: <StraightenIcon className='text-custom-300'/>,
         value: idProductUnityFK
     }
-
 
 
     return (<form
@@ -262,7 +260,7 @@ export const ProductForm = ({editActive, setEditActive}) => {
                     className={'w-full'} name={'expirationDate'} handleInputChange={handleInputChange}
                     placeholder={'Fecha de expiración'}/>
             </div>
-            <div>
+            {!editActive && <div>
                 <p className='text-custom-150 font-normal'>Imagenes: </p>
                 <InputComponent
                     id={'imageInput'}
@@ -278,7 +276,7 @@ export const ProductForm = ({editActive, setEditActive}) => {
 
 
             </div>
-
+}
             <div/>
 
             <div className='flex items-center space-x-2 justify-center'>

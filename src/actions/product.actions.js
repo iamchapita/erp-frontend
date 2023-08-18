@@ -200,7 +200,7 @@ export const updateProduct = (formState, token) => {
 
     product = {
         ...formState,
-        status: formState.status !== 0 ? 1 : 0,
+        status: formState.status === true ? 1 : 0,
         elaborationDate: moment(formState.elaborationDate, formatoOriginal).format(formatoDeseado),
         expirationDate: moment(formState.expirationDate, formatoOriginal).format(formatoDeseado),
     }
@@ -260,8 +260,20 @@ export const updateProduct = (formState, token) => {
 
 export const productActive = (product) => ({
     type: types.productActive,
-    payload: product,
+    payload: {...product,
+    status: product.status === 'Activo' ? 1 : 0
+    },
 });
+
+export const prodCategoryActive = (category) => (
+    {
+        type: types.productCategoryActive,
+        payload: {
+            ...category,
+            status: category.status === 'Activo' ? 1 : 0
+        }
+    }
+)
 
 export const imageUploaded = (fileURL) => ({
     type: types.productActive,

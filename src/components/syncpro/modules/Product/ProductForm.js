@@ -11,7 +11,7 @@ import {AutocompleteComponent} from '../../../Autocomplete';
 import {Title} from '../../../Title';
 import moment from 'moment';
 
-export const ProductForm = ({editActive, setEditActive}) => {
+export const ProductForm = ({editActive, setEditActive, formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck}) => {
     const dispatch = useDispatch();
     const {accessToken} = useSelector(state => state.auth);
     const categories = useSelector(state => state.product.productCategories);
@@ -67,19 +67,7 @@ export const ProductForm = ({editActive, setEditActive}) => {
     }
 
 
-    const [formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset] = useForm({
-        name: '',
-        description: '',
-        idProductCategoryFK: '',
-        idProductUnityFK: '',
-        taxablePrice: '',
-        taxExemptPrice: '',
-        salePrice: '',
-        images: '',
-        status: '',
-        elaborationDate: '',
-        expirationDate: ''
-    })
+
 
     const {
         name,
@@ -95,10 +83,10 @@ export const ProductForm = ({editActive, setEditActive}) => {
         expirationDate
     } = formState;
 
+
     useEffect(() => {
         setFormState(product)
     }, [product])
-
 
 
     const elaborationDateFormated = moment(elaborationDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
@@ -281,8 +269,8 @@ export const ProductForm = ({editActive, setEditActive}) => {
 
             <div className='flex items-center space-x-2 justify-center'>
                 <p className='text-custom-150 font-normal'>Estado: </p>
-                <InputComponent
-                    value={status}
+                <input
+                    checked={status}
                     onChange={handleCheck}
                     type={'checkbox'}
                     className='
@@ -301,9 +289,8 @@ export const ProductForm = ({editActive, setEditActive}) => {
 
                 '
                     name={'status'}
-                    handleInputChange={handleCheck}
                     placeholder={'Estado'}
-                    checked={formState.status ? 1 : 0}
+
                 />
 
             </div>

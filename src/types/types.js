@@ -21,6 +21,7 @@ export const types = {
 	productClear: "[Product] Clear",
 	productCategoriesLoaded: "[Product Categories] Categories loaded",
 	productUnitiesLoaded: "[Product Unities] Unities loaded",
+	productCategoryActive: "[Product Category] Active",
 
 	// Invoice
 

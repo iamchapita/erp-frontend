@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
 import InputComponent from '../../../InputComponent'
 import { useDispatch, useSelector } from 'react-redux';
-import {changeTab, loadProducts, uploadCategory, uploadProduct} from '../../../../actions/product.actions';
+import {
+    changeTab,
+    loadProducts,
+    updateProduct,
+    uploadCategory,
+    uploadProduct
+} from '../../../../actions/product.actions';
 import { useForm } from '../../../../hooks/useForm';
 import { Title } from '../../../Title';
 import {productTabs} from "../../../../data/util";
 
-export const CategoriesForm = () => {
+export const CategoriesForm = ({formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck, editActive, setEditActive}) => {
     const dispatch = useDispatch();
     const { accessToken } = useSelector(state => state.auth);
- 
-    useEffect(() => {
-        accessToken && dispatch(loadProducts(accessToken))
-    }, [accessToken, dispatch])
+    const {categoryActive} = useSelector(state => state.product);
+
+
 
     const handlePost = async (e) => {
         e.preventDefault();
@@ -20,23 +25,32 @@ export const CategoriesForm = () => {
         await dispatch(uploadCategory(formState, accessToken))
     }
 
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        await dispatch(updateProduct(formState, accessToken))
+        setEditActive(false)
+        reset();
+    }
 
-    const [formState, handleInputChange, handleCheck] =
-        useForm({
-            name: '',
-            status: 0,
-        })
+
+    useEffect(()=>{
+        setFormState(categoryActive)
+    },[categoryActive])
 
     const {
         name,
         status
     } = formState;
 
+    useEffect(() => {
+        console.log('Edit', editActive)
+    }, [editActive]);
+
     return (
         <form
-            onSubmit={handlePost}
+            onSubmit={editActive ? handleUpdate : handlePost}
             className='my-2'>
-            <Title title={'Agregar categoría'} />
+            <Title title={editActive ?  'Editar categoría' : 'Agregar categoría'} />
             <div className='[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2'>
                 <div className=''>
                     <p className='text-custom-150 font-normal'>Nombre de la categoría: </p>
@@ -96,7 +110,7 @@ export const CategoriesForm = () => {
             focus:border-custom-400
             font-semibold
             '>
-                        Agregar categoría
+                        {editActive ? 'Actualizar' : 'Agregar'}
                     </button>
                 </div>
 

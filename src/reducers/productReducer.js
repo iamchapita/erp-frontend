@@ -19,6 +19,12 @@ const initialState = {
 		elaborationDate: "",
 		expirationDate: "",
 	},
+	categoryActive:{
+		id: null,
+		name: '',
+		status: 0,
+	}
+	,
 	currentTab: {
 		index: 0,
 		tab: 'Productos',
@@ -37,6 +43,15 @@ export const productReducer = (state = initialState, action) => {
 					...action.payload,
 				},
 			};
+		case types.productCategoryActive:
+			console.log('payload', action.payload)
+			return {
+				...state,
+				categoryActive: {
+					...state.categoryActive,
+					...action.payload,
+				}
+			}
 		case types.productLoaded:
 			return {
 				...state,

@@ -77,7 +77,6 @@ export const ProductPageHeader = ({editActive, setEditActive, reset}) => {
         reducer: 'product'
     }
 
-
     return (
         <>
             <Tab {...tabData} />

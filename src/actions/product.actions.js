@@ -10,6 +10,7 @@ import moment from "moment";
 
 const mainModule = "Productos";
 const firstChildModule = "Categoría de Productos";
+const secondChildModule = "Unidad de Medida";
 
 export const loadProducts = (token) => {
     return async(dispatch) => {
@@ -186,7 +187,9 @@ export const uploadCategory = (formState, token) => {
         );
     };
 };
+export const updateCategory = (formState, token) => {
 
+}
 
 export const updateProduct = (formState, token) => {
     let product = {};
@@ -204,9 +207,6 @@ export const updateProduct = (formState, token) => {
         elaborationDate: moment(formState.elaborationDate, formatoOriginal).format(formatoDeseado),
         expirationDate: moment(formState.expirationDate, formatoOriginal).format(formatoDeseado),
     }
-
-
-
     return async(dispatch) => {
         try {
             Swal.fire({
@@ -236,7 +236,7 @@ export const updateProduct = (formState, token) => {
                     dispatch(
                         uploadBinacleAction(
                             firstChildModule,
-                            getTransactType(data),
+                            getTransactType(data, id),
                             token
                         )
                     );
@@ -257,6 +257,72 @@ export const updateProduct = (formState, token) => {
         );
     }
 }
+
+export const updateCat = (formState, token) => {
+    let category = {};
+    let id = formState.id;
+    delete formState.id;
+    delete formState.updatedAt;
+    delete formState.createdAt;
+    category = {
+        ...formState,
+        status: formState.status === true ? 1 : 0,
+    }
+
+    console.log('Cat', category)
+    return async(dispatch) => {
+        try {
+            Swal.fire({
+                title: "Actualizando categoría",
+                text: "Por favor espere...",
+                allowOutsideClick: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                title: "Fallo al actualizar",
+                text: "Un error ocurrió durante la actualización.",
+            });
+        }
+        FetchData(`product/updateCategory/${id}`, token, "PATCH", category).then(
+            (data) => {
+
+                if (
+                    data.msg ===
+                    "Se ha modificado la categoría de producto correctamente."
+                ) {
+                    // Acción sobre bitácora
+                    dispatch(
+                        uploadBinacleAction(
+                            firstChildModule,
+                            getTransactType(data, id),
+                            token
+                        )
+                    );
+                    Swal.fire({
+                        icon: "success",
+                        title: "Categoría actualizada",
+                        text: "La categoría se ha actualizado correctamente.",
+                    });
+                    dispatch(chargeCategories(token));
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ha ocurrido un error al actualizar la categoría.",
+                    });
+                }
+            }
+        );
+    }
+}
+
+
+
 
 export const productActive = (product) => ({
     type: types.productActive,

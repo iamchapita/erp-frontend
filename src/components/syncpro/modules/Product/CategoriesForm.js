@@ -3,7 +3,7 @@ import InputComponent from '../../../InputComponent'
 import { useDispatch, useSelector } from 'react-redux';
 import {
     changeTab,
-    loadProducts,
+    loadProducts, updateCat,
     updateProduct,
     uploadCategory,
     uploadProduct
@@ -17,8 +17,6 @@ export const CategoriesForm = ({formState, handleInputChange, handleCheck, handl
     const { accessToken } = useSelector(state => state.auth);
     const {categoryActive} = useSelector(state => state.product);
 
-
-
     const handlePost = async (e) => {
         e.preventDefault();
         console.log('Form', formState);
@@ -27,7 +25,7 @@ export const CategoriesForm = ({formState, handleInputChange, handleCheck, handl
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await dispatch(updateProduct(formState, accessToken))
+        await dispatch(updateCat(formState, accessToken))
         setEditActive(false)
         reset();
     }

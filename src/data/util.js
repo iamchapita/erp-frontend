@@ -409,8 +409,8 @@ export const binacleTableHead = [
 	{
 		field: "description",
 		headerName: "Descripción",
-		flex: 2,
-		minWidth: 150,
+		flex: 3,
+		minWidth: 250,
 		maxWidth: 300,
 	},
 ];

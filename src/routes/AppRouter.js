@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { auth, onAuthStateChanged } from "../firebase/firebase.config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PublicRouter } from "./PublicRouter";
+import { SuperAdminRouter } from "./SuperAdminRouter";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { login } from "../actions/auth.actions";
 import { PrivateRouter } from "./PrivateRouter";
@@ -14,6 +15,7 @@ import { loadSystemInfo } from "../actions/system.action";
 export const AppRouter = () => {
 	const [checking, setChecking] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const { role } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -68,7 +70,13 @@ export const AppRouter = () => {
 			<Route
 				path="/syncpro/*"
 				element={
-					<PrivateRouter isLoggedIn={isLoggedIn}></PrivateRouter>
+					role !== "Superadministrador" ? (
+						<PrivateRouter isLoggedIn={isLoggedIn}></PrivateRouter>
+					) : (
+						<SuperAdminRouter
+							isLoggedIn={isLoggedIn}
+						></SuperAdminRouter>
+					)
 				}
 			/>
 		</Routes>

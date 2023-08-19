@@ -158,6 +158,7 @@ export const uploadCategory = (formState, token) => {
         }
         FetchData("product/addCategory", token, "POST", formState).then(
             (data) => {
+
                 if (
                     data.msg ===
                     "Se ha creado la categoría de producto correctamente."
@@ -238,7 +239,69 @@ export const uploadUnity = (formState, token) => {
     };
 }
 
-export const updateUnity = (formState, token) => {return}
+export const updateUnity = (formState, token) => {
+    let unity = {};
+    let id = formState.id;
+    delete formState.id;
+    delete formState.updatedAt;
+    delete formState.createdAt;
+    delete formState.status;
+
+    unity = {
+        ...formState,
+    }
+
+    return async(dispatch) => {
+        try {
+            Swal.fire({
+                title: "Actualizando unidad",
+                text: "Por favor espere...",
+                allowOutsideClick: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                title: "Fallo al actualizar",
+                text: "Un error ocurrió durante la actualización.",
+            });
+        }
+        FetchData(`product/updateProductUnity/${id}`, token, "PATCH", unity).then(
+            (data) => {
+                console.log('data', data);
+                if (
+                    data.msg ===
+                    "Se ha modificado la unidad de medida correctamente."
+                ) {
+                    // Acción sobre bitácora
+                    dispatch(
+                        uploadBinacleAction(
+                            secondChildModule,
+                            getTransactType(data, id),
+                            token
+                        )
+                    );
+                    Swal.fire({
+                        icon: "success",
+                        title: "Unidad de medida actualizada",
+                        text: "La unidad se ha actualizado correctamente.",
+                    });
+                    dispatch(chargeUnities(token));
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ha ocurrido un error al actualizar la unidad.",
+                    });
+                }
+            }
+        );
+    }
+
+}
 
 export const updateProduct = (formState, token) => {
     let product = {};
@@ -389,6 +452,13 @@ export const prodCategoryActive = (category) => (
         }
     }
 )
+
+export const prodUnityActive = (unity) => (
+    {
+        type: types.productUnityActive,
+        payload: unity
+    }
+);
 
 export const imageUploaded = (fileURL) => ({
     type: types.productActive,

@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 import { Tab } from '../../../Tab'
 import { useDispatch, useSelector } from 'react-redux'
-import {changeTab, productActive, prodCategoryActive} from '../../../../actions/product.actions'
+import {changeTab, productActive, prodCategoryActive, prodUnityActive} from '../../../../actions/product.actions'
 import { productCategoriesTableHead, productTableHead, productTabs, productUnitiesTableHead } from '../../../../data/util'
 import { Box } from '@mui/joy'
 import {useForm} from "../../../../hooks/useForm";
@@ -64,6 +64,9 @@ export const ProductPageHeader = ({editActive, setEditActive, reset, setFormStat
         if (tab === 'Categorías') {
             dispatch(prodCategoryActive(params.row))
             console.log('params', params.row)
+        }
+        if (tab === 'Unidades') {
+            dispatch(prodUnityActive(params.row))
         }
         setSelectedRow(params.row)
         setEditActive(true)

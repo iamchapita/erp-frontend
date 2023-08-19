@@ -58,10 +58,7 @@ export const productReducer = (state = initialState, action) => {
         case types.productUnityActive:
             return {
                 ...state,
-                unityActive: {
-                    ...state.unityActive,
-                    ...action.payload,
-                }
+                unityActive: action.payload
             }
         case types.productLoaded:
             return {

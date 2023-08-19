@@ -45,10 +45,17 @@ export const AutocompleteComponent = ({
 		Array.isArray(items) &&
 		items.length > 0 && (
 			<Autocomplete
-				value={items.find((option) => option.id === value) || null}
+				value={
+					items.find(
+						(option) => option.id === value && option.id !== 0 && option.id !== false
+					) || null
+				}
 				loading={loading}
 				loadingText="Cargando..."
-				options={items.slice().sort((a, b) => a[optionName].localeCompare(b[optionName]))}
+				options={items
+					.filter(option => option.status !== 0 && option.status !== false && option.status !== 'Inactivo')
+					.slice()
+					.sort((a, b) => a[optionName].localeCompare(b[optionName]))}
 				groupBy={(option) => option[optionName][0]}
 				getOptionLabel={(option) => option[optionName]}
 				name={name}
@@ -57,6 +64,7 @@ export const AutocompleteComponent = ({
 				startDecorator={icon}
 				required={required}
 			/>
+
 		)
 	);
 };

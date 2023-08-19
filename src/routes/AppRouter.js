@@ -9,6 +9,7 @@ import SignUpScreen from "../components/auth/SignUpScreen";
 import AuthScreen from "../components/auth/AuthScreen";
 import { CircularProgress } from "@mui/material";
 import { FetchData } from "../components/utils/fetch";
+import { loadSystemInfo } from "../actions/system.action";
 
 export const AppRouter = () => {
 	const [checking, setChecking] = useState(true);
@@ -33,6 +34,8 @@ export const AppRouter = () => {
 							data[0].name
 						)
 					);
+
+					dispatch(loadSystemInfo(user.accessToken));
 				});
 				setIsLoggedIn(true);
 			} else {

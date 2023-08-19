@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Binacle } from "../components/syncpro/modules/Binacle/Binacle";
 import { Customer } from "../components/syncpro/modules/Customer/Customer";

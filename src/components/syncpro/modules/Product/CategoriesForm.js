@@ -11,6 +11,7 @@ import {
 import { useForm } from '../../../../hooks/useForm';
 import { Title } from '../../../Title';
 import {productTabs} from "../../../../data/util";
+import addNotification from "react-push-notification";
 
 export const CategoriesForm = ({formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck, editActive, setEditActive}) => {
     const dispatch = useDispatch();
@@ -21,7 +22,10 @@ export const CategoriesForm = ({formState, handleInputChange, handleCheck, handl
         e.preventDefault();
         console.log('Form', formState);
         await dispatch(uploadCategory(formState, accessToken))
+
     }
+
+
 
     const handleUpdate = async (e) => {
         e.preventDefault();

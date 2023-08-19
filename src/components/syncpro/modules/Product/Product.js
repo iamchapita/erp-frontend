@@ -39,6 +39,8 @@ export const Product = () => {
         formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange
     }
 
+
+
     return (
         <div className='p-5 text-start w-full'>
             <Title title={'Productos'} />

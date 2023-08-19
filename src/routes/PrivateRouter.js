@@ -7,6 +7,7 @@ import { SideBar } from "../components/syncpro/SideBar";
 import { Dashboard } from "../components/syncpro/Dashboard";
 import { Product } from "../components/syncpro/modules/Product/Product";
 import { useSelector } from "react-redux";
+import { LicenseWarning } from "../components/syncpro/LicenseWarning";
 
 export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
@@ -16,6 +17,8 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 			<SideBar />
 
 			<div className="overflow-y-auto w-full">
+				{role === "Administrador" ? <LicenseWarning /> : null}
+
 				<Routes>
 					{role === "Administrador" ? (
 						<Route path="bitacora" element={<Binacle />} />

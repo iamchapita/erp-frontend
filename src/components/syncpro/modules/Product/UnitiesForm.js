@@ -4,44 +4,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     changeTab,
     loadProducts, updateCat,
-    updateProduct,
+    updateProduct, updateUnity,
     uploadCategory,
-    uploadProduct
+    uploadProduct, uploadUnity
 } from '../../../../actions/product.actions';
 import { useForm } from '../../../../hooks/useForm';
 import { Title } from '../../../Title';
 import {productTabs} from "../../../../data/util";
-import addNotification from "react-push-notification";
 
-export const CategoriesForm = ({formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck, editActive, setEditActive}) => {
+export const UnitiesForm = ({formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck, editActive, setEditActive}) => {
     const dispatch = useDispatch();
     const { accessToken } = useSelector(state => state.auth);
-    const {categoryActive} = useSelector(state => state.product);
+    const {unityActive} = useSelector(state => state.product);
 
     const handlePost = async (e) => {
         e.preventDefault();
         console.log('Form', formState);
-        await dispatch(uploadCategory(formState, accessToken))
-
+        await dispatch(uploadUnity(formState, accessToken))
     }
-
-
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await dispatch(updateCat(formState, accessToken))
+        await dispatch(updateUnity(formState, accessToken))
         setEditActive(false)
         reset();
     }
 
 
     useEffect(()=>{
-        setFormState(categoryActive)
-    },[categoryActive])
+        setFormState(unityActive)
+    },[unityActive])
 
     const {
         name,
-        status
+        symbol,
     } = formState;
 
     useEffect(() => {
@@ -52,45 +48,31 @@ export const CategoriesForm = ({formState, handleInputChange, handleCheck, handl
         <form
             onSubmit={editActive ? handleUpdate : handlePost}
             className='my-2'>
-            <Title title={editActive ?  'Editar categoría' : 'Agregar categoría'} />
+            <Title title={editActive ?  'Editar unidad de medida' : 'Agregar unidad de medida'} />
             <div className='[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2'>
                 <div className=''>
-                    <p className='text-custom-150 font-normal'>Nombre de la categoría: </p>
+                    <p className='text-custom-150 font-normal'>Nombre de la unidad: </p>
                     <InputComponent handleInputChange={handleInputChange}
-                        maxLength={45}
-                        value={name}
-                        type={'text'}
-                        name={'name'}
+                                    maxLength={45}
+                                    value={name}
+                                    type={'text'}
+                                    name={'name'}
 
-                        className={'w-full'} required={true} placeholder={'Nombre del producto'} />
+                                    className={'w-full'} required={true} placeholder={'Nombre del producto'} />
                 </div>
 
                 <div className='flex items-center space-x-2 justify-center'>
-                    <p className='text-custom-150 font-normal'>Estado: </p>
-                    <InputComponent
-                        value={status}
-                        onChange={handleCheck}
-                        type={'checkbox'}
-                        className='
-                w-5
-                h-5
-                p-2
-                rounded
-                text-custom-100
-                cursor-pointer
-                focus:outline-none
-                ring-0
-                focus:ring-0
-                outline-none
-                
-                font-semibold
+                    <div className=''>
+                        <p className='text-custom-150 font-normal'>Símbolo de la unidad: </p>
+                        <InputComponent handleInputChange={handleInputChange}
+                                        maxLength={45}
+                                        value={symbol}
+                                        type={'text'}
+                                        name={'symbol'}
 
-                '
-                        name={'status'}
-                        handleInputChange={handleCheck}
-                        placeholder={'Estado'}
-                        checked={formState.status ? 1 : 0}
-                    />
+                                        className={'w-full'} required={true} placeholder={'Símbolo de la unidad'} />
+                    </div>
+
 
                 </div>
                 <div>

@@ -3,29 +3,52 @@ import { DataGrid } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 import { Tab } from '../../../Tab'
 import { useDispatch, useSelector } from 'react-redux'
-import {changeTab, productActive} from '../../../../actions/product.actions'
+import {changeTab, productActive, prodCategoryActive, prodUnityActive} from '../../../../actions/product.actions'
 import { productCategoriesTableHead, productTableHead, productTabs, productUnitiesTableHead } from '../../../../data/util'
 import { Box } from '@mui/joy'
+import {useForm} from "../../../../hooks/useForm";
 
-export const ProductPageHeader = ({editActive, setEditActive}) => {
+export const ProductPageHeader = ({editActive, setEditActive, reset, setFormState}) => {
     const dispatch = useDispatch();
     const { products, productCategories, productUnities } = useSelector(state => state.product)
     const [data, setData] = useState([]);
     const [tableHead, setTableHead] = useState(productTableHead);
     const { tab } = useSelector(state => state.product.currentTab)
     const [selectedRow, setSelectedRow] = useState();
+
     const handleTabClick = (index, tab) => {
         if (tab === 'Productos') {
-
+            setFormState({
+                name: '',
+                description: '',
+                idProductCategoryFK: '',
+                idProductUnityFK: '',
+                taxablePrice: '',
+                taxExemptPrice: '',
+                salePrice: '',
+                images: '',
+                status: true,
+                elaborationDate: '',
+                expirationDate: ''
+            })
             setData(products)
             setTableHead(productTableHead)
+
         }
         if (tab === 'Categorías') {
-
+            setFormState({
+                name: '',
+                status: true,
+            })
             setData(productCategories)
             setTableHead(productCategoriesTableHead)
         }
         if (tab === 'Unidades') {
+
+            setFormState({
+                name: '',
+                symbol: '',
+            })
 
             setData(productUnities)
             setTableHead(productUnitiesTableHead)
@@ -35,8 +58,16 @@ export const ProductPageHeader = ({editActive, setEditActive}) => {
     };
 
     const handleSelectRow = (params) => {
-        console.log(params.row)
-        dispatch(productActive(params.row))
+        if (tab === 'Productos') {
+            dispatch(productActive(params.row))
+        }
+        if (tab === 'Categorías') {
+            dispatch(prodCategoryActive(params.row))
+            console.log('params', params.row)
+        }
+        if (tab === 'Unidades') {
+            dispatch(prodUnityActive(params.row))
+        }
         setSelectedRow(params.row)
         setEditActive(true)
     }
@@ -69,7 +100,6 @@ export const ProductPageHeader = ({editActive, setEditActive}) => {
         handleTabClick,
         reducer: 'product'
     }
-
 
     return (
         <>
@@ -112,6 +142,7 @@ export const ProductPageHeader = ({editActive, setEditActive}) => {
                         onRowDoubleClick={handleSelectRow}
                         onCellKeyDown={()=>{
                             setEditActive(false)
+                            reset()
                         }}
                     />
                 </Box>}

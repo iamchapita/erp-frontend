@@ -37,10 +37,19 @@ export const useForm = (initialState = {}) => {
 	 * @param {Object} event - El evento del cambio.
 	 */
 	const handleCheck = ({ target }) => {
+
+		setFormState({ ...formState, [target.name]: target.checked });
+	};
+
+	const handleImageChange = ({ target }) => {
+		setFormState({ ...formState, [target.name]: target.files});
+	}
+
+	 const handleInputCheck = ({ target }) => {
 		console.log(target.checked);
 		const value = target.checked ? 1 : 0; // Convertir true a 1 y false a 0
-		setFormState({ ...formState, [target.name]: value });
-	};
+		return value;
+	}
 
 	const reset = (newFormState = initialState) => {
 		setFormState(newFormState);
@@ -78,6 +87,7 @@ export const useForm = (initialState = {}) => {
 		handleSubmit,
 		setFormState,
 		reset,
+		handleImageChange
 	];
 };
 

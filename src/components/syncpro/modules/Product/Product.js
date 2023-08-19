@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductForm } from './ProductForm';
 import { CategoriesForm } from './CategoriesForm';
 import {changeTab} from "../../../../actions/product.actions";
+import {useForm} from "../../../../hooks/useForm";
+import {UnitiesForm} from "./UnitiesForm";
 
 export const Product = () => {
 
@@ -19,13 +21,34 @@ export const Product = () => {
 
     }, [dispatch]);
 
+    const [formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange] = useForm({
+        name: '',
+        description: '',
+        idProductCategoryFK: '',
+        idProductUnityFK: '',
+        taxablePrice: '',
+        taxExemptPrice: '',
+        salePrice: '',
+        images: '',
+        status: true,
+        elaborationDate: '',
+        expirationDate: ''
+    })
+
+    let functions = {
+        formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange
+    }
+
+
 
     return (
         <div className='p-5 text-start w-full'>
             <Title title={'Productos'} />
-            <ProductPageHeader editActive={editActive} setEditActive={setEditActive} />
-            {currentTab.tab === 'Productos' && <ProductForm  editActive={editActive} setEditActive={setEditActive} />}
-            {currentTab.tab === 'Categorías' && <CategoriesForm />}
+            <ProductPageHeader reset={reset} setFormState={setFormState} editActive={editActive} setEditActive={setEditActive} />
+            {currentTab.tab === 'Productos' && <ProductForm  {...functions} editActive={editActive} setEditActive={setEditActive} />}
+            {currentTab.tab === 'Categorías' && <CategoriesForm {...functions} editActive={editActive} setEditActive={setEditActive} />}
+            {currentTab.tab === 'Unidades' && <UnitiesForm {...functions} editActive={editActive} setEditActive={setEditActive} />}
+
         </div>
 
     )

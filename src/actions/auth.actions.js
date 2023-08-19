@@ -128,14 +128,14 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 	};
 };
 
-// Hay que probarla
 // export const logoutAction = () => {
 // 	return async (dispatch) => {
 // 		try {
 // 			await signOut(auth)
-// 				.then(() => {
+// 				.then((data) => {
+// 					console.log(data);
 // 					dispatch(logout());
-// 					dispatch(uploadLogoutToBinacleAction(user.accessToken));
+// 					dispatch(uploadLogoutToBinacleAction(null));
 // 				})
 // 				.catch((error) => {
 // 					console.log(error);

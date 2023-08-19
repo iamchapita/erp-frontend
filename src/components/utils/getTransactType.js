@@ -1,4 +1,9 @@
+import addNotification from "react-push-notification";
+import UpdateIcon from '@mui/icons-material/Update';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+
 export const getTransactType = (transactInfo, updatedId = null) => {
+	console.log("TransactInfo", transactInfo);
 	// Insert
 	/* {
         "fieldCount": 0,
@@ -20,6 +25,26 @@ export const getTransactType = (transactInfo, updatedId = null) => {
         "changedRows": 1
     } */
 
+	const update = {
+		title: "Actualización",
+		message: transactInfo.msg,
+		theme: "darkblue",
+		duration: 3000,
+		native: true, // when using native, your OS will handle theming.
+		icon: 'https://cdn-icons-png.flaticon.com/128/1688/1688988.png',
+
+	}
+	const insert = {
+		title: "Inserción",
+		message: transactInfo.msg,
+		theme: "darkblue",
+		duration: 3000,
+		native: true, // when using native, your OS will handle theming.
+		icon: 'https://cdn-icons-png.flaticon.com/128/5709/5709755.png',
+	}
+
+	updatedId ? notification(update) : notification(insert)
+
 	return updatedId === null
 		? {
 				description: `Id insertado: ${transactInfo.insertId}.`,
@@ -30,3 +55,12 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 				actionType: "Actualización",
 		  };
 };
+
+
+const notification = (data) => {
+	addNotification(
+		{
+			...data
+		}
+	)
+}

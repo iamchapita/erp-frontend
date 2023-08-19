@@ -11,7 +11,6 @@ export const types = {
 	currentTab: "[Tab] Current Tab",
 
 	// Products
-
 	productLoaded: "[Product] Loaded",
 	productImageLoaded: "[Product] Image Loaded",
 	productActive: "[Product] Active",
@@ -21,9 +20,10 @@ export const types = {
 	productClear: "[Product] Clear",
 	productCategoriesLoaded: "[Product Categories] Categories loaded",
 	productUnitiesLoaded: "[Product Unities] Unities loaded",
+	productCategoryActive: "[Product Category] Active",
+	productUnityActive: "[Product Unity] Active",
 
 	// Invoice
-
 	InvoiceLoaded: "[Invoice] Loaded",
 	InvoiceImageLoaded: "[Invoice] Image Loaded",
 	InvoiceActive: "[Invoice] Active",
@@ -33,7 +33,6 @@ export const types = {
 	InvoiceClear: "[Invoice] Clear",
 
 	// Clientes
-
 	customerLoaded: "[Customer] Loaded",
 	customerActive: "[Customer] Active",
 	customerAdd: "[Customer] Add",
@@ -49,4 +48,7 @@ export const types = {
 	// Binacle
 	binacleLoaded: "[Binacle] Loaded",
 	binacleActive: "[Binacle] Active",
+
+	// System
+	systemInfoLoaded: "[SystemInfo] Loaded",
 };

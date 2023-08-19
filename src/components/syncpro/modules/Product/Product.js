@@ -7,6 +7,7 @@ import { ProductForm } from './ProductForm';
 import { CategoriesForm } from './CategoriesForm';
 import {changeTab} from "../../../../actions/product.actions";
 import {useForm} from "../../../../hooks/useForm";
+import {UnitiesForm} from "./UnitiesForm";
 
 export const Product = () => {
 
@@ -41,9 +42,11 @@ export const Product = () => {
     return (
         <div className='p-5 text-start w-full'>
             <Title title={'Productos'} />
-            <ProductPageHeader reset={reset} editActive={editActive} setEditActive={setEditActive} />
+            <ProductPageHeader reset={reset} setFormState={setFormState} editActive={editActive} setEditActive={setEditActive} />
             {currentTab.tab === 'Productos' && <ProductForm  {...functions} editActive={editActive} setEditActive={setEditActive} />}
             {currentTab.tab === 'Categorías' && <CategoriesForm {...functions} editActive={editActive} setEditActive={setEditActive} />}
+            {currentTab.tab === 'Unidades' && <UnitiesForm {...functions} editActive={editActive} setEditActive={setEditActive} />}
+
         </div>
 
     )

@@ -66,9 +66,6 @@ export const ProductForm = ({editActive, setEditActive, formState, handleInputCh
         reset();
     }
 
-
-
-
     const {
         name,
         description,

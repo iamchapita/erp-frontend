@@ -8,7 +8,7 @@ import { productCategoriesTableHead, productTableHead, productTabs, productUniti
 import { Box } from '@mui/joy'
 import {useForm} from "../../../../hooks/useForm";
 
-export const ProductPageHeader = ({editActive, setEditActive, reset}) => {
+export const ProductPageHeader = ({editActive, setEditActive, reset, setFormState}) => {
     const dispatch = useDispatch();
     const { products, productCategories, productUnities } = useSelector(state => state.product)
     const [data, setData] = useState([]);
@@ -18,16 +18,37 @@ export const ProductPageHeader = ({editActive, setEditActive, reset}) => {
 
     const handleTabClick = (index, tab) => {
         if (tab === 'Productos') {
-
+            setFormState({
+                name: '',
+                description: '',
+                idProductCategoryFK: '',
+                idProductUnityFK: '',
+                taxablePrice: '',
+                taxExemptPrice: '',
+                salePrice: '',
+                images: '',
+                status: true,
+                elaborationDate: '',
+                expirationDate: ''
+            })
             setData(products)
             setTableHead(productTableHead)
+
         }
         if (tab === 'Categorías') {
-
+            setFormState({
+                name: '',
+                status: true,
+            })
             setData(productCategories)
             setTableHead(productCategoriesTableHead)
         }
         if (tab === 'Unidades') {
+
+            setFormState({
+                name: '',
+                symbol: '',
+            })
 
             setData(productUnities)
             setTableHead(productUnitiesTableHead)

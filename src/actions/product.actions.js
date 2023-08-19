@@ -187,9 +187,58 @@ export const uploadCategory = (formState, token) => {
         );
     };
 };
-export const updateCategory = (formState, token) => {
+export const uploadUnity = (formState, token) => {
+    return async(dispatch) => {
+        try {
+            Swal.fire({
+                title: "Subiendo unidad",
+                text: "Por favor espere...",
+                allowOutsideClick: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                icon: "error",
+                title: "Fallo al subir",
+                text: "Un error ha ocurrido durante la subida.",
+            });
+        }
+        FetchData("product/addProductUnity", token, "POST", formState).then(
+            (data) => {
+                console.log(data)
+                if (data.msg === "Se ha creado la unidad de medida correctamente.") {
+                    // Acción sobre bitácora
+                    dispatch(
+                        uploadBinacleAction(
+                            secondChildModule,
+                            getTransactType(data),
+                            token
+                        )
+                    );
 
+                    Swal.fire({
+                        icon: "success",
+                        title: "Unidad creada",
+                        text: "La unidad se ha creado correctamente.",
+                    });
+                    dispatch(chargeUnities(token));
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: data.msg === '23000' ? 'Ya existe una unidad de medida con ese nombre.' : 'Ha ocurrido un error al crear la unidad.',
+                    });
+                }
+            }
+        );
+    };
 }
+
+export const updateUnity = (formState, token) => {return}
 
 export const updateProduct = (formState, token) => {
     let product = {};

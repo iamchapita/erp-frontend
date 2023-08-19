@@ -9,6 +9,11 @@ const initialState = {
 
 export const systemReducer = (state = initialState, action) => {
 	switch (action?.type) {
+		case types.systemInfoActive:
+			return {
+				...state,
+				systemInfoActive: action.payload,
+			};
 		case types.systemInfoLoaded:
 			return action.payload;
 

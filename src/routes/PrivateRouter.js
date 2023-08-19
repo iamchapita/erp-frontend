@@ -12,20 +12,23 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
 
 	return isLoggedIn ? (
-		<div className="flex">
+		<div className="flex h-screen">
 			<SideBar />
-			<Routes>
-				{role === "Administrador" ? (
-					<Route path="bitacora" element={<Binacle />} />
-				) : (
-					<></>
-				)}
-				<Route path="clientes" element={<Customer />} />
-				<Route path="dashboard" element={<Dashboard />} />
-				<Route path="productos" element={<Product />} />
-				<Route path="facturas" element={<Invoice />} />
-				<Route path="*" element={<Navigate to={"dashboard"} />} />
-			</Routes>
+
+			<div className="overflow-y-auto w-full">
+				<Routes>
+					{role === "Administrador" ? (
+						<Route path="bitacora" element={<Binacle />} />
+					) : (
+						<></>
+					)}
+					<Route path="clientes" element={<Customer />} />
+					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="productos" element={<Product />} />
+					<Route path="facturas" element={<Invoice />} />
+					<Route path="*" element={<Navigate to={"dashboard"} />} />
+				</Routes>
+			</div>
 		</div>
 	) : (
 		<Navigate to={"/auth/login"} />

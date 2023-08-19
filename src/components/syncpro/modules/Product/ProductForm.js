@@ -11,7 +11,7 @@ import {AutocompleteComponent} from '../../../Autocomplete';
 import {Title} from '../../../Title';
 import moment from 'moment';
 
-export const ProductForm = ({editActive, setEditActive, formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck}) => {
+export const ProductForm = ({editActive, setEditActive, formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange}) => {
     const dispatch = useDispatch();
     const {accessToken} = useSelector(state => state.auth);
     const categories = useSelector(state => state.product.productCategories);
@@ -53,12 +53,12 @@ export const ProductForm = ({editActive, setEditActive, formState, handleInputCh
         document.getElementById('imageInput').value = ''
     }
 
-    const handleFileChange = (e) => {
-        const files = e.target.files
-        if (files) {
-            dispatch(uploadImage(files, handleInputChange))
-        }
-    }
+    // const handleFileChange = (e) => {
+    //     const files = e.target.files
+    //     if (files) {
+    //         dispatch(uploadImage(files, handleInputChange))
+    //     }
+    // }
 
 
     const handleCancelEdit = () => {
@@ -137,23 +137,7 @@ export const ProductForm = ({editActive, setEditActive, formState, handleInputCh
         <Title title={editActive ? 'Actualizar Producto' : 'Agregar Producto'}/>
         <div
             className='[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2'>
-            {!editActive && <div>
-                <p className='text-custom-150 font-normal'>Imagenes: </p>
-                <InputComponent
-                    id={'imageInput'}
 
-                    className={'w-full'} name={'imageUrls'}
-                    handleInputChange={handleFileChange}
-                    placeholder={'Imagenes'}
-                    type={'file'}
-                    multiple={true}
-                    accept={'image/*'}
-
-                />
-
-
-            </div>
-            }
           <div className=''>
 
                 <p className='text-custom-150 font-normal'>Nombre del producto: </p>
@@ -264,6 +248,22 @@ export const ProductForm = ({editActive, setEditActive, formState, handleInputCh
                     className={'w-full'} name={'expirationDate'} handleInputChange={handleInputChange}
                     placeholder={'Fecha de expiración'}/>
             </div>
+            {!editActive && <div>
+                <p className='text-custom-150 font-normal'>Imagenes: </p>
+                <InputComponent
+                    id={'imageInput'}
+                    className={'w-full'} name={'images'}
+                    handleInputChange={handleImageChange}
+                    placeholder={'Imagenes'}
+                    type={'file'}
+                    multiple={true}
+                    accept={'image/*'}
+
+                />
+
+
+            </div>
+            }
             <div/>
 
             <div className='flex items-center space-x-2 justify-center'>
@@ -293,6 +293,7 @@ export const ProductForm = ({editActive, setEditActive, formState, handleInputCh
                 />
 
             </div>
+
             <div>
                 <button
                     type='submit'

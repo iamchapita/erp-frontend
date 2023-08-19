@@ -21,7 +21,7 @@ export const Product = () => {
 
     }, [dispatch]);
 
-    const [formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck] = useForm({
+    const [formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange] = useForm({
         name: '',
         description: '',
         idProductCategoryFK: '',
@@ -36,7 +36,7 @@ export const Product = () => {
     })
 
     let functions = {
-        formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleInputCheck
+        formState, handleInputChange, handleCheck, handleSubmit, setFormState, reset, handleImageChange
     }
 
     return (

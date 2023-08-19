@@ -51,7 +51,7 @@ export const unitiesLoaded = (unities) => ({
     payload: unities,
 });
 
-export const uploadImage = (files, handleInputChange) => {
+export const uploadImage = (files) => {
     return async(dispatch) => {
         try {
             Swal.fire({
@@ -66,12 +66,7 @@ export const uploadImage = (files, handleInputChange) => {
 
             const fileURL = await imageUpload(files);
             dispatch(imageUploaded(fileURL));
-            handleInputChange({
-                target: {
-                    name: "images",
-                    value: fileURL,
-                },
-            });
+
             Swal.close();
         } catch (error) {
             console.error(error);
@@ -85,7 +80,16 @@ export const uploadImage = (files, handleInputChange) => {
 };
 
 export const uploadProduct = (formState, token) => {
-    return async(dispatch) => {
+    return async(dispatch, getState) => {
+        let images = formState.images;
+        delete formState.images;
+        dispatch(uploadImage(images))
+        formState = {
+            ...formState,
+            images: getState().product.product.images,
+        }
+
+
         try {
             console.log("Form1", formState);
             Swal.fire({

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Syncpro",
+  "name": "SyncPro ERP",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +8,18 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logoMediano",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "250x250"
     },
     {
-      "src": "logo512.png",
+      "src": "logoGrande.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "500x500"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#004aad"
 }

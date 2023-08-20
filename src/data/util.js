@@ -146,6 +146,7 @@ export const items = [
 		Title: "Cerrar Sesión",
 		className: "justify-self-end absolute bottom-0",
 		role: [
+			"Superadministrador",
 			"Administrador",
 			"Vendedor",
 			"Cajero",

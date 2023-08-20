@@ -11,9 +11,7 @@ export const SideBar = () => {
 			<ol className="text-center flex flex-col flex-1 items-center  [&>*]:py-2 font-normal hover:cursor-pointer [&>*]:mx-1 space-y-1">
 				{items.map(
 					(item, index) =>
-						item.role.includes(role) &&
-						(role !== "Superadministrador" ||
-							role !== "Administrador") && (
+						item.role.includes(role) && (
 							<ListItem
 								ClassName={item?.className}
 								key={index}
@@ -22,7 +20,6 @@ export const SideBar = () => {
 								path={item.path}
 								closeSession={item.closeSession}
 							/>
-
 						)
 				)}
 			</ol>

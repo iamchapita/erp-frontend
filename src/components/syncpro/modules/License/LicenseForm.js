@@ -56,7 +56,7 @@ export const LicenseForm = ({
 				<div className="">
 					<div>
 						<p className="text-custom-150 font-normal">
-							Inicio de Licencia:{" "}
+							Fecha de Vencimiento de Licencia:{" "}
 						</p>
 						<InputComponent
 							value={licenseDueDate}

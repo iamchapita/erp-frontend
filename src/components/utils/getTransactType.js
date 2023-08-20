@@ -34,6 +34,7 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		icon: 'https://cdn-icons-png.flaticon.com/128/1688/1688988.png',
 
 	}
+
 	const insert = {
 		title: "Inserción",
 		message: transactInfo.msg,

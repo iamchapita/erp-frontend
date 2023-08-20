@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import { types } from "../types/types";
-import { uploadBinacleAction } from "./binacle.actions";
-import { getTransactType } from "../components/utils/getTransactType";
+import { uploadLicenseUpdate } from "./binacle.actions";
 import { FetchData } from "../components/utils/fetch";
 
 const module = "Sistema";
@@ -55,7 +54,7 @@ export const updateLicense = (form, token) => {
 				dispatch(loadSystemInfo(token));
 				dispatch(systemActive(license));
 				dispatch(
-					uploadBinacleAction(module, getTransactType(data), token)
+					uploadLicenseUpdate(module, license.licenseDueDate, token)
 				);
 
 				Swal.close();

@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Title } from "../../../Title";
 import InputComponent from "../../../InputComponent";
-import {
-	uploadCustomer,
-	updateCustomer,
-	loadCustomers,
-	loadBusinessCustomers,
-	loadNaturalCustomers,
-} from "../../../../actions/customer.action";
+import { updateLicense } from "../../../../actions/system.action";
 import moment from "moment";
 
 export const LicenseForm = ({
@@ -24,8 +18,7 @@ export const LicenseForm = ({
 		e.preventDefault();
 
 		// Envio de formulario
-		// dispatch();
-
+		dispatch(updateLicense(formState, accessToken));
 		reset();
 	};
 

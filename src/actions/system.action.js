@@ -1,5 +1,7 @@
+import Swal from "sweetalert2";
 import { types } from "../types/types";
-
+import { uploadBinacleAction } from "./binacle.actions";
+import { getTransactType } from "../components/utils/getTransactType";
 import { FetchData } from "../components/utils/fetch";
 
 const module = "Sistema";
@@ -22,78 +24,53 @@ export const systemActive = (systemInfo) => ({
 	payload: systemInfo,
 });
 
-// export const uploadCustomer = (form, token) => {
-// 	return async (dispatch, getState) => {
-// 		let customer = {
-// 			idCustomerTypeFK: form.idCustomerTypeFK,
-// 			firstNames: form.firstNames,
-// 			lastNames: form.lastNames,
-// 			city: form.city,
-// 			country: form.country,
-// 			direction: form.direction,
-// 			// ContactInfo
-// 			phoneNumber: form.phoneNumber,
-// 			email: form.email,
-// 			// naturalCustomerTypeDetails
-// 			naturalRtn: form.naturalRtn,
-// 			// businessCustomerTypeDetails
-// 			businessName: form.businessName,
-// 			businessRtn: form.businessRtn,
-// 			hasCredit: form.hasCredit,
-// 			creditAmount: form.creditAmount,
-// 		};
+export const updateLicense = (form, token) => {
+	return async (dispatch, getState) => {
+		let license = {
+			licenseStartDate: form.licenseStartDate,
+			licenseDueDate: form.licenseDueDate,
+		};
 
-// 		// Pasando a null las propiedades vacías
-// 		customer = cleanFormsFields(customer, " ");
+		try {
+			Swal.fire({
+				title: "Actualizando Licencia",
+				text: "Por favor espere...",
+				allowOutsideClick: false,
+				allowEnterKey: false,
+				didOpen: () => {
+					Swal.showLoading();
+				},
+			});
+		} catch (error) {
+			console.error(error);
+			Swal.fire({
+				icon: "error",
+				title: "Fallo en Actualización",
+				text: `Ocurrió un error mientras de actualizaba.`,
+			});
+		}
 
-// 		try {
-// 			Swal.fire({
-// 				title: "Guardando cliente",
-// 				text: "Por favor espere...",
-// 				allowOutsideClick: false,
-// 				allowEnterKey: false,
-// 				didOpen: () => {
-// 					Swal.showLoading();
-// 				},
-// 			});
-// 		} catch (error) {
-// 			console.error(error);
-// 			Swal.fire({
-// 				icon: "error",
-// 				title: "Fallo en Guardado",
-// 				text: `Ocurrió un error mientras de guardaba.`,
-// 			});
-// 		}
+		FetchData("system/setDates", token, "POST", license)
+			.then((data) => {
+				dispatch(loadSystemInfo(token));
+				dispatch(systemActive(license));
+				dispatch(
+					uploadBinacleAction(module, getTransactType(data), token)
+				);
 
-// 		FetchData("Customer/addCustomer", token, "POST", customer)
-// 			.then((data) => {
-// 				dispatch(loadBusinessCustomers(token));
-// 				dispatch(loadNaturalCustomers(token));
-// 				dispatch(loadCustomers(token));
-// 				dispatch(customerActive(customer));
-
-// 				dispatch(
-// 					uploadBinacleAction(module, getTransactType(data), token)
-// 				);
-
-// 				Swal.close();
-// 				Swal.fire({
-// 					icon: "success",
-// 					title: "Cliente creado",
-// 					text: "El cliente se ha creado correctamente.",
-// 				});
-// 			})
-// 			.catch((error) => {
-// 				Swal.fire({
-// 					icon: "error",
-// 					title: "Fallo en Guardado",
-// 					text: `Ocurrió un error mientras de guardaba.`,
-// 				});
-// 			});
-// 	};
-// };
-
-// export const customerActive = (customer) => ({
-// 	type: types.customerActive,
-// 	payload: customer,
-// });
+				Swal.close();
+				Swal.fire({
+					icon: "success",
+					title: "Licencia actualizada",
+					text: "El Licencia se ha actualizada correctamente.",
+				});
+			})
+			.catch((error) => {
+				Swal.fire({
+					icon: "error",
+					title: "Fallo en Actualización",
+					text: `Ocurrió un error mientras de actualizaba.`,
+				});
+			});
+	};
+};

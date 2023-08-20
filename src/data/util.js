@@ -499,3 +499,37 @@ export const binacleTableHead = [
 		maxWidth: 300,
 	},
 ];
+
+export const licenseTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		flex: 1,
+		flex: 1,
+		minWidth: 80,
+	},
+	{
+		field: "licenseStartDate",
+		headerName: "Inicio Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "licenseDueDate",
+		headerName: "Vencimiento Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "remainingDays",
+		headerName: "Días restantes de Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "licenseStatus",
+		headerName: "Estado de Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+];

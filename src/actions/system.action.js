@@ -17,6 +17,11 @@ export const systemLoaded = (systemInfo) => ({
 	payload: systemInfo,
 });
 
+export const systemActive = (systemInfo) => ({
+	type: types.systemInfoActive,
+	payload: systemInfo,
+});
+
 // export const uploadCustomer = (form, token) => {
 // 	return async (dispatch, getState) => {
 // 		let customer = {

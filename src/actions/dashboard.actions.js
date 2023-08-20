@@ -1,15 +1,18 @@
 import {FetchData} from "../components/utils/fetch";
+import {types} from "../types/types";
 
-export const getUserCount = async () => {
+export const getUserCount =  (token) => {
     return async (dispatch) => {
-        FetchData("getUsersCount", "GET")
-            .then((res) => {
-                dispatch({
-                    type: "GET_USER_COUNT",
-                    payload: res.total
-                })
+        FetchData("user/getUsersCount/", token).then((response) => {
+            dispatch(dispatchGetUserCount(response))
             }
         )
     }
 }
 
+export const dispatchGetUserCount = (userCount) => {
+    return {
+        type: types.getUserCount,
+        payload: userCount
+    }
+}

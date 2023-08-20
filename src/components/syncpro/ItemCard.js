@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const ItemCard = (item) => {
+export const ItemCard = (item, userCount) => {
     const { title: Title, subTitle: SubTitle, icon: Icon } = item;
+
+
 
     return (
         <div className='flex items-center justify-between [&>*]:mx-5 sm:[&>*]:mx-3 transition-all ease-in-out cursor-pointer hover:bg-custom-350 hover:scale-95'>

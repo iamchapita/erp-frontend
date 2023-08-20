@@ -55,6 +55,6 @@ export const types = {
 	systemInfoActive: "[SystemInfo] Active",
 
 	//users
-	GET_USER_COUNT: "[User] Get User Count",
+	getUserCount: "[User] Get User Count",
 
 };

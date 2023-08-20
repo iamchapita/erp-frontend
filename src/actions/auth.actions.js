@@ -17,6 +17,7 @@ import {
 	uploadSignUpToBinacleAction,
 	uploadLogoutToBinacleAction,
 } from "./binacle.actions";
+import addNotification from "react-push-notification";
 
 export const googleLogin = () => {
 	return (dispatch) => {
@@ -48,6 +49,13 @@ export const googleLogin = () => {
 						"success"
 					);
 					dispatch(uiFinishLoading());
+					addNotification({
+						title: "Inicio de sesión Exitoso",
+						message: "Bienvenido",
+						theme: "darkblue",
+						native: true, // when using native, your OS will handle theming.
+						icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
+					});
 				});
 			})
 			.catch((error) => {

@@ -1,25 +1,63 @@
 import React, { useEffect } from "react";
 
-import { dashBoardItems } from "../../data/util";
 import { ItemCard } from "./ItemCard";
 import { SearchSection } from "../SearchSection";
-import { Bolt } from "@mui/icons-material";
+import {Bolt, Paid, Person4, PersonAdd, Wallet} from "@mui/icons-material";
 
 import {useDispatch, useSelector} from "react-redux";
 import { Breadcrumbs } from "./BreadCrums";
 import {providers} from "../../actions/product.actions";
 import ProveedoresCard from "./Dashboard/suppliers";
 import {getUserCount} from "../../actions/dashboard.actions";
+import {loadCustomers} from "../../actions/customer.action";
 
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const {productProviders} = useSelector((state) => state.product);
 	const { userCount } = useSelector((state) => state.dashboard);
+	const { customers } = useSelector((state) => state.customer);
+	const [customerCount, setCustomerCount] = React.useState(0);
+	const [dashBoardItems, setDashBoardItems] = React.useState([])
+
 	useEffect(() => {
 		dispatch(providers(accessToken));
 		dispatch(getUserCount(accessToken));
-	}, [dispatch, accessToken]);
+		dispatch(loadCustomers(accessToken));
+
+		setDashBoardItems([
+			{
+				title: "Ventas de hoy",
+				subTitle: "L. 0.00",
+				icon: Wallet,
+			},
+			{
+				title: "Usuarios registrados",
+				subTitle: userCount,
+				icon: Person4,
+			},
+			{
+				title: "Clientes registrados",
+				subTitle: customerCount,
+				icon: PersonAdd,
+			},
+			{
+				title: "Ventas totales",
+				subTitle: "L. 0.00",
+				icon: Paid,
+			},
+		])
+	}, [dispatch, accessToken, userCount, customerCount]);
+
+	useEffect(() => {
+		setCustomerCount(customers.length);
+	}, [dispatch, accessToken, customers]);
+
+
+
+
+
+
 
 
 
@@ -33,7 +71,7 @@ export const Dashboard = () => {
 				{/* Items */}
 				<div className="sm:grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 space-y-2 sm:space-y-0 gap-2 sm:mt-5 flex-1 justify-between [&>*]:sm:px-5 [&>*]:px-1 [&>*]:rounded-xl [&>*]:w-auto [&>*]:h-20 [&>*]:bg-white [&>*]:shadow-sm">
 					{dashBoardItems.map((item, index) => (
-						<ItemCard key={index} {...item} userCount={userCount}  />
+						<ItemCard key={index} {...item} />
 					))}
 				</div>
 				<div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-5 h-auto mt-2 sm:mt-5">
@@ -73,8 +111,8 @@ export const Dashboard = () => {
 				</div>
 
 				<div className="grid grid-cols-2">
-					<div className="p-5 bg-custom-300 rounded text-start  col-span-2">
-						<div className="font-bold bg-custom-300">
+					<div className="p-5 bg-white rounded text-start  col-span-2">
+						<div className="font-bold">
 							Proveedores
 						</div>
 						<div>

@@ -46,6 +46,7 @@ export const types = {
 	businessCustomersLoaded: "[Business Customers] Business Customers Loaded",
 	naturalCustomersLoaded: "[Nartural Customers] Natural Customers Loaded",
 
+
 	// Binacle
 	binacleLoaded: "[Binacle] Loaded",
 	binacleActive: "[Binacle] Active",

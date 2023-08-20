@@ -1,24 +1,65 @@
 import React, { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Tab } from "../../../Tab";
 import { invoiceTableHead } from "../../../../data/util";
 import { Title } from "../../../Title";
 import { DataGrid } from "@mui/x-data-grid";
 import InputComponent from "../../../InputComponent";
-import { AutocompleteComponent } from "../../../Autocomplete";
 import { useForm } from "../../../../hooks/useForm";
 import { loadInvoices } from "../../../../actions/invoice.actions";
-import CategoryIcon from "@mui/icons-material/Category";
-import StraightenIcon from "@mui/icons-material/Straighten";
+import { generateRandomCAI } from "../../../utils/randomCai";
+import { uploadInvoice } from "../../../../actions/invoice.actions";
 
-
-export const Invoice = React.memo(() => {
+export const Invoice = ({
+	formState,
+	selectedRow,
+	handleInputChange,
+	reset,
+})=> {
 	const [clientName, setClientName] = useState('');
+	const [creditDays, setCreditDays] = useState(0);
 	const [invoiceDate, setInvoiceDate] = useState('');
+	const [dueDate, setDueDate] = useState('');
 	const [products, setProducts] = useState([]);
 	const [selectedProducts, setSelectedProducts] = useState([]);
 	const [totalAmount, setTotalAmount] = useState(0);
-  
+	const [cai, setCai] = useState(generateRandomCAI);
+	const [rtn, setRtn] = useState(0);
+	const [error, setError] = useState('');
+	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+	const { accessToken } = useSelector((state) => state.auth);
+
+	const dispatch = useDispatch();
+	const invoices = useSelector((state) => state.invoice);
+
+	useEffect(() => {
+		accessToken && dispatch(loadInvoices(accessToken));
+	}, [accessToken, dispatch]);
+
+	const handleProductSelection = (productId, price) => {
+		const updatedProducts = [...selectedProducts, { productId, price }];
+		setSelectedProducts(updatedProducts);
+		setTotalAmount(totalAmount + price);
+	  };
+	
+	const handlePost = (e) => {
+		e.preventDefault();
+		dispatch(uploadInvoice(formState, accessToken));
+		reset();
+	};
+
+	const handleRtnChange = (event) => {
+		const inputValue = event.target.value;
+		setRtn(inputValue);
+	
+		if (inputValue.length === 14 && /^\d+$/.test(inputValue)) {
+		  setError('');
+		  setSubmitButtonDisabled(false); // Habilitar el botón si la validación es correcta
+		} else {
+		  setError('El RTN debe tener 14 dígitos numéricos.');
+		  setSubmitButtonDisabled(true); // Deshabilitar el botón si la validación falla
+		}
+	  };
+	
 	/*useEffect(() => {
 		const fetchProducts = async () => {
 		  try {
@@ -32,98 +73,6 @@ export const Invoice = React.memo(() => {
 fetchProducts();
   }, []);
 */
-
-const handleProductSelection = (productId, price) => {
-    const updatedProducts = [...selectedProducts, { productId, price }];
-    setSelectedProducts(updatedProducts);
-    setTotalAmount(totalAmount + price);
-  };
-
-  const handleSubmit1= async (e) => {
-    e.preventDefault();
-
-    try {
-      const invoiceData = {
-        clientName,
-        invoiceDate,
-        products: selectedProducts,
-        totalAmount,
-      };
-
-      // Llamada a la función de la API para agregar la factura
-     // await addInvoice(invoiceData);
-
-      // Reiniciar el formulario después de enviar
-      setClientName('');
-      setInvoiceDate('');
-      setSelectedProducts([]);
-      setTotalAmount(0);
-
-      alert('Factura agregada exitosamente');
-    } catch (error) {
-      console.error('Error al agregar la factura', error);
-      alert('Error al agregar la factura');
-    }
-  };
-
-	const dispatch = useDispatch();
-	const { accessToken } = useSelector((state) => state.auth);
-	const invoices = useSelector((state) => state.invoice.invoices);
-	const invoiceActive = useSelector(
-		(state) => state.invoice.invoiceActive
-	);
-	// const categories = useSelector((state) => state.product.productCategories);
-	// const unities = useSelector((state) => state.product.productUnities);
-
-	useEffect(() => {
-		accessToken && dispatch(loadInvoices(accessToken));
-	}, [accessToken, dispatch]);
-
-	// const handlePost = (e) => {
-	// 	e.preventDefault();
-	// 	console.log("Form", formState);
-	// 	dispatch(uploadProduct(formState, accessToken));
-	// };
-
-	// const handleFileChange = (e) => {
-	// 	const files = e.target.files;
-	// 	if (files) {
-	// 		dispatch(uploadImage(files, handleInputChange));
-	// 	}
-	// };
-
-	const [formState, handleInputChange, , handleSubmit] = useForm({
-		id: "",
-		idCustomerFK: "",
-		idSellerFK: "",
-		idPurchaseOrderFK: "",
-		invoiceCode: "",
-		cai: "",
-		rtn: "",
-		invoiceType: "",
-		saleDate: "",
-		dueDate: "",
-		creditDays: "",
-		invoiceNotes: "",
-	});
-
-	// const autoCompleteCategories = {
-	// 	name: "idProductCategoryFK",
-	// 	handleInputChange,
-	// 	dispatchProp: chargeCategories,
-	// 	items: categories,
-	// 	optionName: "name",
-	// 	icon: <CategoryIcon className="text-custom-300" />,
-	// };
-
-	// const autoCompleteUnities = {
-	// 	name: "idProductUnityFK",
-	// 	handleInputChange,
-	// 	dispatchProp: chargeUnities,
-	// 	items: unities,
-	// 	optionName: "name",
-	// 	icon: <StraightenIcon className="text-custom-300" />,
-	// };
 
 	return (
 		<div className="p-5 text-start w-full">
@@ -146,12 +95,18 @@ const handleProductSelection = (productId, price) => {
 				)}
 			</div>
 			<div>
-      <form className='my-2' onSubmit={handleSubmit}>
+      <form className='my-2' onSubmit={handlePost}>
 	  <Title title={'Agregar factura'} />
        <div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2"> 
-	    <div>
+	   <div>
+          <label >CAI:</label>
+		  <hr></hr>
+          <span style={{ fontSize: '22px' }}>{cai}</span>
+        </div>
+		<div>
 		<p className='text-custom-150 font-normal'>Nombre del cliente: </p>
-          <input
+          <InputComponent
+		  	handleInputChange={handleInputChange}
             type="text"
             value={clientName}
             onChange={(e) => setClientName(e.target.value)}
@@ -160,14 +115,40 @@ const handleProductSelection = (productId, price) => {
 			 placeholder={'Nombre del cliente'}
           />
         </div>
+		<div>
+		<p className='text-custom-150 font-normal'>RTN: </p>
+          <InputComponent
+		  	handleInputChange={handleInputChange}
+            type="text"
+            value={rtn}
+            onChange={handleRtnChange}
+			className={'w-full'}
+			required
+			placeholder={'00000000000000'}
+          />
+		  {error && <p style={{ color: 'red' }}>{error}</p>}
+        </div>
+		
         <div>
 		<p className='text-custom-150 font-normal'>Fecha de venta: </p>
-          <input
+          <InputComponent
+		  	handleInputChange={handleInputChange}
             type="date"
             value={invoiceDate}
             onChange={(e) => setInvoiceDate(e.target.value)}
 			className={'w-full'}
-            required
+			required
+          />
+        </div>
+		<div>
+		<p className='text-custom-150 font-normal'>Fecha de vencimiento: </p>
+          <InputComponent
+		 	handleInputChange={handleInputChange}
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+			className={'w-full'}
+			required={false}
           />
         </div>
         <div>
@@ -186,11 +167,24 @@ const handleProductSelection = (productId, price) => {
             ))}
           </ul>
         </div>
+		<div>
+		<p className='text-custom-150 font-normal'>Días de crédito: </p>
+          <InputComponent
+		  	handleInputChange={handleInputChange}
+            type="number"
+            value={creditDays}
+            onChange={(e) => setCreditDays(e.target.value)}
+			className={'w-full'}
+			required={false}
+          />
+        </div>
         <div>
           <label >Total:</label>
           <span>${totalAmount}</span>
         </div>
-        <button type='submit'
+        <button 
+			disabled={submitButtonDisabled}
+			type='submit'
             className='
             w-full
             h-10
@@ -212,4 +206,4 @@ const handleProductSelection = (productId, price) => {
     </div>	
 </div>
 	);
-});
+};

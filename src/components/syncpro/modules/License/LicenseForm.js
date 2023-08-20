@@ -66,7 +66,7 @@ export const LicenseForm = ({
 							className={"w-full"}
 							name={"licenseDueDate"}
 							handleInputChange={handleInputChange}
-							placeholder={"Fecha de Inicio de Licencia"}
+							placeholder={"Fecha de Vencimiento de Licencia"}
 						/>
 					</div>
 				</div>

@@ -139,7 +139,8 @@ export const ProductPageHeader = ({editActive, setEditActive, reset, setFormStat
                             }
                         }
                         pageSizeOptions={[5, 10, 20]}
-                        onRowDoubleClick={handleSelectRow}
+
+                        onRowClick={handleSelectRow}
                         onCellKeyDown={()=>{
                             setEditActive(false)
                             reset()

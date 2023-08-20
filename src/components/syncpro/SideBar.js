@@ -20,7 +20,9 @@ export const SideBar = () => {
 								Icon={item.Icon}
 								Title={item.Title}
 								path={item.path}
+								closeSession={item.closeSession}
 							/>
+
 						)
 				)}
 			</ol>

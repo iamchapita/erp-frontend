@@ -152,6 +152,7 @@ export const items = [
 			"Registrador",
 			"Cotizador",
 		],
+		closeSession: true,
 	},
 ];
 
@@ -504,7 +505,6 @@ export const licenseTableHead = [
 	{
 		field: "id",
 		headerName: "ID",
-		flex: 1,
 		flex: 1,
 		minWidth: 80,
 	},

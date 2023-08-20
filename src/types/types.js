@@ -22,7 +22,8 @@ export const types = {
 	productUnitiesLoaded: "[Product Unities] Unities loaded",
 	productCategoryActive: "[Product Category] Active",
 	productUnityActive: "[Product Unity] Active",
-
+	productProvidersLoaded: "[Product Providers] Providers loaded",
+	productProviderActive: "[Product Provider] Active",
 	// Invoice
 	InvoiceLoaded: "[Invoice] Loaded",
 	InvoiceImageLoaded: "[Invoice] Image Loaded",
@@ -52,4 +53,8 @@ export const types = {
 	// System
 	systemInfoLoaded: "[SystemInfo] Loaded",
 	systemInfoActive: "[SystemInfo] Active",
+
+	//users
+	getUserCount: "[User] Get User Count",
+
 };

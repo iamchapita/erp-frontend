@@ -4,6 +4,7 @@ const initialState = {
     products: [],
     productCategories: [],
     productUnities: [],
+    productProviders: [],
     product: {
         id: null,
         productCode: "",
@@ -83,6 +84,11 @@ export const productReducer = (state = initialState, action) => {
                 ...state,
                 productUnities: action.payload,
             };
+        case types.productProvidersLoaded:
+            return {
+                ...state,
+                productProviders: action.payload,
+            }
         case types.currentTab:
             return {
                 ...state,

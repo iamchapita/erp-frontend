@@ -438,6 +438,19 @@ export const updateCat = (formState, token) => {
 }
 
 
+export const providers = (token) => {
+    return async(dispatch) => {
+        FetchData("product/getProductProviders/", token).then((data) => {
+            dispatch(providersLoaded(data));
+        });
+    };
+}
+
+export const providersLoaded = (providers) => ({
+    type: types.productProvidersLoaded,
+    payload: providers,
+})
+
 
 
 export const productActive = (product) => ({
@@ -473,3 +486,4 @@ export const changeTab = (tab) => ({
     type: types.currentTab,
     payload: tab,
 });
+

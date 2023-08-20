@@ -146,6 +146,7 @@ export const items = [
 		Title: "Cerrar Sesión",
 		className: "justify-self-end absolute bottom-0",
 		role: [
+			"Superadministrador",
 			"Administrador",
 			"Vendedor",
 			"Cajero",
@@ -163,8 +164,8 @@ export const dashBoardItems = [
 		icon: Wallet,
 	},
 	{
-		title: "Usuarios de hoy",
-		subTitle: "2,500",
+		title: "Usuarios registrados",
+
 		icon: Person4,
 	},
 	{

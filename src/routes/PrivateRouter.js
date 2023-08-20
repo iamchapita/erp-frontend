@@ -14,6 +14,8 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 
 	return isLoggedIn ? (
 		<div className="flex h-screen">
+
+
 			<SideBar />
 
 			<div className="overflow-y-auto w-full">
@@ -32,6 +34,7 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 					<Route path="*" element={<Navigate to={"dashboard"} />} />
 				</Routes>
 			</div>
+
 		</div>
 	) : (
 		<Navigate to={"/auth/login"} />

@@ -81,3 +81,20 @@ export const uploadSignUpToBinacleAction = (token) => {
 		});
 	};
 };
+
+export const uploadLicenseUpdate = (table, licenseDueDate, token) => {
+	return async (dispatch, getState) => {
+		const { auth } = getState();
+
+		const data = {
+			actionType: "Actualización de Licencia",
+			uid: auth.uid,
+			actionOn: table,
+			description: `Se actualizó la Licencia, vence en ${licenseDueDate}.`,
+		};
+
+		FetchData("binacle/addAction", token, "POST", data).then((data) => {
+			dispatch(binacleActive(data));
+		});
+	};
+};

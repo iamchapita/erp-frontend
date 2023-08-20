@@ -14,59 +14,144 @@ import {
 	Settings,
 	Wallet,
 	FormatListNumberedRtlOutlined,
+	Bolt,
 } from "@mui/icons-material";
 
 export const items = [
+	// Para usuarios
+
 	{
 		Icon: Home,
 		Title: "Dashboard",
 		path: "dashboard",
+		role: [
+			"Superadministrador",
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: Person,
 		Title: "Clientes",
 		path: "clientes",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: Inventory,
 		Title: "Productos",
 		path: "productos",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: Receipt,
 		Title: "Facturas",
 		path: "facturas",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: LocalShipping,
 		Title: "Proveedores",
 		path: "proveedores",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: AddCard,
 		Title: "Compras",
 		path: "compras",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: PointOfSale,
 		Title: "Ventas",
 		path: "ventas",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
+
+	// Para Superadministradores
+	{
+		Icon: Person,
+		Title: "Usuarios",
+		path: "usuarios",
+		role: ["Superadministrador"],
+	},
+	{
+		Icon: Bolt,
+		Title: "Licencia",
+		path: "licencia",
+		role: ["Superadministrador"],
+	},
+
+	// Para Administradores y Superadministradores
 	{
 		Icon: FormatListNumberedRtlOutlined,
 		Title: "Bitácora",
 		path: "bitacora",
-		role: "Administrador",
+		role: ["Administrador", "Superadministrador"],
 	},
+
+	// Iconos a renderizarse de último
 	{
 		Icon: Settings,
 		Title: "Configuración",
 		path: "configuracion",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 	{
 		Icon: Logout,
 		Title: "Cerrar Sesión",
 		className: "justify-self-end absolute bottom-0",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
 	},
 ];
 
@@ -412,5 +497,39 @@ export const binacleTableHead = [
 		flex: 3,
 		minWidth: 250,
 		maxWidth: 300,
+	},
+];
+
+export const licenseTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		flex: 1,
+		flex: 1,
+		minWidth: 80,
+	},
+	{
+		field: "licenseStartDate",
+		headerName: "Inicio Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "licenseDueDate",
+		headerName: "Vencimiento Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "remainingDays",
+		headerName: "Días restantes de Licencia",
+		flex: 2,
+		minWidth: 130,
+	},
+	{
+		field: "licenseStatus",
+		headerName: "Estado de Licencia",
+		flex: 2,
+		minWidth: 130,
 	},
 ];

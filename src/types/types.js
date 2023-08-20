@@ -51,4 +51,5 @@ export const types = {
 
 	// System
 	systemInfoLoaded: "[SystemInfo] Loaded",
+	systemInfoActive: "[SystemInfo] Active",
 };

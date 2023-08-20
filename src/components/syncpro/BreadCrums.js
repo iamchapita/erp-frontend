@@ -5,10 +5,10 @@ export const Breadcrumbs = () => {
     const currentLocation = (location.pathname.split('/').slice(2))
     console.log(currentLocation)
     return (
-        <div>
+        <div className={'text-2xl'}>
             {
 
-                currentLocation.map((locat, index) => <Link key={index} to={`/syncpro/${locat}`}>{locat}</Link>)
+                currentLocation.map((locat, index) => <Link className={'text-2xl text-start font-medium'} key={index} to={`/syncpro/${locat}`}>{locat}</Link>)
             }
 
         </div>

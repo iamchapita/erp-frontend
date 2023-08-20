@@ -63,6 +63,7 @@ function registerValidSW(swUrl, config) {
         }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
+
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
@@ -87,6 +88,8 @@ function registerValidSW(swUrl, config) {
                 config.onSuccess(registration);
               }
             }
+            // Send a message to the active service worker to trigger a page reload
+            navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
           }
         };
       };
@@ -135,3 +138,12 @@ export function unregister() {
       });
   }
 }
+
+// Escucha los mensajes del Service Worker
+navigator.serviceWorker.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    // Recarga la página cuando el Service Worker pide un reload
+    window.location.reload();
+  }
+});
+

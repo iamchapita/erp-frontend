@@ -6,7 +6,13 @@ export const LicenseWarning = () => {
 	const { licenseDueDate, remainingDays, licenseStatus } = useSelector(
 		(state) => state.system
 	);
-	const [showBanner, setBannerShow] = useState(remainingDays < 30);
+	const [showBanner, setBannerShow] = useState(null);
+
+	useEffect(() => {
+		remainingDays !== null
+			? setBannerShow(remainingDays < 30)
+			: setBannerShow(false);
+	}, [remainingDays]);
 
 	return showBanner === true ? (
 		<div className="relative isolate flex justify-content items-center  gap-x-6 overflow-hidden bg-red-500 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">

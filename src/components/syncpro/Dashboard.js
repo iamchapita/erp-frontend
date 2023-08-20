@@ -9,17 +9,25 @@ import { BarChart1 } from "./BarChart";
 import { Pagination } from "../Pagination";
 import { Table } from "@mui/material";
 import { FetchData } from "../utils/fetch";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { Breadcrumbs } from "./BreadCrums";
+import {providers} from "../../actions/product.actions";
+import ProveedoresCard from "./Dashboard/suppliers";
 
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const {productProviders} = useSelector((state) => state.product);
 	useEffect(() => {
-		// FetchData("product/getProduct/1", accessToken);
-	}, [accessToken]);
+		dispatch(providers(accessToken));
+	}, [dispatch, accessToken]);
+
+
+
 
 	return (
 		<div className="relative">
+
 			<div className="flex-1 p-5 space-y-3">
 				{/* <Pagination {...routes} /> */}
 				<Breadcrumbs />
@@ -67,12 +75,12 @@ export const Dashboard = () => {
 				</div>
 
 				<div className="grid grid-cols-2">
-					<div className="p-5 bg-red-200 rounded text-start  col-span-1">
+					<div className="p-5 bg-custom-300 rounded text-start  col-span-2">
 						<div className="font-bold bg-custom-300">
-							Últimas 5 facturas de clientes
+							Proveedores
 						</div>
 						<div>
-							<Table></Table>
+							<ProveedoresCard proveedores={productProviders} />
 						</div>
 					</div>
 				</div>

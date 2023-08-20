@@ -164,7 +164,7 @@ export const dashBoardItems = [
 		icon: Wallet,
 	},
 	{
-		title: "Usuarios de hoy",
+		title: "Usuarios registrados",
 		subTitle: "2,500",
 		icon: Person4,
 	},

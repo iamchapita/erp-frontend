@@ -42,6 +42,6 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 			</div>
 		</div>
 	) : (
-		<Navigate to={"/login"} />
+		<Navigate to={"/"} />
 	);
 };

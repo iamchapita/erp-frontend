@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { logOut } from "../../helpers/logOut";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadLogoutToBinacleAction } from "../../actions/binacle.actions";
+import {logoutAction} from "../../actions/auth.actions";
 
 export const ListItem = ({ Icon, Title, ClassName, path, closeSession }) => {
 	const dispatch = useDispatch();
@@ -45,8 +46,7 @@ export const ListItem = ({ Icon, Title, ClassName, path, closeSession }) => {
 			{closeSession && (
 				<Tooltip
 					onClick={() => {
-						const result = logOut();
-						dispatch(uploadLogoutToBinacleAction(accessToken));
+						dispatch(logoutAction());
 					}}
 					componentsProps={{
 						tooltip: {

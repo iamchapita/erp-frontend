@@ -5,7 +5,7 @@ export const PublicRouter = ({ isLoggedIn, children }) => {
 
     return (
         isLoggedIn
-            ? <Navigate to={`/syncpro/home`} />
+            ? <Navigate to={`/syncpro/dashboard`} />
             :
             <Routes>
                 {children}

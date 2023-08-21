@@ -139,11 +139,11 @@ export function unregister() {
   }
 }
 
-// Escucha los mensajes del Service Worker
-navigator.serviceWorker.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    // Recarga la página cuando el Service Worker pide un reload
-    window.location.reload();
-  }
-});
-
+// // Escucha los mensajes del Service Worker
+// navigator.serviceWorker.addEventListener('message', (event) => {
+//   if (event.data && event.data.type === 'SKIP_WAITING') {
+//     // Recarga la página cuando el Service Worker pide un reload
+//     window.location.reload();
+//   }
+// });
+//

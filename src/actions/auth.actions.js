@@ -211,7 +211,7 @@ export const login = (
 	},
 });
 
-export const logoutAction = () => {
+export const logoutAction = (accessToken) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -229,7 +229,7 @@ export const logoutAction = () => {
 						.then((data) => {
 							console.log(data);
 							dispatch(logout());
-							dispatch(uploadLogoutToBinacleAction(null));
+							dispatch(uploadLogoutToBinacleAction(accessToken));
 						})
 						.catch((error) => {
 							console.log(error);

@@ -46,7 +46,7 @@ export const ListItem = ({ Icon, Title, ClassName, path, closeSession }) => {
 			{closeSession && (
 				<Tooltip
 					onClick={() => {
-						dispatch(logoutAction());
+						dispatch(logoutAction(accessToken));
 					}}
 					componentsProps={{
 						tooltip: {

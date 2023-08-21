@@ -7,8 +7,7 @@ import { customerReducer } from "../reducers/customerReducer";
 import { invoiceReducer } from "../reducers/invoiceReducer";
 import { binacleReducer } from "../reducers/binacleReducer";
 import { systemReducer } from "../reducers/systemReducer";
-import { dashboardReducer } from "../reducers/dashboardReducer";
-import { salesReducer } from "../reducers/salesReducer";
+import {dashboardReducer} from "../reducers/dashboardReducer";
 
 const composeEnhancers =
 	typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -24,8 +23,7 @@ export const store = configureStore({
 		invoice: invoiceReducer,
 		binacle: binacleReducer,
 		system: systemReducer,
-		dashboard: dashboardReducer,
-		sales: salesReducer,
+		dashboard: dashboardReducer
 	},
 	middleware: [thunk],
 	devTools: composeEnhancers(),

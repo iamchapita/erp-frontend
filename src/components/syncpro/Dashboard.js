@@ -11,6 +11,8 @@ import ProveedoresCard from "./Dashboard/suppliers";
 import {getUserCount} from "../../actions/dashboard.actions";
 import {loadCustomers} from "../../actions/customer.action";
 import {Link} from "react-router-dom";
+import FooterPa from "./Dashboard/footer";
+import Cta from "./Dashboard/Cta";
 
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
@@ -103,10 +105,11 @@ export const Dashboard = () => {
 					</div>
 					<div className="bg-white shadow-sm text-start p-5 sm:col-span-2 rounded-xl">
 						<div className="bg-custom-300 p-5 rounded h-full flex justify-center items-center text-white">
-							{/* <BarChart1 /> */}
+
 						</div>
 					</div>
 				</div>
+
 
 				<div className="grid grid-cols-2">
 					<div className="p-5 bg-white rounded text-start  col-span-2">
@@ -119,6 +122,7 @@ export const Dashboard = () => {
 					</div>
 				</div>
 			</div>
+			<FooterPa/>
 		</div>
 	);
 };

@@ -35,7 +35,7 @@ export const Sales = () => {
 
 	return (
 		<div className="p-5 text-start w-full">
-			<Title title={"Ventas al Contado"} />
+			<Title title={"Ventas"} />
 			<SalesPageHeader
 				selectedRow={selectedRow}
 				setSelectedRow={setSelectedRow}

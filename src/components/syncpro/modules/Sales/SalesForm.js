@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Title } from "../../../Title";
 import InputComponent from "../../../InputComponent";
 import { AutocompleteComponent } from "../../../Autocomplete";
-import { loadCustomers } from "../../../../actions/customer.action";
-import StraightenIcon from "@mui/icons-material/Straighten";
+import { loadCustomersToSales } from "../../../../actions/customer.action";
+import { loadSellers } from "../../../../actions/employee.action";
+import PersonIcon from "@mui/icons-material/Person";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 export const SalesForm = ({
 	formState,
@@ -15,10 +17,11 @@ export const SalesForm = ({
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const customers = useSelector((state) => state.customer.customers);
+	const sellers = useSelector((state) => state.employee.sellers);
 
 	useEffect(() => {
-		accessToken && dispatch(loadCustomers(accessToken));
-		console.log(customers);
+		accessToken && dispatch(loadCustomersToSales(accessToken));
+		accessToken && dispatch(loadSellers(accessToken));
 	}, [accessToken, dispatch]);
 
 	const handlePost = (e) => {
@@ -29,11 +32,23 @@ export const SalesForm = ({
 	const autoCompleteCustomers = {
 		name: "idCustomerFK",
 		handleInputChange,
-		dispatchProp: loadCustomers,
+		dispatchProp: loadCustomersToSales,
 		items: customers,
-		optionName: "firstNames",
-		icon: <StraightenIcon className="text-custom-300" />,
+		optionName: "fullName",
+		icon: <PersonIcon className="text-custom-300" />,
 		value: formState.idCustomerFK,
+		required: true,
+	};
+
+	const autoCompleteSeller = {
+		name: "idSellerFK",
+		handleInputChange,
+		dispatchProp: loadSellers,
+		items: sellers,
+		optionName: "username",
+		icon: <BadgeIcon className="text-custom-300" />,
+		value: formState.idSellerFK,
+		required: true,
 	};
 
 	return (
@@ -41,9 +56,16 @@ export const SalesForm = ({
 			<Title title={"Agregar productos"} />
 			<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
 				<div>
-					<p className="text-custom-150 font-normal">Clientes: </p>
+					<p className="text-custom-150 font-normal">Cliente: </p>
 					<AutocompleteComponent
 						{...autoCompleteCustomers}
+						handleInputChange={handleInputChange}
+					/>
+				</div>
+				<div>
+					<p className="text-custom-150 font-normal">Vendedor: </p>
+					<AutocompleteComponent
+						{...autoCompleteSeller}
 						handleInputChange={handleInputChange}
 					/>
 				</div>

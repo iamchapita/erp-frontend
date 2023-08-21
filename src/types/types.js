@@ -63,4 +63,13 @@ export const types = {
 	purchaseOrderActive: "[purchaseOrder] Active",
 	purchaseOrderProductsLoaded: "[purchaseOrderProducts] Loaded",
 	purchaseOrderProductsActive: "[purchaseOrderProducts] Active",
+
+	// Employee
+	sellerLoaded: "[sellers] Loaded",
+	sellerActive: "[sellers] Active",
+	// Loaded: "[] Loaded",
+	// Active: "[] Active",
+	// Loaded: "[] Loaded",
+	// Active: "[] Active",
+	
 };

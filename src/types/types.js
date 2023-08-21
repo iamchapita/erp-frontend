@@ -24,6 +24,7 @@ export const types = {
 	productUnityActive: "[Product Unity] Active",
 	productProvidersLoaded: "[Product Providers] Providers loaded",
 	productProviderActive: "[Product Provider] Active",
+
 	// Invoice
 	InvoiceLoaded: "[Invoice] Loaded",
 	InvoiceImageLoaded: "[Invoice] Image Loaded",
@@ -46,7 +47,6 @@ export const types = {
 	businessCustomersLoaded: "[Business Customers] Business Customers Loaded",
 	naturalCustomersLoaded: "[Nartural Customers] Natural Customers Loaded",
 
-
 	// Binacle
 	binacleLoaded: "[Binacle] Loaded",
 	binacleActive: "[Binacle] Active",
@@ -58,4 +58,9 @@ export const types = {
 	//users
 	getUserCount: "[User] Get User Count",
 
+	// Sales
+	purchaseOrderLoaded: "[purchaseOrder] Loaded",
+	purchaseOrderActive: "[purchaseOrder] Active",
+	purchaseOrderProductsLoaded: "[purchaseOrderProducts] Loaded",
+	purchaseOrderProductsActive: "[purchaseOrderProducts] Active",
 };

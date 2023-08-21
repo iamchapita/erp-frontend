@@ -142,8 +142,8 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 								user.photoURL,
 								user.emailVerified,
 								user.accessToken,
-								data[0].id,
-								data[0].name
+								1,
+								"Administrador"
 							)
 						);
 
@@ -199,7 +199,7 @@ export const login = (
 		displayName,
 		email,
 		photoURL,
-		emailVerified,
+		emailVerified,	
 		accessToken,
 		idRole,
 		role,

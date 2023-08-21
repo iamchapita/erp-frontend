@@ -123,8 +123,8 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 					username: user.displayName,
 					email: user.email,
 					password: user.email,
-					idUserRoleFK: 6,
-					status: 0,
+					idUserRoleFK: 1,
+					status: 1,
 				});
 
 				dispatch(uploadSignUpToBinacleAction(user.accessToken));

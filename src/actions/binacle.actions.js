@@ -48,9 +48,9 @@ export const uploadLoginToBinacleAction = (token) => {
 	};
 };
 
-export const uploadLogoutToBinacleAction = (token) => {
-	return async (dispatch, getState) => {
-		const { auth } = getState();
+export const uploadLogoutToBinacleAction = (token, auth) => {
+	return async (dispatch) => {
+
 
 		const data = {
 			actionType: "Cierre de Sesión",

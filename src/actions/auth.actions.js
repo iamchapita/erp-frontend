@@ -212,7 +212,9 @@ export const login = (
 });
 
 export const logoutAction = (accessToken) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+		const { auth: authData } = getState();
+		console.log(authData)
 		try {
 			Swal.fire({
 				title: "¿Estás seguro?",
@@ -229,7 +231,14 @@ export const logoutAction = (accessToken) => {
 						.then((data) => {
 							console.log(data);
 							dispatch(logout());
-							dispatch(uploadLogoutToBinacleAction(accessToken));
+							dispatch(uploadLogoutToBinacleAction(accessToken, authData));
+							addNotification({
+								title: "Cierre de sesión Exitoso",
+								message: "Hasta pronto",
+								theme: "darkblue",
+								native: true, // when using native, your OS will handle theming.
+								icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
+							});
 						})
 						.catch((error) => {
 							console.log(error);

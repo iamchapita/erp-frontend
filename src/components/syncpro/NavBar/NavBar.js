@@ -1,10 +1,12 @@
 import {Fragment, useState} from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import imgNav from '../../../img/navImg.png'
 import {items} from "../../../data/util";
 import {Link} from "react-router-dom";
+import {logOut} from "../../../helpers/logOut";
+import {uploadLogoutToBinacleAction} from "../../../actions/binacle.actions";
 
 
 function classNames(...classes) {
@@ -12,6 +14,9 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+    const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.auth);
+
 
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
     const newItems = items.map((item, index) => {
@@ -107,12 +112,15 @@ export default function NavBar() {
 
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    <p
+                                                        onClick={() => {
+                                                            const result = logOut()
+                                                            dispatch(uploadLogoutToBinacleAction(accessToken));
+                                                        }}
+                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                                                     >
                                                         Cerrar Sesión
-                                                    </a>
+                                                    </p>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>

@@ -8,13 +8,15 @@ import { Dashboard } from "../components/syncpro/Dashboard";
 import { Product } from "../components/syncpro/modules/Product/Product";
 import { useSelector } from "react-redux";
 import { LicenseWarning } from "../components/syncpro/LicenseWarning";
+import NavBar from "../components/syncpro/NavBar/NavBar";
 
 export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
 
 	return isLoggedIn ? (
-		<div className="flex h-screen">
+		<div className="flex-none sm:flex h-screen">
 
+			<NavBar/>
 
 			<SideBar />
 

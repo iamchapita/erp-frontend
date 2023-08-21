@@ -62,7 +62,7 @@ export const Dashboard = () => {
 
 
 	return (
-		<div className="relative">
+		<div className="static">
 
 			<div className="flex-1 p-5 space-y-3">
 				{/* <Pagination {...routes} /> */}

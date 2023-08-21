@@ -14,32 +14,41 @@ import { loadSystemInfo } from "../actions/system.action";
 import LandingPage from "../components/syncpro/Landing/Landing";
 
 export const AppRouter = () => {
+	const dispatch = useDispatch();
 	const [checking, setChecking] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const { role } = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
+	const { idRole, role } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user?.uid) {
-				FetchData("user/getUserRolByUid", user.accessToken, "POST", {
-					uid: user.uid,
-				}).then((data) => {
-					dispatch(
-						login(
-							user.uid,
-							user.displayName,
-							user.email,
-							user.photoURL,
-							user.emailVerified,
-							user.accessToken,
-							data[0].id,
-							data[0].name
-						)
-					);
+				if (idRole === null && role === null) {
+					FetchData(
+						"user/getUserRolByUid",
+						user.accessToken,
+						"POST",
+						{
+							uid: user.uid,
+						}
+					).then((data) => {
+						if (data.length > 0) {
+							dispatch(
+								login(
+									user.uid,
+									user.displayName,
+									user.email,
+									user.photoURL,
+									user.emailVerified,
+									user.accessToken,
+									data[0].id,
+									data[0].name
+								)
+							);
+						}
+					});
+				}
 
-					dispatch(loadSystemInfo(user.accessToken));
-				});
+				dispatch(loadSystemInfo(user.accessToken));
 				setIsLoggedIn(true);
 			} else {
 				setIsLoggedIn(false);
@@ -74,7 +83,6 @@ export const AppRouter = () => {
 				element={
 					role !== "Superadministrador" ? (
 						<PrivateRouter isLoggedIn={isLoggedIn}></PrivateRouter>
-
 					) : (
 						<SuperAdminRouter
 							isLoggedIn={isLoggedIn}
@@ -82,7 +90,6 @@ export const AppRouter = () => {
 					)
 				}
 			/>
-
 		</Routes>
 	);
 };

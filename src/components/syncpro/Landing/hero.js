@@ -48,8 +48,8 @@ function HeroSec() {
                             </p>
                         </div>
                         <div className="flex justify-center items-center">
-                            <Link to={"/login"} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-300 bg-custom-300 transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-custom-300 py-2 sm:py-4 text-sm">Comenzar</Link>
-                            <Link to={"/register"} className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-300 bg-transparent transition duration-150 ease-in-out hover:border-indigo-600 lg:text-xl lg:font-bold  hover:text-indigo-600 rounded border border-custom-300 text-custom-300 px-4 sm:px-10 py-2 sm:py-4 text-sm">Registrarse</Link>
+                            <Link to={"/login"} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-300 bg-custom-300 transition duration-150 ease-in-out hover:bg-custom-250 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-custom-300 py-2 sm:py-4 text-sm">Comenzar</Link>
+                            <Link to={"/register"} className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-300 bg-transparent transition duration-150 ease-in-out hover:border-custom-250 lg:text-xl lg:font-bold  hover:text-indigo-600 rounded border border-custom-300 text-custom-300 px-4 sm:px-10 py-2 sm:py-4 text-sm">Registrarse</Link>
                         </div>
                     </div>
                 </div>

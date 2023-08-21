@@ -62,9 +62,9 @@ export const AppRouter = () => {
 				path="/*"
 				element={
 					<PublicRouter isLoggedIn={isLoggedIn}>
+						<Route path="landing" element={<LandingPage />} />
 						<Route path="register" element={<SignUpScreen />} />
 						<Route path="login" element={<AuthScreen />} />
-						<Route path="landing" element={<LandingPage />} />
 						<Route path="*" element={<Navigate to={"landing"} />} />
 					</PublicRouter>
 				}

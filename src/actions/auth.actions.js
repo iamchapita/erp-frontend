@@ -118,16 +118,28 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 
 				// Se registra el usuario como inactivo y con rol "No Asignado"
 				// El administrador debe establecer elr rol del nuevo usuario
-				await PostData("user/addUser", null, {
+				FetchData("user/addUser", user.accessToken, "POST", {
 					uid: user.uid,
 					username: user.displayName,
 					email: user.email,
 					password: user.email,
 					idUserRoleFK: 1,
 					status: 1,
+				}).then((data) => {
+					dispatch(uploadSignUpToBinacleAction(user.accessToken));
+					dispatch(
+						login(
+							user.uid,
+							user.displayName,
+							user.email,
+							user.photoURL,
+							user.emailVerified,
+							user.accessToken,
+							1,
+							"Administrador"
+						)
+					);
 				});
-
-				dispatch(uploadSignUpToBinacleAction(user.accessToken));
 			})
 			.catch((e) => {
 				Swal.fire("Error", e.message, "error");

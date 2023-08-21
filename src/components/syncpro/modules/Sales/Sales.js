@@ -35,13 +35,18 @@ export const Sales = () => {
 
 	return (
 		<div className="p-5 text-start w-full">
-			<Title title={"Ventas"} />
+			<Title title={"Ventas al Contado"} />
 			<SalesPageHeader
 				selectedRow={selectedRow}
 				setSelectedRow={setSelectedRow}
 			/>
 
-			{/* <SalesForm formState={} selectedRow={selectedRow} /> */}
+			<SalesForm
+				formState={formState}
+				selectedRow={selectedRow}
+				handleInputChange={handleInputChange}
+				reset={reset}
+			/>
 		</div>
 	);
 };

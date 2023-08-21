@@ -13,8 +13,23 @@ export const logOut = () => {
 		cancelButtonText: "Cancelar",
 	}).then((result) => {
 		if (result.isConfirmed) {
-			indexedDB.deleteDatabase("firebaseLocalStorageDb");
-			window.location.reload();
+			// indexedDB.deleteDatabase("firebaseLocalStorageDb");
+			// localStorage.clear();
+			// //Delete service worker cache
+			// if ("serviceWorker" in navigator) {
+			// 	navigator.serviceWorker.getRegistrations().then(function (registrations) {
+			// 		for (let registration of registrations) {
+			// 			registration.unregister();
+			// 		}
+			// 	});
+			// }
+
+			// //Delete all storage
+			// window.localStorage.clear();
+
+			//
+			// window.location.reload();
+
 			addNotification({
 				title: "Cierre de sesión Exitoso",
 				message: "Hasta pronto",

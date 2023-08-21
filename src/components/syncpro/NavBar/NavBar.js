@@ -7,6 +7,7 @@ import {items} from "../../../data/util";
 import {Link} from "react-router-dom";
 import {logOut} from "../../../helpers/logOut";
 import {uploadLogoutToBinacleAction} from "../../../actions/binacle.actions";
+import {logoutAction} from "../../../actions/auth.actions";
 
 
 function classNames(...classes) {
@@ -114,8 +115,7 @@ export default function NavBar() {
                                                 {({ active }) => (
                                                     <p
                                                         onClick={() => {
-                                                            const result = logOut()
-                                                            dispatch(uploadLogoutToBinacleAction(accessToken));
+                                                            dispatch(logoutAction(accessToken));
                                                         }}
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                                                     >

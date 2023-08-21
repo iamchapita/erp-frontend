@@ -7,8 +7,9 @@ import {
 	createUserWithEmailAndPassword,
 	updateProfile,
 	sendEmailVerification,
+	signOut,
 } from "../firebase/firebase.config";
-import { signOut } from "firebase/auth";
+
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui.actions";
 import { PostData, FetchData } from "../components/utils/fetch";
@@ -28,34 +29,54 @@ export const googleLogin = () => {
 				FetchData("user/getUserRolByUid", user.accessToken, "POST", {
 					uid: user.uid,
 				}).then((data) => {
-					dispatch(
-						login(
-							user.uid,
-							user.displayName,
-							user.email,
-							user.photoURL,
-							user.emailVerified,
-							user.accessToken,
-							data[0].id,
-							data[0].name
-						)
-					);
+					if (data.length > 0) {
+						dispatch(
+							login(
+								user.uid,
+								user.displayName,
+								user.email,
+								user.photoURL,
+								user.emailVerified,
+								user.accessToken,
+								data[0].id,
+								data[0].name
+							)
+						);
+					} else {
+						PostData("user/addUser", null, {
+							uid: user.uid,
+							username: user.displayName,
+							email: user.email,
+							password: user.email,
+							idUserRoleFK: 1,
+							status: 1,
+						}).then((data) => {
+							dispatch(
+								login(
+									user.uid,
+									user.displayName,
+									user.email,
+									user.photoURL,
+									user.emailVerified,
+									user.accessToken,
+									1,
+									"Administrador"
+								)
+							);
+						});
+					}
+				});
+				
+				dispatch(uploadLoginToBinacleAction(user.accessToken));
 
-					dispatch(uploadLoginToBinacleAction(user.accessToken));
-
-					Swal.fire(
-						"Inicio de sesión Exitoso",
-						"Bienvenido",
-						"success"
-					);
-					dispatch(uiFinishLoading());
-					addNotification({
-						title: "Inicio de sesión Exitoso",
-						message: "Bienvenido",
-						theme: "darkblue",
-						native: true, // when using native, your OS will handle theming.
-						icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
-					});
+				Swal.fire("Inicio de sesión Exitoso", "Bienvenido", "success");
+				dispatch(uiFinishLoading());
+				addNotification({
+					title: "Inicio de sesión Exitoso",
+					message: "Bienvenido",
+					theme: "darkblue",
+					native: true, // when using native, your OS will handle theming.
+					icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
 				});
 			})
 			.catch((error) => {
@@ -108,23 +129,18 @@ export const signInWithEmailPassword = (email, password) => {
 	};
 };
 
-export const signUpWithEmailPasswordName = (displayName, email, password) => {
+export const googleRegister = () => {
 	return (dispatch) => {
 		dispatch(uiStartLoading());
-		createUserWithEmailAndPassword(auth, email, password)
+		signInWithPopup(auth, provider)
 			.then(async ({ user }) => {
-				await updateProfile(user, { displayName });
-				sendEmailVerification(user);
-
-				// Se registra el usuario como inactivo y con rol "No Asignado"
-				// El administrador debe establecer elr rol del nuevo usuario
 				await PostData("user/addUser", null, {
 					uid: user.uid,
 					username: user.displayName,
 					email: user.email,
 					password: user.email,
-					idUserRoleFK: 6,
-					status: 0,
+					idUserRoleFK: 1,
+					status: 1,
 				}).then((data) => {
 					FetchData(
 						"user/getUserRolByUid",
@@ -144,6 +160,68 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 								user.accessToken,
 								data[0].id,
 								data[0].name
+							)
+						);
+
+						dispatch(uploadSignUpToBinacleAction(user.accessToken));
+
+						Swal.fire("Registro Exitoso", "Bienvenido", "success");
+						dispatch(uiFinishLoading());
+					});
+
+					dispatch(uiFinishLoading());
+					addNotification({
+						title: "Inicio de sesión Exitoso",
+						message: "Bienvenido",
+						theme: "darkblue",
+						native: true, // when using native, your OS will handle theming.
+						icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
+					});
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+				dispatch(uiFinishLoading());
+			});
+	};
+};
+
+export const signUpWithEmailPasswordName = (displayName, email, password) => {
+	return (dispatch) => {
+		dispatch(uiStartLoading());
+		createUserWithEmailAndPassword(auth, email, password)
+			.then(async ({ user }) => {
+				await updateProfile(user, { displayName });
+				sendEmailVerification(user);
+
+				// Se registra el usuario como inactivo y con rol "No Asignado"
+				// El administrador debe establecer elr rol del nuevo usuario
+				await PostData("user/addUser", null, {
+					uid: user.uid,
+					username: user.displayName,
+					email: user.email,
+					password: user.email,
+					idUserRoleFK: 1,
+					status: 1,
+				}).then((data) => {
+					FetchData(
+						"user/getUserRolByUid",
+						user.accessToken,
+						"POST",
+						{
+							uid: user.uid,
+						}
+					).then((data) => {
+						dispatch(
+							login(
+								user.uid,
+								user.displayName,
+								user.email,
+								user.photoURL,
+								user.emailVerified,
+								user.accessToken,
+								1,
+								"Administrador"
 							)
 						);
 
@@ -204,4 +282,53 @@ export const login = (
 		idRole,
 		role,
 	},
+});
+
+export const logoutAction = (accessToken) => {
+	return async (dispatch, getState) => {
+		const { auth: authData } = getState();
+		console.log(authData);
+		try {
+			Swal.fire({
+				title: "¿Estás seguro?",
+				text: "Estás a punto de cerrar sesión",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#4fD1C5",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Sí, cerrar sesión",
+				cancelButtonText: "Cancelar",
+			}).then(async (result) => {
+				if (result.isConfirmed) {
+					await signOut(auth)
+						.then((data) => {
+							console.log(data);
+							dispatch(logout());
+							dispatch(
+								uploadLogoutToBinacleAction(
+									accessToken,
+									authData
+								)
+							);
+							addNotification({
+								title: "Cierre de sesión Exitoso",
+								message: "Hasta pronto",
+								theme: "darkblue",
+								native: true, // when using native, your OS will handle theming.
+								icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
+							});
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+				}
+			});
+		} catch (error) {
+			console.error("Error durante el logout:", error);
+		}
+	};
+};
+
+const logout = () => ({
+	type: types.logout,
 });

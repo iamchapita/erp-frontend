@@ -5,7 +5,7 @@ import SocialNetworkBottom from "../button/SocialNetworkBottom";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { googleLogin, signUpWithEmailPasswordName } from '../../actions/auth.actions';
+import { signUpWithEmailPasswordName, googleRegister } from '../../actions/auth.actions';
 
 import validator from 'validator'
 import { uiRemoveError, uiSetError } from '../../actions/ui.actions';
@@ -102,7 +102,7 @@ const SignUpScreen = () => {
     }
 
     const handleGoogleSignUp = () => {
-        dispatch(googleLogin())
+        dispatch(googleRegister())
     }
 
 

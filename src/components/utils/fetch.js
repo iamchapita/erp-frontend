@@ -62,7 +62,7 @@ export const FetchData = async (url, authToken, method = 'GET', data = null) => 
 
 export const PostData = async (url, authToken = null, body) => {
 	try {
-		const response = await fetch(`http://localhost:8082/${url}`, {
+		const response = await fetch(`https://ww3.syncprois.tech/${url}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

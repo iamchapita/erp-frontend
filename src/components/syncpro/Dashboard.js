@@ -10,6 +10,7 @@ import {providers} from "../../actions/product.actions";
 import ProveedoresCard from "./Dashboard/suppliers";
 import {getUserCount} from "../../actions/dashboard.actions";
 import {loadCustomers} from "../../actions/customer.action";
+import {Link} from "react-router-dom";
 
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
@@ -78,19 +79,16 @@ export const Dashboard = () => {
 					<div className="bg-white shadow-sm grid col-span-1 sm:grid-cols-1 lg:grid-cols-5 p-5 sm:col-span-3 rounded-xl">
 						<div className="relative col-span-1 md:col-span-3 text-start">
 							<p className="text-sm font-bold text-custom-500 opacity-50">
-								Proyecto de industria
+								¿Quiénes somos?
 							</p>
 							<p className="font-bold">
-								Dashboard de este proyecto
+								Te contamos un poco sobre nosotros
 							</p>
-							<p className="text-custom-500 mb-5">
-								Este debería ser un Lorem Ipsum pero no tengo
-								una extensión para hacer eso con React en
-								VSCode, entonces, mejor no. ¿Será que lo dejo de
-								este tamaño?
+							<p className="text-gray-700 mb-5">
+								Bienvenido a Syncpro, tu socio estratégico para alcanzar el éxito en el mercado. En MarketPlus, nos dedicamos a potenciar tu negocio, brindándote soluciones innovadoras y personalizadas que te permitirán destacar en un entorno competitivo.
 							</p>
-							<p className="font-bold mb-5 lg:mb-0 lg:absolute lg:bottom-0">
-								Leer más -{">"}
+							<p className="font-bold mb-5 lg:mb-0 animate-pulse lg:absolute lg:bottom-0">
+								<Link to={'productos'} className={''}> {'Comencemos ->'}</Link>
 							</p>
 						</div>
 						<div className="bg-custom-300 h-64 flex items-center justify-center sm:col-span-2 rounded">

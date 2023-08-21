@@ -51,14 +51,14 @@ export const FetchData = async (url, authToken, method = 'GET', data = null) => 
 			requestOptions.body = JSON.stringify(data);
 		}
 
-		const response = await fetch(`http://localhost:8082/${url}`, requestOptions);
-
+		const response = await fetch(`https://ww3.syncprois.tech/${url}`, requestOptions);
 		const responseData = await response.json();
 		return responseData; // Hacer algo con los datos obtenidos
 	} catch (error) {
 		console.error("Error al realizar la solicitud:", error);
 	}
 };
+
 
 export const PostData = async (url, authToken = null, body) => {
 	try {

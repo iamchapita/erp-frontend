@@ -7,8 +7,9 @@ import {
 	createUserWithEmailAndPassword,
 	updateProfile,
 	sendEmailVerification,
+	signOut
 } from "../firebase/firebase.config";
-import { signOut } from "firebase/auth";
+
 import { types } from "../types/types";
 import { uiFinishLoading, uiStartLoading } from "./ui.actions";
 import { PostData, FetchData } from "../components/utils/fetch";
@@ -183,6 +184,10 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 // 	type: types.logout,
 // });
 
+
+
+
+
 export const login = (
 	uid,
 	displayName,
@@ -204,4 +209,42 @@ export const login = (
 		idRole,
 		role,
 	},
+});
+
+export const logoutAction = () => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: "¿Estás seguro?",
+				text: "Estás a punto de cerrar sesión",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#4fD1C5",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Sí, cerrar sesión",
+				cancelButtonText: "Cancelar",
+			}).then(async (result) => {
+				if (result.isConfirmed) {
+					await signOut(auth)
+						.then((data) => {
+							console.log(data);
+							dispatch(logout());
+							dispatch(uploadLogoutToBinacleAction(null));
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+				}
+			});
+		} catch (error) {
+			console.error("Error durante el logout:", error);
+
+		}
+};
+};
+
+
+
+const logout = () => ({
+	type: types.logout,
 });

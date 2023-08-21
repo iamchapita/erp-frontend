@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import {Fragment, useState} from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import {useSelector} from "react-redux";
@@ -6,12 +6,6 @@ import imgNav from '../../../img/navImg.png'
 import {items} from "../../../data/util";
 import {Link} from "react-router-dom";
 
-const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -19,13 +13,18 @@ function classNames(...classes) {
 
 export default function NavBar() {
 
+    const [currentItemIndex, setCurrentItemIndex] = useState(0);
     const newItems = items.map((item, index) => {
-
         return {
             ...item,
-            current: index === 0
-        }
+            current: index === currentItemIndex
+        };
     });
+
+    const handleItemClick = (index) => {
+        setCurrentItemIndex(index);
+    };
+
 
     const {photoURL, role} = useSelector(state => state.auth)
 
@@ -125,19 +124,22 @@ export default function NavBar() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 px-2 pb-3 pt-2">
-                            {newItems.map((item) => (
-                                <Disclosure.Button
-                                    key={item.Title}
-                                    as="a"
-                                    href={item.path}
-                                    className={classNames(
-                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    {item.Title}
-                                </Disclosure.Button>
+                            {newItems.map((item, index) => (
+                                (item.role.includes(role) && !item.closeSession )&& (
+                                    <Link
+                                        key={item.Title}
+
+                                        to={item.path}
+                                        className={classNames(
+                                            item.current ? 'bg-custom-100 text-custom-300' : 'text-white hover:bg-white hover:text-custom-100',
+                                            'block rounded-md px-3 py-2 text-base font-medium'
+                                        )}
+                                        aria-current={item.current ? 'page' : undefined}
+                                        onClick={() => handleItemClick(index)}
+                                    >
+                                        {item.Title}
+                                    </Link>
+                                )
                             ))}
                         </div>
                     </Disclosure.Panel>

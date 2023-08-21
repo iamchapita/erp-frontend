@@ -72,6 +72,7 @@ export const AppRouter = () => {
 				element={
 					role !== "Superadministrador" ? (
 						<PrivateRouter isLoggedIn={isLoggedIn}></PrivateRouter>
+
 					) : (
 						<SuperAdminRouter
 							isLoggedIn={isLoggedIn}
@@ -79,6 +80,7 @@ export const AppRouter = () => {
 					)
 				}
 			/>
+
 		</Routes>
 	);
 };

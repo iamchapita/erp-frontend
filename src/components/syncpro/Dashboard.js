@@ -12,7 +12,8 @@ import {getUserCount} from "../../actions/dashboard.actions";
 import {loadCustomers} from "../../actions/customer.action";
 import {Link} from "react-router-dom";
 import FooterPa from "./Dashboard/footer";
-import Cta from "./Dashboard/Cta";
+import Footer from "./Dashboard/Graph";
+import logo from '../../img/navImg.png'
 
 export const Dashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
@@ -105,7 +106,7 @@ export const Dashboard = () => {
 					</div>
 					<div className="bg-white shadow-sm text-start p-5 sm:col-span-2 rounded-xl">
 						<div className="bg-custom-300 p-5 rounded h-full flex justify-center items-center text-white">
-
+							<img src={logo} alt="undraw-Add-user-re-5oib" border="0" className="w-1/2" />
 						</div>
 					</div>
 				</div>
@@ -123,6 +124,7 @@ export const Dashboard = () => {
 				</div>
 			</div>
 			<FooterPa/>
+			<Footer/>
 		</div>
 	);
 };

@@ -11,6 +11,7 @@ import { LicenseWarning } from "../components/syncpro/LicenseWarning";
 import { Sales } from "../components/syncpro/modules/Sales/Sales";
 
 import NavBar from "../components/syncpro/NavBar/NavBar";
+import Footer from "../components/syncpro/Dashboard/Graph";
 
 export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
@@ -37,6 +38,7 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 					<Route path="ventas" element={<Sales />} />
 					<Route path="*" element={<Navigate to={"dashboard"} />} />
 				</Routes>
+
 			</div>
 		</div>
 	) : (

@@ -14,6 +14,16 @@ export const logOut = () => {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			indexedDB.deleteDatabase("firebaseLocalStorageDb");
+			localStorage.clear();
+			//Delete service worker cache
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.getRegistrations().then(function (registrations) {
+					for (let registration of registrations) {
+						registration.unregister();
+					}
+				});
+			}
+
 			window.location.reload();
 			addNotification({
 				title: "Cierre de sesión Exitoso",

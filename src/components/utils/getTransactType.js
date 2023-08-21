@@ -29,8 +29,8 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		title: "Actualización",
 		message: transactInfo.msg,
 		theme: "darkblue",
-		duration: 3000,
-		native: true, // when using native, your OS will handle theming.
+		duration: 30000,
+		native: false, // when using native, your OS will handle theming.
 		icon: 'https://cdn-icons-png.flaticon.com/128/1688/1688988.png',
 
 
@@ -40,7 +40,7 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		title: "Inserción",
 		message: transactInfo.msg,
 		theme: "darkblue",
-		duration: 3000,
+		duration: 30000,
 		native: true, // when using native, your OS will handle theming.
 		icon: 'https://cdn-icons-png.flaticon.com/128/5709/5709755.png',
 	}

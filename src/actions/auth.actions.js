@@ -125,9 +125,34 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 					password: user.email,
 					idUserRoleFK: 6,
 					status: 0,
-				});
+				}).then((data) => {
+					FetchData(
+						"user/getUserRolByUid",
+						user.accessToken,
+						"POST",
+						{
+							uid: user.uid,
+						}
+					).then((data) => {
+						dispatch(
+							login(
+								user.uid,
+								user.displayName,
+								user.email,
+								user.photoURL,
+								user.emailVerified,
+								user.accessToken,
+								data[0].id,
+								data[0].name
+							)
+						);
 
-				dispatch(uploadSignUpToBinacleAction(user.accessToken));
+						dispatch(uploadSignUpToBinacleAction(user.accessToken));
+
+						Swal.fire("Registro Exitoso", "Bienvenido", "success");
+						dispatch(uiFinishLoading());
+					});
+				});
 			})
 			.catch((e) => {
 				Swal.fire("Error", e.message, "error");

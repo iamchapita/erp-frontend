@@ -14,7 +14,7 @@ const initialState = {
 		taxExemptPrice: "",
 		salesTax: "",
 		subTotal: "",
-		// total: "",
+		total: "",
 		status: "",
 	},
 	purchaseOrderProduct: {

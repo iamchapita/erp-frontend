@@ -29,34 +29,54 @@ export const googleLogin = () => {
 				FetchData("user/getUserRolByUid", user.accessToken, "POST", {
 					uid: user.uid,
 				}).then((data) => {
-					dispatch(
-						login(
-							user.uid,
-							user.displayName,
-							user.email,
-							user.photoURL,
-							user.emailVerified,
-							user.accessToken,
-							data[0].id,
-							data[0].name
-						)
-					);
+					if (data.length > 0) {
+						dispatch(
+							login(
+								user.uid,
+								user.displayName,
+								user.email,
+								user.photoURL,
+								user.emailVerified,
+								user.accessToken,
+								data[0].id,
+								data[0].name
+							)
+						);
+					} else {
+						PostData("user/addUser", null, {
+							uid: user.uid,
+							username: user.displayName,
+							email: user.email,
+							password: user.email,
+							idUserRoleFK: 1,
+							status: 1,
+						}).then((data) => {
+							dispatch(
+								login(
+									user.uid,
+									user.displayName,
+									user.email,
+									user.photoURL,
+									user.emailVerified,
+									user.accessToken,
+									1,
+									"Administrador"
+								)
+							);
+						});
+					}
+				});
+				
+				dispatch(uploadLoginToBinacleAction(user.accessToken));
 
-					dispatch(uploadLoginToBinacleAction(user.accessToken));
-
-					Swal.fire(
-						"Inicio de sesión Exitoso",
-						"Bienvenido",
-						"success"
-					);
-					dispatch(uiFinishLoading());
-					addNotification({
-						title: "Inicio de sesión Exitoso",
-						message: "Bienvenido",
-						theme: "darkblue",
-						native: true, // when using native, your OS will handle theming.
-						icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
-					});
+				Swal.fire("Inicio de sesión Exitoso", "Bienvenido", "success");
+				dispatch(uiFinishLoading());
+				addNotification({
+					title: "Inicio de sesión Exitoso",
+					message: "Bienvenido",
+					theme: "darkblue",
+					native: true, // when using native, your OS will handle theming.
+					icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
 				});
 			})
 			.catch((error) => {

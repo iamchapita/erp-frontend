@@ -11,6 +11,7 @@ import AuthScreen from "../components/auth/AuthScreen";
 import { CircularProgress } from "@mui/material";
 import { FetchData } from "../components/utils/fetch";
 import { loadSystemInfo } from "../actions/system.action";
+import LandingPage from "../components/syncpro/Landing/Landing";
 
 export const AppRouter = () => {
 	const [checking, setChecking] = useState(true);
@@ -61,9 +62,10 @@ export const AppRouter = () => {
 				path="/*"
 				element={
 					<PublicRouter isLoggedIn={isLoggedIn}>
+						<Route path="landing" element={<LandingPage />} />
 						<Route path="register" element={<SignUpScreen />} />
 						<Route path="login" element={<AuthScreen />} />
-						<Route path="*" element={<Navigate to={"login"} />} />
+						<Route path="*" element={<Navigate to={"landing"} />} />
 					</PublicRouter>
 				}
 			/>
@@ -72,6 +74,7 @@ export const AppRouter = () => {
 				element={
 					role !== "Superadministrador" ? (
 						<PrivateRouter isLoggedIn={isLoggedIn}></PrivateRouter>
+
 					) : (
 						<SuperAdminRouter
 							isLoggedIn={isLoggedIn}
@@ -79,6 +82,7 @@ export const AppRouter = () => {
 					)
 				}
 			/>
+
 		</Routes>
 	);
 };

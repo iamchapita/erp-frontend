@@ -534,3 +534,42 @@ export const licenseTableHead = [
 		minWidth: 130,
 	},
 ];
+
+export const salesTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		flex: 1,
+		minWidth: 80,
+	},
+	{
+		field: "fullName",
+		headerName: "Cliente",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "username",
+		headerName: "Vendedor",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "purchaseOrderDate",
+		headerName: "Fecha de Orden de Compra",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "total",
+		headerName: "Total",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "status",
+		headerName: "Estado",
+		flex: 2,
+		minWidth: 150,
+	},
+];

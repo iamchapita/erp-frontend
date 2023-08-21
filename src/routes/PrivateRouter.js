@@ -8,13 +8,17 @@ import { Dashboard } from "../components/syncpro/Dashboard";
 import { Product } from "../components/syncpro/modules/Product/Product";
 import { useSelector } from "react-redux";
 import { LicenseWarning } from "../components/syncpro/LicenseWarning";
+import { Sales } from "../components/syncpro/modules/Sales/Sales";
+
+import NavBar from "../components/syncpro/NavBar/NavBar";
+import Footer from "../components/syncpro/Dashboard/Graph";
 
 export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
 
 	return isLoggedIn ? (
-		<div className="flex h-screen">
-
+		<div className="flex-none sm:flex h-screen">
+			<NavBar />
 
 			<SideBar />
 
@@ -31,10 +35,11 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="productos" element={<Product />} />
 					<Route path="facturas" element={<Invoice />} />
+					<Route path="ventas" element={<Sales />} />
 					<Route path="*" element={<Navigate to={"dashboard"} />} />
 				</Routes>
-			</div>
 
+			</div>
 		</div>
 	) : (
 		<Navigate to={"/auth/login"} />

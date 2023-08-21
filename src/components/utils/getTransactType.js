@@ -33,6 +33,7 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		native: true, // when using native, your OS will handle theming.
 		icon: 'https://cdn-icons-png.flaticon.com/128/1688/1688988.png',
 
+
 	}
 
 	const insert = {

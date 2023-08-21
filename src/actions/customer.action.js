@@ -5,7 +5,7 @@ import { cleanFormsFields } from "../data/cleanFormsFields";
 import { uploadBinacleAction } from "./binacle.actions";
 import { getTransactType } from "../components/utils/getTransactType";
 
-const module = "Customer";
+const module = "Clientes";
 
 export const customerActive = (customer) => ({
 	type: types.customerActive,

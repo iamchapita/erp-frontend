@@ -16,8 +16,10 @@ export const employeeReducer = (state = initialState, action) => {
 				sellerActive: action.payload,
 			};
 		case types.sellerLoaded:
-			return action.payload;
-
+			return {
+				...state,
+				sellers: action.payload,
+			};
 		default:
 			return state;
 	}

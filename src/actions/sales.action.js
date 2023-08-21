@@ -12,6 +12,7 @@ export const purchaseOrderActive = (purchaseOrder) => ({
 export const loadPurchaseOrder = (token) => {
 	return async (dispatch) => {
 		FetchData("sales/getPurchaseOrders", token).then((data) => {
+			console.log(data);
 			dispatch(purchaseOrderLoaded(data));
 		});
 	};

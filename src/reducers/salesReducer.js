@@ -6,8 +6,7 @@ const initialState = {
 	purchaseOrder: {
 		id: "",
 		idCustomerFK: "",
-		firstNames: "",
-		lastNames: "",
+		fullName: "",
 		idSellerFK: "",
 		username: "",
 		purchaseOrderDate: "",
@@ -15,7 +14,7 @@ const initialState = {
 		taxExemptPrice: "",
 		salesTax: "",
 		subTotal: "",
-		total: "",
+		// total: "",
 		status: "",
 	},
 	purchaseOrderProduct: {
@@ -25,11 +24,6 @@ const initialState = {
 		pricePerUnit: "",
 		productQuantity: "",
 		totalPerProduct: "",
-	},
-	currentTab: {
-		index: 0,
-		tab: "",
-		tabHeaders: {},
 	},
 };
 
@@ -58,17 +52,6 @@ export const salesReducer = (state = initialState, action) => {
 				purchaseOrderProducts: [...action.payload],
 			};
 
-		case types.customer:
-			return action.payload;
-
-		case types.currentTab:
-			return {
-				...state,
-				currentTab: {
-					...state.currentTab,
-					...action.payload,
-				},
-			};
 		default:
 			return state;
 	}

@@ -88,8 +88,8 @@ function registerValidSW(swUrl, config) {
                 config.onSuccess(registration);
               }
             }
-            // Send a message to the active service worker to trigger a page reload
-            navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+            // // Send a message to the active service worker to trigger a page reload
+            // navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
           }
         };
       };

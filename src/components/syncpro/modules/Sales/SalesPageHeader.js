@@ -8,18 +8,15 @@ export const SalesPageHeader = ({ selectedRow, setSelectedRow }) => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const purchaseOrders = useSelector((state) => state.sales.purchaseOrders);
+	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		accessToken && dispatch(loadPurchaseOrder(accessToken));
 	}, [accessToken, dispatch]);
 
-	const [data, setData] = useState([]);
-	const [tableHead, setTableHead] = useState(salesTableHead);
-
 	useEffect(() => {
 		setData(purchaseOrders);
-		setTableHead(salesTableHead);
-	}, [dispatch, purchaseOrders]);
+	}, [purchaseOrders, dispatch]);
 
 	const handleRowClick = (params) => {
 		setSelectedRow(params.row);
@@ -33,13 +30,13 @@ export const SalesPageHeader = ({ selectedRow, setSelectedRow }) => {
 
 	return (
 		<div className="grid grid-cols-1">
-			{purchaseOrders && (
+			{data && (
 				<DataGrid
 					className="col-span-1"
 					autoHeight
 					density="compact"
-					columns={tableHead}
-					rows={purchaseOrders}
+					columns={salesTableHead}
+					rows={data}
 					initialState={{
 						pagination: {
 							paginationModel: { page: 0, pageSize: 5 },

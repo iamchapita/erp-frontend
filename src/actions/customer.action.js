@@ -20,6 +20,21 @@ export const loadCustomers = (token) => {
 	};
 };
 
+export const loadCustomersToSales = (token) => {
+	return async (dispatch) => {
+		FetchData("Customer/getCustomers", token).then((data) => {
+			dispatch(
+				customersLoaded(
+					data.map((customer) => ({
+						id: customer.id,
+						fullName: `${customer.firstNames} ${customer.lastNames}`,
+					}))
+				)
+			);
+		});
+	};
+};
+
 export const customersLoaded = (customers) => ({
 	type: types.customerLoaded,
 	payload: customers,

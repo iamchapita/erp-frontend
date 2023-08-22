@@ -63,11 +63,10 @@ export const googleLogin = () => {
 									"Administrador"
 								)
 							);
+							dispatch(uploadLoginToBinacleAction(user.accessToken));
 						});
 					}
 				});
-				
-				dispatch(uploadLoginToBinacleAction(user.accessToken));
 
 				Swal.fire("Inicio de sesión Exitoso", "Bienvenido", "success");
 				dispatch(uiFinishLoading());
@@ -134,14 +133,21 @@ export const googleRegister = () => {
 		dispatch(uiStartLoading());
 		signInWithPopup(auth, provider)
 			.then(async ({ user }) => {
-				await PostData("user/addUser", null, {
+				const userInfo = {
 					uid: user.uid,
 					username: user.displayName,
 					email: user.email,
 					password: user.email,
 					idUserRoleFK: 1,
 					status: 1,
-				}).then((data) => {
+				};
+
+				FetchData(
+					"user/addUser",
+					user.accessToken,
+					"POST",
+					userInfo
+				).then((data) => {
 					FetchData(
 						"user/getUserRolByUid",
 						user.accessToken,
@@ -164,19 +170,9 @@ export const googleRegister = () => {
 						);
 
 						dispatch(uploadSignUpToBinacleAction(user.accessToken));
-
 						Swal.fire("Registro Exitoso", "Bienvenido", "success");
-						dispatch(uiFinishLoading());
 					});
-
 					dispatch(uiFinishLoading());
-					addNotification({
-						title: "Inicio de sesión Exitoso",
-						message: "Bienvenido",
-						theme: "darkblue",
-						native: true, // when using native, your OS will handle theming.
-						icon: "https://cdn-icons-png.flaticon.com/128/1688/1688988.png",
-					});
 				});
 			})
 			.catch((error) => {
@@ -194,16 +190,21 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 				await updateProfile(user, { displayName });
 				sendEmailVerification(user);
 
-				// Se registra el usuario como inactivo y con rol "No Asignado"
-				// El administrador debe establecer elr rol del nuevo usuario
-				await PostData("user/addUser", null, {
+				const userInfo = {
 					uid: user.uid,
 					username: user.displayName,
 					email: user.email,
 					password: user.email,
 					idUserRoleFK: 1,
 					status: 1,
-				}).then((data) => {
+				};
+
+				FetchData(
+					"user/addUser",
+					user.accessToken,
+					"POST",
+					userInfo
+				).then((data) => {
 					FetchData(
 						"user/getUserRolByUid",
 						user.accessToken,
@@ -220,16 +221,15 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 								user.photoURL,
 								user.emailVerified,
 								user.accessToken,
-								1,
-								"Administrador"
+								data[0].id,
+								data[0].name
 							)
 						);
 
 						dispatch(uploadSignUpToBinacleAction(user.accessToken));
-
 						Swal.fire("Registro Exitoso", "Bienvenido", "success");
-						dispatch(uiFinishLoading());
 					});
+					dispatch(uiFinishLoading());
 				});
 			})
 			.catch((e) => {
@@ -238,28 +238,6 @@ export const signUpWithEmailPasswordName = (displayName, email, password) => {
 			});
 	};
 };
-
-// export const logoutAction = () => {
-// 	return async (dispatch) => {
-// 		try {
-// 			await signOut(auth)
-// 				.then((data) => {
-// 					console.log(data);
-// 					dispatch(logout());
-// 					dispatch(uploadLogoutToBinacleAction(null));
-// 				})
-// 				.catch((error) => {
-// 					console.log(error);
-// 				});
-// 		} catch (error) {
-// 			console.error("Error durante el logout:", error);
-// 		}
-// 	};
-// };
-
-// export const logout = () => ({
-// 	type: types.logout,
-// });
 
 export const login = (
 	uid,
@@ -287,7 +265,6 @@ export const login = (
 export const logoutAction = (accessToken) => {
 	return async (dispatch, getState) => {
 		const { auth: authData } = getState();
-		console.log(authData);
 		try {
 			Swal.fire({
 				title: "¿Estás seguro?",
@@ -302,7 +279,6 @@ export const logoutAction = (accessToken) => {
 				if (result.isConfirmed) {
 					await signOut(auth)
 						.then((data) => {
-							console.log(data);
 							dispatch(logout());
 							dispatch(
 								uploadLogoutToBinacleAction(
@@ -332,3 +308,7 @@ export const logoutAction = (accessToken) => {
 const logout = () => ({
 	type: types.logout,
 });
+
+// export const getUserId = () ={
+
+// }

@@ -73,7 +73,7 @@ export const CustomModal = ({ setState, setOpen, open, handleOpen, handleClose, 
           <div className='grid grid-cols-1'>
             <Title title='Roles' className='col-span-1' />
             <div className='flex justify-center [&>*]:cursor-pointer [&>*]:hover:transition-all [&>*]:hover:ease-in-out'>
-              <Tooltip
+{/*               <Tooltip
                 componentsProps={{
                   tooltip: {
                     sx: {
@@ -100,7 +100,7 @@ export const CustomModal = ({ setState, setOpen, open, handleOpen, handleClose, 
                     fontSize='large' className=' bg-gray-600 rounded  text-custom-300' />}
                 </IconButton>
               </Tooltip>
-
+ */}
               <Tooltip
                 componentsProps={{
                   tooltip: {

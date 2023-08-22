@@ -1,3 +1,4 @@
+import addNotification from "react-push-notification";
 import { FetchData } from "../components/utils/fetch"
 import { adminTypes } from "../types/admin.types";
 
@@ -63,8 +64,28 @@ export const updateRole = ( currentUser) => {
         
         FetchData('user/updateUser', accessToken, 'PATCH', { uid, idUserRoleFK, status })
             .then((data) => {
+               if( data.affectedRows > 0 )  {
                 dispatch(getAllUsers(accessToken));
-                dispatch(getRolesAction(accessToken));
+                dispatch(getRolesAction(accessToken))
+
+            }  else {
+                console.log('Error al actualizar el rol');
+                //Notifiacion con service worker
+                Notification.permission === "granted" && addNotification({
+                    title: "Error al actualizar el rol",
+                    message: "No se pudo actualizar el rol del usuario",
+                    type: "danger",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+
+            }
             }
             )
     }

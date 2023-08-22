@@ -10,6 +10,7 @@ import { systemReducer } from "../reducers/systemReducer";
 import { dashboardReducer } from "../reducers/dashboardReducer";
 import { salesReducer } from "../reducers/salesReducer";
 import { userReducer } from "../reducers/user.reducer";
+import { employeeReducer } from "../reducers/employeeReducer";
 
 const composeEnhancers =
 	typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -28,6 +29,7 @@ export const store = configureStore({
 		dashboard: dashboardReducer,
 		sales: salesReducer,
 		user: userReducer,
+		employee: employeeReducer,
 	},
 	middleware: [thunk],
 	devTools: composeEnhancers(),

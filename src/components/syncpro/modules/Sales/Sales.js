@@ -26,11 +26,12 @@ export const Sales = () => {
 		subTotal: "",
 		total: "",
 		status: "",
-		idPurchaseOrderFK: "",
-		idProductFK: "",
-		pricePerUnit: "",
-		productQuantity: "",
-		totalPerProduct: "",
+		product: "",
+		// idPurchaseOrderFK: "",
+		// idProductFK: "",
+		// pricePerUnit: "",
+		// productQuantity: "",
+		// totalPerProduct: "",
 	});
 
 	return (

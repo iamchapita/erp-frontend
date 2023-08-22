@@ -6,8 +6,6 @@ import { getTransactType } from "../components/utils/getTransactType";
 import { uploadBinacleAction } from "./binacle.actions";
 import moment from "moment";
 
-// 	! FALTA IMPLEMENTAR ACTUALIZACIÓN
-
 const mainModule = "Productos";
 const firstChildModule = "Categoría de Productos";
 const secondChildModule = "Unidad de Medida";
@@ -23,17 +21,9 @@ export const loadProducts = (token) => {
 export const loadProductsToSaleView = (token) => {
 	return async (dispatch) => {
 		FetchData("product/getProduct/", token).then((data) => {
-			let filtered = data.filter((product) => product.status == true);
-
-			filtered = filtered.map((product) => ({
-				id: product.id,
-				productCode: product.productCode,
-				name: product.name,
-				description: product.description,
-				salePrice: parseInt(product.salePrice),
-			}));
-
-			dispatch(productsLoaded(filtered));
+			dispatch(
+				productsLoaded(data.filter((product) => product.status == true))
+			);
 		});
 	};
 };

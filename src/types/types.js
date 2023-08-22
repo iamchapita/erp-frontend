@@ -67,9 +67,8 @@ export const types = {
 	// Employee
 	sellerLoaded: "[sellers] Loaded",
 	sellerActive: "[sellers] Active",
-	// Loaded: "[] Loaded",
-	// Active: "[] Active",
-	// Loaded: "[] Loaded",
-	// Active: "[] Active",
+
+	// Inventory
+	inventoryLoaded: "[inventory] Loaded",
 	
 };

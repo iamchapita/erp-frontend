@@ -29,6 +29,10 @@ export const updateUserRole = (accessToken, uid, role) => {
 
 
 export const userActiveAction = (user) => {
+    user = {
+        ...user,
+        userStatus: (user.userStatus === "Activo" || user.userStatus === 1) ? user.userStatus = 1 : user.userStatus = 0,
+    }
     return {
         type: adminTypes.USER_ACTIVE,
         payload: user,
@@ -44,6 +48,23 @@ export const getRolesAction = (accessToken) => {
                     type: adminTypes.GET_ROLES,
                     payload: data,
                 })
+            }
+            )
+    }
+}
+
+
+export const updateRole = ( currentUser) => {
+    return async (dispatch, getState) => {
+        const { roles } = getState().user;
+        const { accessToken } = getState().auth;
+        const { uid, userRole, userStatus: status } = currentUser;
+        const {id : idUserRoleFK} = roles.find((roleObject) => roleObject.name === userRole);
+        
+        FetchData('user/updateUser', accessToken, 'PATCH', { uid, idUserRoleFK, status })
+            .then((data) => {
+                dispatch(getAllUsers(accessToken));
+                dispatch(getRolesAction(accessToken));
             }
             )
     }

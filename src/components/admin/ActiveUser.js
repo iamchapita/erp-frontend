@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { CustomModal } from "./Modal";
+import { useDispatch } from "react-redux";
+import { updateRole, userActiveAction } from "../../actions/user.actions";
 const ActiveUser = ({ currentUser, setFormState, editActive, reset, setEditActive }) => {
     const [state, setstate] = useState(false)
     const [open, setOpen] = React.useState(false);
+
+    const dispatch = useDispatch();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const changeStatus = () => {
         setstate(true)
-        setFormState({
-            ...currentUser,
-            userStatus: currentUser.userStatus === 'Activo' ? 'Inactivo' : 'Activo'
-        })
+        
+        dispatch(userActiveAction(
+            {
+                ...currentUser,
+                userStatus: currentUser.userStatus === 1 ?  0 :  1,
+            
+        }))
 
+        
     }
+
+
+    
+
 
 
 
@@ -25,7 +37,7 @@ const ActiveUser = ({ currentUser, setFormState, editActive, reset, setEditActiv
     return (
         <div className="xl:w-5/12 w-11/12 mx-auto mb-4 my-6 md:w-2/3 shadow sm:px-10 px-4 py-6 bg-white dark:bg-gray-800 rounded-md">
             <p className="text-lg text-gray-800 dark:text-gray-100 font-semibold mb-4">Usuario seleccionado</p>
-            <div className="flex justify-between bg-custom-300 rounded-md relative">
+            <div className="flex flex-col justify-between bg-custom-300 rounded-md relative">
                 <div className="flex">
                     <div className="px-4 py-6 border-r border-custom-250">
                         <div className="h-10 w-10">
@@ -43,23 +55,28 @@ const ActiveUser = ({ currentUser, setFormState, editActive, reset, setEditActiv
                     </div>
                 </div>
 
-                {editActive && <span className="self-center cursor-pointer m-3" >
+                {editActive && <span className="self-end flex cursor-pointer m-3" >
                     <SupervisorAccountIcon onClick={handleOpen} className="text-white mx-3 hover:scale-110 transition-all  ease-in-out " />
-                    {currentUser.userStatus === 'Activo' ? <LockOpenIcon onClick={changeStatus} className="text-white hover:scale-110 transition-all  ease-in-out " />
+                    {currentUser.userStatus === 1 ? <LockOpenIcon onClick={changeStatus} className="text-white hover:scale-110 transition-all  ease-in-out " />
                         : <LockIcon onClick={changeStatus} className="text-red-600 hover:scale-110 transition-all  ease-in-out " />}
                 </span>}
 
             </div>
             {/* BUtton to save and cancel */}
             {state && <div className="flex justify-end mt-4">
-                <button className="bg-custom-300 text-white px-4 py-2 rounded-md mr-2 hover:bg-custom-400 transition-all ease-in-out">Guardar</button>
+                <button onClick={()=>{
+                   dispatch(updateRole(currentUser))
+                   setstate(false)
+                   reset()
+                   setEditActive(false)
+                }} className="bg-custom-300 text-white px-4 py-2 rounded-md mr-2 hover:bg-custom-250 hover:text-custom-150 transition-all ease-in-out active:bg-custom-100 active:text-white">Guardar</button>
                 <button onClick={()=>{
                     setstate(false) 
                     reset()
                     setEditActive(false)
                     }} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-all ease-in-out">Cancelar</button>
             </div>}
-            <CustomModal setOpen={setOpen} open={open} handleClose={handleClose} handleOpen={handleOpen}/>
+            <CustomModal setState={setstate} currentUser={currentUser} setOpen={setOpen} open={open} handleClose={handleClose} handleOpen={handleOpen}/>
         </div>
     );
 };

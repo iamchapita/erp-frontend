@@ -1,5 +1,5 @@
-import { Modal } from '@mui/material'
-import React from 'react'
+import { Modal, Tooltip } from '@mui/material'
+import React, { useEffect, useMemo, useState } from 'react'
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
@@ -8,18 +8,27 @@ import Typography from '@mui/material/Typography';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { Title } from '../Title';
 import { AutocompleteComponent } from '../Autocomplete';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import { userActiveAction } from '../../actions/user.actions';
 
-export const CustomModal = ({setOpen, open, handleOpen, handleClose}) => {
+export const CustomModal = ({setState, setOpen, open, handleOpen, handleClose, currentUser}) => {
 
     const {roles} = useSelector(state => state.user)
+    const dispatch = useDispatch();
+ 
 
     const style = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: 300,
+        height: 200,
         bgcolor: '#4fd1c5',
         boxShadow: 24,
         p: 4,
@@ -27,9 +36,18 @@ export const CustomModal = ({setOpen, open, handleOpen, handleClose}) => {
         color: '#000',
       };
 
+      
     
+      const handleChangeRole = (role) =>{
+          setState(true)
+          dispatch(userActiveAction(
+            {
+                ...currentUser,
+                userRole: role,
+            }
+          ))
 
-
+      }
 
     
 
@@ -52,10 +70,29 @@ export const CustomModal = ({setOpen, open, handleOpen, handleClose}) => {
     <Fade in={open}>
     
           <Box sx={style}>
-            <div className='grid grid-cols-2'>
-                <AdminPanelSettingsIcon className='text-4xl bg-white rounded text-custom-300 col-span-1'/>
+            <div className='grid grid-cols-1'>
+                <Title title='Roles' className='col-span-1'/>
+                <div className='flex justify-between [&>*]:cursor-pointer [&>*]:hover:transition-all [&>*]:hover:ease-in-out'>
+                {currentUser.userRole!=="Superadministrador" ? <EngineeringIcon onClick={()=>{handleChangeRole('Superadministrador')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : <EngineeringIcon onClick={()=>{handleChangeRole('Superadministrador')}}
+                 fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                {currentUser.userRole!=="Administrador" ? <AdminPanelSettingsIcon onClick={()=>{handleChangeRole('Administrador')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : <AdminPanelSettingsIcon onClick={()=>{handleChangeRole('Administrador')}}
+                 fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                {currentUser.userRole!=="Vendedor" ? <StorefrontIcon onClick={()=>{handleChangeRole('Vendedor')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : 
+                 <StorefrontIcon onClick={()=>{handleChangeRole('Vendedor')}}
+                 fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                {currentUser.userRole!=="Cajero" ? <PointOfSaleIcon onClick={()=>{handleChangeRole('Cajero')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : 
+                <PointOfSaleIcon onClick={()=>{handleChangeRole('Cajero')}}
+                 fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                {currentUser.userRole!=="Registrador" ? <HowToRegIcon onClick={()=>{handleChangeRole('Registrador')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : 
+                <HowToRegIcon onClick={()=>{handleChangeRole('Cliente')}}
+                fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                {currentUser.userRole!=="Cotizador" ? <AttachMoneyIcon onClick={()=>{handleChangeRole('Cotizador')}} fontSize='large' className=' bg-white hover:scale-110 rounded text-custom-300 hover:bg-opacity-60 hover:text-black'/> : 
+                <AttachMoneyIcon onClick={()=>{handleChangeRole('Contador')}}
+                 fontSize='large' className=' bg-gray-600 rounded  text-custom-300'/>}
+                </div>
+             
+            <button onClick={handleClose} className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4'>Cerrar</button>
             </div>
-            
           </Box>
         
     </Fade>

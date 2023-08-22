@@ -5,7 +5,6 @@ export const getAllUsers = (accessToken)=> {
     return async (dispatch) => {
         FetchData('user/getUsers', accessToken, 'GET')
             .then((data) => {
-               
                 dispatch({
                     type: adminTypes.GET_USERS,
                     payload: data,

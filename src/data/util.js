@@ -15,6 +15,7 @@ import {
 	Wallet,
 	FormatListNumberedRtlOutlined,
 	Bolt,
+	ManageAccounts,
 } from "@mui/icons-material";
 
 export const items = [
@@ -140,6 +141,12 @@ export const items = [
 			"Registrador",
 			"Cotizador",
 		],
+	},
+	{
+		Icon: ManageAccounts,
+		Title: "Gestión de Usuarios",
+		path: "gestionUsuarios",
+		role: ["Superadministrador", "Administrador"],
 	},
 	{
 		Icon: Logout,
@@ -568,6 +575,51 @@ export const salesTableHead = [
 	},
 	{
 		field: "status",
+		headerName: "Estado",
+		flex: 2,
+		minWidth: 150,
+	},
+];
+
+export const userManagementDataTabs = [
+	"Usuarios",
+	"Superadministradores",
+	"Administradores",
+	"Vendedores",
+	"Cajeros",
+	"Registradores",
+	"Cotizadores",
+];
+
+
+
+export const userTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		flex: 1,
+		minWidth: 80,
+	},
+	{
+		field: "username",
+		headerName: "Nombre de Usuario",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "email",
+		headerName: "Correo Electrónico",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "userRole",
+		headerName: "Rol",
+		flex: 2,
+		minWidth: 150,
+	},
+	{
+		field: "userStatus",
 		headerName: "Estado",
 		flex: 2,
 		minWidth: 150,

@@ -12,6 +12,7 @@ import { Sales } from "../components/syncpro/modules/Sales/Sales";
 
 import NavBar from "../components/syncpro/NavBar/NavBar";
 import Footer from "../components/syncpro/Dashboard/Graph";
+import { ControlPanel } from "../components/admin/ControlPanel";
 
 export const PrivateRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
@@ -27,7 +28,10 @@ export const PrivateRouter = ({ isLoggedIn }) => {
 
 				<Routes>
 					{role === "Administrador" ? (
+						<>
 						<Route path="bitacora" element={<Binacle />} />
+						<Route path="gestionUsuarios" element={<ControlPanel />} />
+						</>
 					) : (
 						<></>
 					)}

@@ -30,7 +30,7 @@ export const loadProductsToSaleView = (token) => {
 				productCode: product.productCode,
 				name: product.name,
 				description: product.description,
-				salePrice: product.salePrice,
+				salePrice: parseInt(product.salePrice),
 			}));
 
 			dispatch(productsLoaded(filtered));

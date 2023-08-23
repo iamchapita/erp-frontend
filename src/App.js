@@ -2,9 +2,8 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./routes/AppRouter";
-import Footer from "./components/syncpro/Dashboard/Graph";
-import React, { useEffect } from "react";
-import CustomizedSnackbars from "./components/Notification";
+import React from "react";
+
 /* import { useServiceWorker } from "./serviceWorkerUpdates";
 import addNotification from "react-push-notification";
  */

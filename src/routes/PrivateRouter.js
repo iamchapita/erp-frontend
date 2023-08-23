@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Binacle } from "../components/syncpro/modules/Binacle/Binacle";
 import { Customer } from "../components/syncpro/modules/Customer/Customer";
@@ -11,7 +11,6 @@ import { LicenseWarning } from "../components/syncpro/LicenseWarning";
 import { Sales } from "../components/syncpro/modules/Sales/Sales";
 
 import NavBar from "../components/syncpro/NavBar/NavBar";
-import Footer from "../components/syncpro/Dashboard/Graph";
 import { ControlPanel } from "../components/admin/ControlPanel";
 
 export const PrivateRouter = ({ isLoggedIn }) => {

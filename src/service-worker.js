@@ -83,16 +83,11 @@ self.addEventListener('beforeinstallprompt', (event) => {
 
 });
 
-  self.addEventListener('notificationclick', function (event) {
-    event.notification.close();
-   
-  });
+
 
 
   
-export const showNotification = (title, options)=> {
-  self.registration.showNotification(title, options);
-}
+
 
 
 

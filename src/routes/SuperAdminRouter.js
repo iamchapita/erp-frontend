@@ -7,6 +7,7 @@ import { SuperAdminDashboard } from "../components/syncpro/SuperAdminDashboard";
 import { SideBar } from "../components/syncpro/SideBar";
 import { User } from "../components/syncpro/modules/User/User";
 import { License } from "../components/syncpro/modules/License/License";
+import NavBar from "../components/syncpro/NavBar/NavBar";
 
 export const SuperAdminRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
@@ -14,7 +15,7 @@ export const SuperAdminRouter = ({ isLoggedIn }) => {
 	return isLoggedIn ? (
 		<div className="flex h-screen">
 			<SideBar />
-
+			<NavBar />
 			<div className="overflow-y-auto w-full">
 				<LicenseWarning />
 

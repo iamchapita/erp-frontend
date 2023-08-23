@@ -35,7 +35,7 @@ const ActiveUser = ({ currentUser, setFormState, editActive, reset, setEditActiv
 
 
     return (
-        <div className="xl:w-5/12 w-11/12 mx-auto mb-4 my-6 md:w-2/3 shadow sm:px-10 px-4 py-6 bg-white dark:bg-gray-800 rounded-md">
+        <div className="xl:w-5/12 w-11/12 mx-auto mb-16 my-6 md:w-2/3 shadow sm:px-10 px-4 py-6 bg-white dark:bg-gray-800 rounded-md">
             <p className="text-lg text-gray-800 dark:text-gray-100 font-semibold mb-4">Usuario seleccionado</p>
             <div className="flex flex-col justify-between bg-custom-300 rounded-md relative">
                 <div className="flex">

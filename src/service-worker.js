@@ -59,7 +59,10 @@ registerRoute(
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
   })
-);
+
+
+
+  );
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
@@ -67,7 +70,13 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
+})
+
+self.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+
+  // Here, simply call event.prompt() to show the default installation prompt
+  event.prompt();
 });
 
 
-// Any other custom service worker logic can go here.

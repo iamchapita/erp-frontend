@@ -4,9 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./routes/AppRouter";
 import Footer from "./components/syncpro/Dashboard/Graph";
 import React, { useEffect } from "react";
+import CustomizedSnackbars from "./components/Notification";
 /* import { useServiceWorker } from "./serviceWorkerUpdates";
 import addNotification from "react-push-notification";
  */
+
+
+
 const App = () => {
 
 	/* const { waitingWorker, showReload, reloadPage } = useServiceWorker();
@@ -35,6 +39,7 @@ const App = () => {
 			<BrowserRouter>
 				<div className="flex flex-col bg-custom-800 font-thin text-center h-screen">
 					<AppRouter />
+					{/* <CustomizedSnackbars /> */}
 				</div>
 			</BrowserRouter>
 		</Provider>

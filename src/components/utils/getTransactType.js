@@ -2,6 +2,11 @@ import addNotification from "react-push-notification";
 import UpdateIcon from '@mui/icons-material/Update';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
+
+
+
+
+
 export const getTransactType = (transactInfo, updatedId = null) => {
 	console.log("TransactInfo", transactInfo);
 	// Insert

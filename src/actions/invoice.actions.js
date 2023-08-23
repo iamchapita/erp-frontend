@@ -15,13 +15,13 @@ export const loadInvoices = (token) => {
 };
 
 export const invoicesLoaded = (invoices) => ({
-	type: types.invoiceLoaded,
+	type: types.InvoiceLoaded,
 	payload: invoices,
 });
 
 
 export const invoiceActive = (invoice) => ({
-	type: types.invoiceActive,
+	type: types.InvoiceActive,
 	payload: invoice,
 });
 

@@ -8,7 +8,7 @@ import { loadSellers } from "../../../../actions/employee.action";
 import PersonIcon from "@mui/icons-material/Person";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { ProductsOrder } from "./ProductsOrder";
-import { ProductDetail } from "./ProductDetail";
+import { loadProductsToSaleView } from "../../../../actions/product.actions";
 
 export const SalesForm = ({
 	formState,
@@ -20,12 +20,12 @@ export const SalesForm = ({
 	const { accessToken } = useSelector((state) => state.auth);
 	const customers = useSelector((state) => state.customer.customers);
 	const sellers = useSelector((state) => state.employee.sellers);
-	const products = useSelector((state) => state.product.products);
 	const [purchaseOrderProducts, setPurchaseOrderProducts] = useState([]);
 
 	useEffect(() => {
 		accessToken && dispatch(loadCustomersToSales(accessToken));
 		accessToken && dispatch(loadSellers(accessToken));
+		accessToken && dispatch(loadProductsToSaleView(accessToken));
 	}, [accessToken, dispatch]);
 
 	const handlePost = (e) => {
@@ -34,7 +34,7 @@ export const SalesForm = ({
 	};
 
 	useEffect(() => {
-		console.log(purchaseOrderProducts);
+		// console.log(purchaseOrderProducts);
 	}, [purchaseOrderProducts]);
 
 	const autoCompleteCustomers = {
@@ -82,20 +82,9 @@ export const SalesForm = ({
 				</div>
 
 				<div className="col-span-2">
-					<Title title={"Producto"} />
-				</div>
-
-				<div className="col-span-2">
-					<ProductDetail
+					<ProductsOrder
 						purchaseOrderProducts={purchaseOrderProducts}
 						setPurchaseOrderProducts={setPurchaseOrderProducts}
-					/>
-				</div>
-
-				<div className="col-span-2">
-					<ProductsOrder
-						products={products}
-						purchaseOrderProducts={purchaseOrderProducts}
 					/>
 				</div>
 

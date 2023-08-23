@@ -55,6 +55,7 @@ registerRoute(
     cacheName: 'images',
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
+
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
@@ -83,8 +84,8 @@ self.addEventListener('beforeinstallprompt', (event) => {
 });
 
   self.addEventListener('notificationclick', function (event) {
-
-
+    event.notification.close();
+   
   });
 
 
@@ -92,7 +93,6 @@ self.addEventListener('beforeinstallprompt', (event) => {
 export const showNotification = (title, options)=> {
   self.registration.showNotification(title, options);
 }
-
 
 
 

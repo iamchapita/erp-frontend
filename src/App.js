@@ -9,9 +9,9 @@ import addNotification from "react-push-notification";
 
 const App = () => {
 
-	const { waitingWorker, showReload, reloadPage } = useServiceWorker();
-
-
+	/* const { waitingWorker, showReload, reloadPage } = useServiceWorker();
+ */
+/* 
 	useEffect(() => {
 		if (showReload && waitingWorker) {
 		  addNotification({
@@ -29,7 +29,7 @@ const App = () => {
 					  });
 		}
 	  }, [waitingWorker, showReload, reloadPage]);
-
+ */
 	return (
 		<Provider store={store}>
 			<BrowserRouter>

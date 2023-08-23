@@ -66,7 +66,7 @@ export const SalesForm = ({
 				products: purchaseOrderProducts,
 			});
 		}
-	}, [purchaseOrderProducts]);
+	}, [purchaseOrderProducts, status, total, taxExemptPrice, salesTax, formState, setFormState]);
 
 	const autoCompleteCustomers = {
 		name: "idCustomerFK",

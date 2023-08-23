@@ -40,6 +40,11 @@ export const AutocompleteComponent = ({
 			});
 		}
 	};
+	
+	useEffect(() => {
+		console.log('items', items)
+	}, [items]);
+
 
 	return (
 		Array.isArray(items) &&
@@ -52,10 +57,19 @@ export const AutocompleteComponent = ({
 				}
 				loading={loading}
 				loadingText="Cargando..."
-				options={items
-					.filter(option => option.status !== 0 && option.status !== false && option.status !== 'Inactivo')
-					.slice()
-					.sort((a, b) => a[optionName].localeCompare(b[optionName]))}
+				options={
+					items.length > 1
+					  ? items
+						  .filter(
+							(option) =>
+							  option.status !== 0 &&
+							  option.status !== false &&
+							  option.status !== 'Inactivo'
+						  )
+						  .slice()
+						  .sort((a, b) => a[optionName].localeCompare(b[optionName]))
+					  : items // No ordenar si solo hay un elemento
+				  }
 				groupBy={(option) => option[optionName][0]}
 				getOptionLabel={(option) => option[optionName]}
 				name={name}

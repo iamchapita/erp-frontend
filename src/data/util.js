@@ -130,18 +130,18 @@ export const items = [
 	},
 
 	// Iconos a renderizarse de último
-	{
-		Icon: Settings,
-		Title: "Configuración",
-		path: "configuracion",
-		role: [
-			"Administrador",
-			"Vendedor",
-			"Cajero",
-			"Registrador",
-			"Cotizador",
-		],
-	},
+	// {
+	// 	Icon: Settings,
+	// 	Title: "Configuración",
+	// 	path: "configuracion",
+	// 	role: [
+	// 		"Administrador",
+	// 		"Vendedor",
+	// 		"Cajero",
+	// 		"Registrador",
+	// 		"Cotizador",
+	// 	],
+	// },
 	{
 		Icon: ManageAccounts,
 		Title: "Gestión de Usuarios",
@@ -591,8 +591,6 @@ export const userManagementDataTabs = [
 	"Cotizadores",
 ];
 
-
-
 export const userTableHead = [
 	{
 		field: "id",
@@ -623,5 +621,87 @@ export const userTableHead = [
 		headerName: "Estado",
 		flex: 2,
 		minWidth: 150,
+	},
+];
+
+// id: product.id,
+// productCode: product.productCode,
+// name: product.name,
+// description: product.description,
+// salePrice: parseInt(product.salePrice),
+
+// idProductFK: productSelected.id,
+// productCode: productSelected.productCode,
+// name: productSelected.name,
+// pricePerUnit: productSelected.salePrice,
+// productQuantity: orderQuantity,
+// totalPerProduct: totalPerProduct,
+
+export const salesProductsTableHead = [
+	{
+		field: "id",
+		headerName: "ID",
+		flex: 1,
+		minWidth: 80,
+		editable: false,
+	},
+	{
+		field: "productCode",
+		headerName: "Código de Producto",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+	},
+	{
+		field: "name",
+		headerName: "Producto",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+	},
+	{
+		field: "description",
+		headerName: "Descripción",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+	},
+	{
+		field: "quantityInStock",
+		headerName: "Cantidad Disponible",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+	},
+	{
+		field: "salePrice",
+		headerName: "Precio de Venta",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+	},
+	{
+		field: "productQuantity",
+		headerName: "Cantiad de Productos",
+		flex: 2,
+		minWidth: 150,
+		editable: true,
+	},
+	{
+		field: "totalPerProduct",
+		headerName: "Total",
+		flex: 2,
+		minWidth: 150,
+		editable: false,
+		valueGetter: (params) =>
+			`${
+				parseInt(params.row.productQuantity) <=
+				parseInt(params.row.quantityInStock)
+					? parseInt(params.row.productQuantity) *
+					  parseFloat(params.row.salePrice)
+					: isNaN(parseInt(params.row.productQuantity))
+					? "No Válido"
+					: "Inventario Insuficiente"
+			}`,
 	},
 ];

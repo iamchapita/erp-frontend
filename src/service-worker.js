@@ -77,6 +77,15 @@ self.addEventListener('beforeinstallprompt', (event) => {
 
   // Here, simply call event.prompt() to show the default installation prompt
   event.prompt();
+
+
+  event.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the installation and granted notification permissions');
+    }
+  });
+
+  
 });
 
 

@@ -46,10 +46,6 @@ export const ProductsOrder = ({
 		);
 	}, [dispatch, products, inventory]);
 
-	useEffect(() => {
-		console.log(purchaseOrderProducts);
-	}, [purchaseOrderProducts]);
-
 	const handleEditCellChange = (params, event) => {
 		const productQuantity = parseInt(event.target.value);
 		const salePrice = parseFloat(params.row.salePrice);

@@ -13,9 +13,9 @@ export const SuperAdminRouter = ({ isLoggedIn }) => {
 	const { role } = useSelector((state) => state.auth);
 
 	return isLoggedIn ? (
-		<div className="flex h-screen">
-			<SideBar />
+		<div className="flex-none sm:flex h-screen">
 			<NavBar />
+			<SideBar />
 			<div className="overflow-y-auto w-full">
 				<LicenseWarning />
 

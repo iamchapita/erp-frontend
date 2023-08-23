@@ -62,9 +62,9 @@ registerRoute(
 
 
 
-  );
+);
 
-  
+
 
 
 self.addEventListener('beforeinstallprompt', (event) => {
@@ -80,18 +80,27 @@ self.addEventListener('beforeinstallprompt', (event) => {
     }
   });
 
-
 });
 
+  self.addEventListener('notificationclick', function (event) {
 
 
-// This allows the web app to trigger skipWaiting via
-// registration.waiting.postMessage({type: 'SKIP_WAITING'})
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-})
+  });
+
+
+  
+export const showNotification = (title, options)=> {
+  self.registration.showNotification(title, options);
+}
 
 
 
+
+
+  // This allows the web app to trigger skipWaiting via
+  // registration.waiting.postMessage({type: 'SKIP_WAITING'})
+  self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+      self.skipWaiting();
+    }
+  })

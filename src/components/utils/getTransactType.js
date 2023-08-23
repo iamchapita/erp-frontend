@@ -1,6 +1,7 @@
 import addNotification from "react-push-notification";
 import UpdateIcon from '@mui/icons-material/Update';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { showNotification } from "../../service-worker";
 
 export const getTransactType = (transactInfo, updatedId = null) => {
 	console.log("TransactInfo", transactInfo);
@@ -41,7 +42,18 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		theme: 'dark',
 	}
 
-	updatedId ? notification(update) : notification(insert);
+	const options = {
+		body: "This notification was generated from a push!",
+		icon: "https://cdn-icons-png.flaticon.com/128/5709/5709755.png",
+	}
+
+
+
+/* 	updatedId ? notification(update) : notification(insert);
+ */
+
+updatedId ? showNotification('Funciona?', options) : notification(insert);
+
 
 	return updatedId === null
 		? {

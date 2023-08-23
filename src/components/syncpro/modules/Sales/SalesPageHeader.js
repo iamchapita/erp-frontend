@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { salesTableHead } from "../../../../data/util";
 import { loadPurchaseOrder } from "../../../../actions/sales.action";
 
-export const SalesPageHeader = ({ selectedRow, setSelectedRow }) => {
+export const SalesPageHeader = () => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const purchaseOrders = useSelector((state) => state.sales.purchaseOrders);
@@ -17,16 +17,6 @@ export const SalesPageHeader = ({ selectedRow, setSelectedRow }) => {
 	useEffect(() => {
 		setData(purchaseOrders);
 	}, [purchaseOrders, dispatch]);
-
-	const handleRowClick = (params) => {
-		setSelectedRow(params.row);
-		// dispatch(loadCustomerById(params.row.id, accessToken));
-	};
-
-	const handleKeyDown = () => {
-		setSelectedRow(null);
-		// reset();
-	};
 
 	return (
 		<div className="grid grid-cols-1">
@@ -42,9 +32,6 @@ export const SalesPageHeader = ({ selectedRow, setSelectedRow }) => {
 							paginationModel: { page: 0, pageSize: 5 },
 						},
 					}}
-					onRowDoubleClick={handleRowClick}
-					selectedRow={selectedRow}
-					onCellKeyDown={handleKeyDown}
 					pageSizeOptions={[5, 10, 20]}
 				/>
 			)}

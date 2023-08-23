@@ -44,11 +44,7 @@ export const ProductsOrder = ({
 				}
 			})
 		);
-	}, [dispatch, products, inventory]);
-
-	useEffect(() => {
-		console.log(purchaseOrderProducts);
-	}, [purchaseOrderProducts]);
+	}, [products, inventory]);
 
 	const handleEditCellChange = (params, event) => {
 		const productQuantity = parseInt(event.target.value);
@@ -117,7 +113,7 @@ export const ProductsOrder = ({
 					rows={productsToOrderTable}
 					pageSizeOptions={[5, 10, 20]}
 					disableRowSelectionOnClick
-					onCellEditStop={handleEditCellChange}
+					// onCellEditStop={handleEditCellChange}
 					getRowClassName={getRowClassName}
 					// sortModel={[
 					// 	{

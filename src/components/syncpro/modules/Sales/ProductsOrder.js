@@ -91,10 +91,6 @@ export const ProductsOrder = ({
 					setPurchaseOrderProducts(updatedPurchaseOrderProducts);
 				}
 			}
-
-			// if (event.key === "Enter") {
-			// 	apiRef.current.selectRow(params.rowNode.id, true);
-			// }
 		}
 	};
 

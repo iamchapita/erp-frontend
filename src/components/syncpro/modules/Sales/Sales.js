@@ -8,7 +8,6 @@ import { useForm } from "../../../../hooks/useForm";
 export const Sales = () => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
-	const [selectedRow, setSelectedRow] = useState();
 
 	const [
 		formState,
@@ -20,33 +19,23 @@ export const Sales = () => {
 	] = useForm({
 		idCustomerFK: "",
 		idSellerFK: "",
-		taxablePrice: "",
+		status: "",
+		total: "",
 		taxExemptPrice: "",
 		salesTax: "",
-		subTotal: "",
-		total: "",
-		status: "",
-		product: "",
-		// idPurchaseOrderFK: "",
-		// idProductFK: "",
-		// pricePerUnit: "",
-		// productQuantity: "",
-		// totalPerProduct: "",
+		products: "",
 	});
 
 	return (
 		<div className="p-5 text-start w-full">
 			<Title title={"Ventas"} />
-			<SalesPageHeader
-				selectedRow={selectedRow}
-				setSelectedRow={setSelectedRow}
-			/>
-
+			<SalesPageHeader />
 			<SalesForm
 				formState={formState}
-				selectedRow={selectedRow}
 				handleInputChange={handleInputChange}
+				handleCheck={handleCheck}
 				reset={reset}
+				setFormState={setFormState}
 			/>
 		</div>
 	);

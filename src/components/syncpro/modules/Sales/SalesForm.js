@@ -14,13 +14,18 @@ export const SalesForm = ({
 	formState,
 	selectedRow,
 	handleInputChange,
+	handleCheck,
 	reset,
+	setFormState,
 }) => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const customers = useSelector((state) => state.customer.customers);
 	const sellers = useSelector((state) => state.employee.sellers);
 	const [purchaseOrderProducts, setPurchaseOrderProducts] = useState([]);
+	const [salesTax, setSalesTax] = useState("");
+	const [taxExemptPrice, setTaxExemptPrice] = useState("");
+	const [total, setTotal] = useState("");
 
 	useEffect(() => {
 		accessToken && dispatch(loadCustomersToSales(accessToken));
@@ -30,11 +35,37 @@ export const SalesForm = ({
 
 	const handlePost = (e) => {
 		e.preventDefault();
+		
 		reset();
 	};
 
+	const { status } = formState;
+
 	useEffect(() => {
-		// console.log(purchaseOrderProducts);
+		if (purchaseOrderProducts.length > 0) {
+			setSalesTax("15%");
+
+			let taxExemptPriceValue = purchaseOrderProducts.reduce(
+				(total, product) => {
+					return total + parseFloat(product.totalPerProduct);
+				},
+				0
+			);
+
+			setTaxExemptPrice(taxExemptPriceValue.toFixed(2));
+			setTotal(
+				(taxExemptPriceValue * 0.15 + taxExemptPriceValue).toFixed(2)
+			);
+
+			setFormState({
+				...formState,
+				status: status,
+				total: total,
+				taxExemptPrice: taxExemptPrice,
+				salesTax: salesTax,
+				products: purchaseOrderProducts,
+			});
+		}
 	}, [purchaseOrderProducts]);
 
 	const autoCompleteCustomers = {
@@ -88,25 +119,91 @@ export const SalesForm = ({
 					/>
 				</div>
 
+				<div>
+					<p className="text-custom-150 font-normal">
+						Impuesto(15%):{" "}
+					</p>
+
+					<InputComponent
+						type={"text"}
+						handleInputChange={handleInputChange}
+						name={"salesTax"}
+						className={"w-full"}
+						required={true}
+						value={salesTax}
+					/>
+				</div>
+
+				<div>
+					<p className="text-custom-150 font-normal">
+						Precio antes de Impuesto:
+					</p>
+
+					<InputComponent
+						type={"text"}
+						handleInputChange={handleInputChange}
+						name={"taxExemptPrice"}
+						className={"w-full"}
+						required={true}
+						value={taxExemptPrice}
+					/>
+				</div>
+
+				<div>
+					<p className="text-custom-150 font-normal">Total: </p>
+					<InputComponent
+						type={"text"}
+						handleInputChange={handleInputChange}
+						name={"taxExemptPrice"}
+						className={"w-full"}
+						required={true}
+						value={total}
+					/>
+				</div>
+
+				<div>
+					<p className="text-custom-150 font-normal">Estado: </p>
+					<input
+						checked={status}
+						onChange={handleCheck}
+						type={"checkbox"}
+						className="
+							w-5
+							h-5
+							p-2
+							rounded
+							text-custom-100
+							cursor-pointer
+							focus:outline-none
+							ring-0
+							focus:ring-0
+							outline-none	
+							font-semibold
+						"
+						name={"status"}
+					/>
+				</div>
+
 				<div className="">
 					<button
+						disabled={total === ""}
 						type="submit"
 						className="
-								w-full
-								h-10
-								p-2
-								rounded
-								text-custom-100
-								bg-custom-300
-								hover:bg-custom-250
-								active:bg-custom-200
-								focus:outline-none
-								ring-0
-								focus:ring-0
-								outline-none
-								focus:border-custom-400
-								font-semibold
-							"
+							w-full
+							h-10
+							p-2
+							rounded
+							text-custom-100
+							bg-custom-300
+							hover:bg-custom-250
+							active:bg-custom-200
+							focus:outline-none
+							ring-0
+							focus:ring-0
+							outline-none
+							focus:border-custom-400
+							font-semibold
+						"
 					>
 						Realizar Venta
 					</button>

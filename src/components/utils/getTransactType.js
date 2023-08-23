@@ -29,15 +29,19 @@ export const getTransactType = (transactInfo, updatedId = null) => {
 		title: "Actualización",
 		message: transactInfo.msg,
 		icon: 'https://cdn-icons-png.flaticon.com/128/1688/1688988.png',
+		native: true,
+		theme: 'dark',
 	}
 
 	const insert = {
 		title: "Inserción",
 		message: transactInfo.msg,
 		icon: 'https://cdn-icons-png.flaticon.com/128/5709/5709755.png',
+		native: true,
+		theme: 'dark',
 	}
 
-	updatedId ? customNotification(update) : customNotification(insert);
+	updatedId ? notification(update) : notification(insert);
 
 	return updatedId === null
 		? {
@@ -59,11 +63,11 @@ const notification = (data) => {
 	)
 }
 
-const customNotification = (data) => {
+/* const customNotification = (data) => {
 	Notification.permission === "granted" &&
 		new Notification(data.title, {
 			body: data.message,
 			icon: data.icon,
 
 		});
-};
+}; */

@@ -686,7 +686,7 @@ export const salesProductsTableHead = [
 	},
 	{
 		field: "productQuantity",
-		headerName: "Cantiad de Productos",
+		headerName: "Cantidad de Productos",
 		flex: 2,
 		minWidth: 150,
 		editable: true,

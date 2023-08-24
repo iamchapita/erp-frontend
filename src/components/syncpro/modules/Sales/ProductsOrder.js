@@ -8,6 +8,7 @@ import { DataGrid, useGridApiRef } from "@mui/x-data-grid";
 import { loadProductsToSaleView } from "../../../../actions/product.actions";
 import { loadInventory } from "../../../../actions/product.actions";
 import { salesProductsTableHead } from "../../../../data/util";
+import TransitionAlerts from "../../AlertComponent";
 
 export const ProductsOrder = ({
 	purchaseOrderProducts,
@@ -103,7 +104,9 @@ export const ProductsOrder = ({
 	return (
 		<div className="grid grid-cols-1">
 			<Title title={"Productos en Orden de Compra"} />
-			<p className="text-custom-100 font-normal mb-3">Debe dar doble click en la celda de la columna "Cantidad de productos" para editar la cantidad de productos.</p>
+			<p className="text-custom-100 font-normal mb-3">
+				<TransitionAlerts mensaje={'Si está en dispositivo móvil, debe dar doble click en la celda de la columna "Cantidad de productos" para editar la cantidad de productos.Una vez editada la cantidad de productos, se debe presionar fuera de la celda para que se guarde la cantidad de productos.'} />
+			</p>
 			{productsToOrderTable && (
 				<DataGrid
 					apiRef={apiRef}
@@ -116,6 +119,7 @@ export const ProductsOrder = ({
 					disableRowSelectionOnClick
 					onCellEditStop={handleEditCellChange}
 					getRowClassName={getRowClassName}
+					
 					// sortModel={[
 					// 	{
 					// 		field: "totalPerProduct", // Reemplaza esto con el campo de tu columna

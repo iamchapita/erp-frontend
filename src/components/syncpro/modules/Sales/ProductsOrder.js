@@ -105,7 +105,7 @@ export const ProductsOrder = ({
 		<div className="grid grid-cols-1">
 			<Title title={"Productos en Orden de Compra"} />
 			<p className="text-custom-100 font-normal mb-3">
-				<TransitionAlerts mensaje={'Si se encuentra usando syncpro en un dispositivo móvil, debe dar doble click en la celda de la columna "Cantidad de productos" para editar la cantidad de los mismos. Una vez hechos los cambios, se debe presionar fuera de la celda para que se guarde la información.'} />
+				<TransitionAlerts mensaje={'Si se encuentra usando syncpro en un dispositivo móvil, debe dar doble click en la celda de la columna "Cantidad de producto" para editar la cantidad del mismo. Una vez hechos los cambios, se debe presionar fuera de la celda para que se guarde la información.'} />
 			</p>
 			{productsToOrderTable && (
 				<DataGrid

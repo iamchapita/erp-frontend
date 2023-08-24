@@ -12,6 +12,7 @@ import { CircularProgress } from "@mui/material";
 import { FetchData } from "../components/utils/fetch";
 import { loadSystemInfo } from "../actions/system.action";
 import LandingPage from "../components/syncpro/Landing/Landing";
+import { PasswordReset } from "../components/auth/PasswordReset";
 
 export const AppRouter = () => {
 	const dispatch = useDispatch();
@@ -74,6 +75,7 @@ export const AppRouter = () => {
 						<Route path="landing" element={<LandingPage />} />
 						<Route path="register" element={<SignUpScreen />} />
 						<Route path="login" element={<AuthScreen />} />
+						<Route path="password-reset" element={<PasswordReset />} />
 						<Route path="*" element={<Navigate to={"landing"} />} />
 					</PublicRouter>
 				}

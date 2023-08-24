@@ -40,7 +40,7 @@ export const AutocompleteComponent = ({
 			});
 		}
 	};
-	
+
 	useEffect(() => {
 		console.log('items', items)
 	}, [items]);
@@ -59,22 +59,22 @@ export const AutocompleteComponent = ({
 				loadingText="Cargando..."
 				options={
 					items.length > 1
-          ? items
-              .filter(
-                (option) =>
-                  option.status !== 0 &&
-                  option.status !== false &&
-                  option.status !== 'Inactivo'
-              )
-              .slice()
-              .sort((a, b) =>
-                a[optionName] && b[optionName]
-                  ? a[optionName].localeCompare(b[optionName])
-                  : 0
-              )
-			  
-          : items
-				  }
+						? items
+							.filter(
+								(option) =>
+									option.status !== 0 &&
+									option.status !== false &&
+									option.status !== 'Inactivo'
+							)
+							.slice()
+							.sort((a, b) =>
+								a[optionName] && b[optionName]
+									? a[optionName].localeCompare(b[optionName])
+									: 0
+							)
+
+						: items
+				}
 				groupBy={(option) => option[optionName][0]}
 				getOptionLabel={(option) => option[optionName]}
 				name={name}

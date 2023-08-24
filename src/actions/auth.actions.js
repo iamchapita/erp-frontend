@@ -8,6 +8,9 @@ import {
 	updateProfile,
 	sendEmailVerification,
 	signOut,
+	updateEmail,
+	updatePassword,
+	sendPasswordResetEmail
 } from "../firebase/firebase.config";
 
 import { types } from "../types/types";
@@ -19,6 +22,42 @@ import {
 	uploadLogoutToBinacleAction,
 } from "./binacle.actions";
 import addNotification from "react-push-notification";
+
+
+
+
+
+export const updatePasswordAction = (user, newPassword) => {
+	console.log(updatePassword)
+	return async (dispatch) => {
+		try {
+			await updatePassword(user, newPassword);
+
+			Swal.fire("Contraseña actualizada", "La contraseña se ha actualizado correctamente", "success");
+		} catch (error) {
+			Swal.fire("Error", error.message, "error");
+		}
+	};
+}
+
+
+export const sendEmailPasswordReset = async (email) => {
+
+		await sendPasswordResetEmail(auth, email)
+			.then(() => {
+				Swal.fire("Correo enviado", "Se ha enviado un correo electrónico para restablecer la contraseña", "success").
+					then(() => {
+						window.location.href = "/login"
+					})
+					
+			})
+			.catch((error) => {
+				Swal.fire("Error", error.message, "error");
+
+			});
+	
+}
+
 
 export const googleLogin = () => {
 	return (dispatch) => {
@@ -119,9 +158,9 @@ export const signInWithEmailPassword = (email, password) => {
 			})
 			.catch((e) => {
 				const message =
-					(e.message === "Firebase: Error (auth/user-not-found)." && "El usuario no existe") 
+					(e.message === "Firebase: Error (auth/user-not-found)." && "El usuario no existe")
 					|| (e.message === "Firebase: Error (auth/wrong-password)." && "La contraseña es incorrecta")
-					|| (e.message === "Firebase: Error (auth/invalid-email)." && "El correo no es válido") 
+					|| (e.message === "Firebase: Error (auth/invalid-email)." && "El correo no es válido")
 					|| (e.message === "Firebase: Error (auth/too-many-requests)." && "Demasiados intentos de inicio de sesión fallidos. Intente más tarde.")
 					|| (e.message === "Firebase: Error (auth/user-disabled)." && "El usuario ha sido deshabilitado")
 					|| (e.message === "Firebase: Error (auth/invalid-credential)." && "Las credenciales proporcionadas no son válidas")

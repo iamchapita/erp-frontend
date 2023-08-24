@@ -46,6 +46,7 @@ const LoginScreen = () => {
 		placeholder: "Contraseña",
 		required: true,
 		handleInputChange,
+
 	};
 
 	const isFormValid = () => {
@@ -80,6 +81,7 @@ const LoginScreen = () => {
 
 	return (
 		<form
+		autoComplete="off"
 			onSubmit={handleSubmit}
 			className={
 				"flex bg-custom-100 items-center justify-center h-screen text-black"
@@ -98,13 +100,15 @@ const LoginScreen = () => {
 				)}
 				<InputComponent {...emailInput} />
 				<InputComponent {...passwordInput} />
-				<p
+				<Link 
+					to={"/password-reset"}
+
 					className={
 						"underline self-end cursor-pointer transition-all hover:text-custom-500"
 					}
 				>
 					¿Olvidaste tu contraseña?
-				</p>
+				</Link>
 				<AuthButton
 					content="Login"
 					handleSubmit={handleSubmit}

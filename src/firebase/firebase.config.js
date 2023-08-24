@@ -9,7 +9,10 @@ import {
     updateProfile,
     createUserWithEmailAndPassword,
     sendEmailVerification,
-    signOut
+    signOut,
+    updatePassword,
+    updateEmail,
+    sendPasswordResetEmail
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,5 +45,8 @@ export {
     createUserWithEmailAndPassword,
     updateProfile,
     sendEmailVerification,
-    signOut
+    signOut,
+    updateEmail,
+    updatePassword,
+    sendPasswordResetEmail
 }

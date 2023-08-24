@@ -24,6 +24,12 @@ export const Customer = () => {
 		open: true,
 		message: "Haz doble click en una fila para editar",
 	});
+
+	const { open: open2, message: message2, handleOpen: handleOpen2, handleClose: handleClose2 } = useOpen({
+		open: true,
+		message: "Para ordernar las celdas, haz click sobre el id y elige el filtro de tu preferencia.",
+	});
+
  
 	
 		
@@ -100,8 +106,13 @@ export const Customer = () => {
 				handleInputChange={handleInputChange}
 				reset={reset}
 				selectedRow={selectedRow}
+				setSelectedRow={setSelectedRow}
 			/>
 			<CustomizedSnackbars message={message} open={open} handleClose={handleClose} />
+			
+{
+				!open && <CustomizedSnackbars message={message2} open={open2} handleClose={handleClose2} />
+}				
 		</div>
 	);
 };

@@ -15,6 +15,7 @@ export const CustomerForm = ({
 	selectedRow,
 	handleInputChange,
 	reset,
+	setSelectedRow,	
 }) => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
@@ -53,7 +54,7 @@ export const CustomerForm = ({
 			) : (
 				<Title title={"Actualizar Cliente"} />
 			)}
-			<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
+			<div className="flex flex-col [&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 sm:grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
 				<div className="">
 					<p className="text-custom-150 font-normal">
 						Nombres del Cliente:{" "}
@@ -367,6 +368,40 @@ export const CustomerForm = ({
 							: "Actualizar Cliente"}
 					</button>
 				</div>
+				{
+					selectedRow &&
+						<div className="col-start-2">
+							<button
+								type="button"
+								className="
+								w-full	
+								h-10
+								p-2
+								rounded
+								text-white
+								bg-red-500
+								hover:bg-red-600
+								active:bg-red-800
+								focus:outline-none
+								ring-0
+								focus:ring-0
+								outline-none
+								focus:border-custom-400
+								font-semibold
+							"
+								onClick={() => {
+									reset();
+									setSelectedRow(null);
+								}
+								}
+								>
+							
+								Cancelar
+							</button>
+						</div>
+				
+					}
+
 			</div>
 		</form>
 	);

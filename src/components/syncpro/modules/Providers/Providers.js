@@ -12,6 +12,8 @@ import { chargeCategories, chargeUnities } from '../../../../actions/product.act
 import CategoryIcon from '@mui/icons-material/Category';
 import StraightenIcon from '@mui/icons-material/Straighten';
 import { Option, Select } from '@mui/joy';
+import { useOpen } from '../../../../hooks/useOpen';
+import CustomizedSnackbars from '../../../SnackBar';
 
 
 export const Product = React.memo(() => {
@@ -22,6 +24,12 @@ export const Product = React.memo(() => {
     const categories = useSelector(state => state.productCategories);
 
     const unities = useSelector(state => state.productUnities);
+    const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz doble click en una fila para editar",
+	});
+ 
+	
 
 
     useEffect(() => {
@@ -76,6 +84,7 @@ export const Product = React.memo(() => {
 
     return (
         <div className='p-5 text-start w-full'>
+            <CustomizedSnackbars open={open} handleClose={handleClose} message={message} />
             <Title title={'Productos'} />
             <Tab data={productTabs} />
             <div

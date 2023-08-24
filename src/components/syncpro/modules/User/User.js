@@ -10,12 +10,21 @@ import {
 	loadSystemInfo,
 	systemActive,
 } from "../../../../actions/system.action";
+import { useOpen } from "../../../../hooks/useOpen";
+import CustomizedSnackbars from "../../../SnackBar";
 
 export const User = () => {
 	const dispatch = useDispatch();
 	const { accessToken } = useSelector((state) => state.auth);
 	const systemInfoActive = useSelector((state) => state.system);
 	const systemInfoLoaded = useSelector((state) => state.system);
+
+	const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz click en una fila para editar",
+	});
+ 
+	
 
 	useEffect(() => {
 		accessToken && dispatch(loadSystemInfo(accessToken));
@@ -51,6 +60,7 @@ export const User = () => {
 
 	return (
 		<div className="p-5 text-start w-full">
+			<CustomizedSnackbars open={open} message={message} handleClose={handleClose} />
 			<Title title={"Usuarios"} />
 			<div className="grid grid-cols-1">
 				{systemInfoLoaded && (

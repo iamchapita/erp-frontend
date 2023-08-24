@@ -8,12 +8,20 @@ import { CategoriesForm } from './CategoriesForm';
 import {changeTab} from "../../../../actions/product.actions";
 import {useForm} from "../../../../hooks/useForm";
 import {UnitiesForm} from "./UnitiesForm";
+import { useOpen } from '../../../../hooks/useOpen';
+import CustomizedSnackbars from '../../../SnackBar';
 
 export const Product = () => {
 
     const dispatch = useDispatch();
     const { currentTab } = useSelector(state => state.product)
     const [editActive, setEditActive] = useState(false);
+    const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz click en una fila para editar",
+	});
+ 
+	
 
 
     useEffect(() => {
@@ -43,6 +51,7 @@ export const Product = () => {
 
     return (
         <div className='p-5 text-start w-full'>
+            <CustomizedSnackbars open={open} handleClose={handleClose} message={message} />
             <Title title={'Productos'} />
             <ProductPageHeader reset={reset} setFormState={setFormState} editActive={editActive} setEditActive={setEditActive} />
             {currentTab.tab === 'Productos' && <ProductForm  {...functions} editActive={editActive} setEditActive={setEditActive} />}

@@ -4,6 +4,8 @@ import { ItemCard } from "./ItemCard";
 import { Bolt } from "@mui/icons-material";
 
 import { useSelector } from "react-redux";
+import { useOpen } from "../../hooks/useOpen";
+import CustomizedSnackbars from "../SnackBar";
 
 export const SuperAdminDashboard = () => {
 	const { accessToken } = useSelector((state) => state.auth);
@@ -11,8 +13,16 @@ export const SuperAdminDashboard = () => {
 		// FetchData("product/getProduct/1", accessToken);
 	}, [accessToken]);
 
+	const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz doble click en una fila para editar",
+	});
+ 
+	
 	return (
 		<div className="relative">
+			<CustomizedSnackbars	open={open} handleClose={handleClose} message={message} />
+
 			<div className="flex-1 p-5 space-y-3">
 				<div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-5 h-auto">
 					<div className="bg-white shadow-sm grid col-span-5 p-5 rounded-xl">

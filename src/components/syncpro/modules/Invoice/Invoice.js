@@ -8,6 +8,8 @@ import { useForm } from "../../../../hooks/useForm";
 import { loadInvoices } from "../../../../actions/invoice.actions";
 import { generateRandomCAI } from "../../../utils/randomCai";
 import { uploadInvoice } from "../../../../actions/invoice.actions";
+import { useOpen } from "../../../../hooks/useOpen";
+import CustomizedSnackbars from "../../../SnackBar";
 
 export const Invoice = ({
 	formState,
@@ -27,6 +29,13 @@ export const Invoice = ({
 	const [error, setError] = useState('');
 	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 	const { accessToken } = useSelector((state) => state.auth);
+
+	const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz doble click en una fila para editar",
+	});
+ 
+	
 
 	const dispatch = useDispatch();
 	const invoices = useSelector((state) => state.invoice);
@@ -76,6 +85,7 @@ fetchProducts();
 
 	return (
 		<div className="p-5 text-start w-full">
+			<CustomizedSnackbars open={open} message={message} handleClose={handleClose} />
 			<Title title={"Facturas"} />
 			<div className="grid grid-cols-1">
 				{invoices && (

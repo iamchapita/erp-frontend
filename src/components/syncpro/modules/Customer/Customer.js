@@ -10,6 +10,8 @@ import {
 	loadNaturalCustomers,
 } from "../../../../actions/customer.action";
 import { cleanFormsFields } from "../../../../data/cleanFormsFields";
+import { useOpen } from "../../../../hooks/useOpen";
+import CustomizedSnackbars from "../../../SnackBar";
 
 export const Customer = () => {
 	const dispatch = useDispatch();
@@ -18,6 +20,14 @@ export const Customer = () => {
 		(state) => state.customer.customerActive
 	);
 	const [selectedRow, setSelectedRow] = useState(null);
+	const { open, message, handleOpen, handleClose } = useOpen({
+		open: true,
+		message: "Haz doble click en una fila para editar",
+	});
+ 
+	
+		
+	
 
 	useEffect(() => {
 		accessToken && dispatch(loadCustomers(accessToken));
@@ -91,6 +101,7 @@ export const Customer = () => {
 				reset={reset}
 				selectedRow={selectedRow}
 			/>
+			<CustomizedSnackbars message={message} open={open} handleClose={handleClose} />
 		</div>
 	);
 };

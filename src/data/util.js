@@ -48,7 +48,7 @@ export const items = [
 	},
 	{
 		Icon: Inventory,
-		Title: "Productos",
+		Title: "Inventario",
 		path: "productos",
 		role: [
 			"Administrador",
@@ -58,42 +58,8 @@ export const items = [
 			"Cotizador",
 		],
 	},
-	{
-		Icon: Receipt,
-		Title: "Facturas",
-		path: "facturas",
-		role: [
-			"Administrador",
-			"Vendedor",
-			"Cajero",
-			"Registrador",
-			"Cotizador",
-		],
-	},
-	{
-		Icon: LocalShipping,
-		Title: "Proveedores",
-		path: "proveedores",
-		role: [
-			"Administrador",
-			"Vendedor",
-			"Cajero",
-			"Registrador",
-			"Cotizador",
-		],
-	},
-	{
-		Icon: AddCard,
-		Title: "Compras",
-		path: "compras",
-		role: [
-			"Administrador",
-			"Vendedor",
-			"Cajero",
-			"Registrador",
-			"Cotizador",
-		],
-	},
+
+	
 	{
 		Icon: PointOfSale,
 		Title: "Ventas",
@@ -129,6 +95,7 @@ export const items = [
 		role: ["Administrador", "Superadministrador"],
 	},
 
+
 	// Iconos a renderizarse de último
 	// {
 	// 	Icon: Settings,
@@ -148,6 +115,43 @@ export const items = [
 		path: "gestionUsuarios",
 		role: ["Superadministrador", "Administrador"],
 	},
+	{
+		Icon: Receipt,
+		Title: "Facturas",
+		path: "facturas",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
+	},
+	{
+		Icon: AddCard,
+		Title: "Compras",
+		path: "compras",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
+	},
+	{
+		Icon: LocalShipping,
+		Title: "Proveedores",
+		path: "proveedores",
+		role: [
+			"Administrador",
+			"Vendedor",
+			"Cajero",
+			"Registrador",
+			"Cotizador",
+		],
+	},
+	
 	{
 		Icon: Logout,
 		Title: "Cerrar Sesión",

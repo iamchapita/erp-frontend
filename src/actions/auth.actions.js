@@ -119,9 +119,22 @@ export const signInWithEmailPassword = (email, password) => {
 			})
 			.catch((e) => {
 				const message =
-					e.message === "Firebase: Error (auth/user-not-found)." &&
-					"El usuario no existe";
-				Swal.fire("Error", message, "error");
+					(e.message === "Firebase: Error (auth/user-not-found)." && "El usuario no existe") 
+					|| (e.message === "Firebase: Error (auth/wrong-password)." && "La contraseña es incorrecta")
+					|| (e.message === "Firebase: Error (auth/invalid-email)." && "El correo no es válido") 
+					|| (e.message === "Firebase: Error (auth/too-many-requests)." && "Demasiados intentos de inicio de sesión fallidos. Intente más tarde.")
+					|| (e.message === "Firebase: Error (auth/user-disabled)." && "El usuario ha sido deshabilitado")
+					|| (e.message === "Firebase: Error (auth/invalid-credential)." && "Las credenciales proporcionadas no son válidas")
+					|| (e.message === "Firebase: Error (auth/operation-not-allowed)." && "El tipo de cuenta correspondiente a esta credencial, aún no está activado.")
+					|| (e.message === "Firebase: Error (auth/invalid-verification-code)." && "El código de verificación no es válido")
+					|| (e.message === "Firebase: Error (auth/invalid-verification-id)." && "El ID de verificación no es válido")
+					|| (e.message === "Firebase: Error (auth/code-expired)." && "El código de verificación ha expirado")
+					|| (e.message === "Firebase: Error (auth/credential-already-in-use)." && "Esta credencial ya está asociada con una cuenta de usuario diferente")
+					|| (e.message === "Firebase: Error (auth/email-already-in-use)." && "El correo electrónico ya está en uso por otra cuenta")
+					|| (e.message === "Firebase: Error (auth/phone-number-already-exists)." && "El número de teléfono ya está en uso por otra cuenta")
+					|| (e.message === "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)." && "El acceso a esta cuenta se ha deshabilitado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restaurarlo inmediatamente restableciendo su contraseña o puede intentarlo nuevamente más tarde.")
+
+				Swal.fire("Error", message, "error")
 				console.log(e);
 				dispatch(uiFinishLoading());
 			});

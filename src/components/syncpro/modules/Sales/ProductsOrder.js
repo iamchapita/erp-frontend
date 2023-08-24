@@ -46,12 +46,13 @@ export const ProductsOrder = ({
 			})
 		);
 	}, [dispatch, products, inventory]);
+	
 
 	const handleEditCellChange = (params, event) => {
 		const productQuantity = parseInt(event.target.value);
 		const salePrice = parseFloat(params.row.salePrice);
 
-		if (isNaN(productQuantity) === false) {
+		if (isNaN(productQuantity) === false && productQuantity >= 0) {
 			const updatedRow = {
 				...params.row,
 				[params.field]: productQuantity,
@@ -105,7 +106,7 @@ export const ProductsOrder = ({
 		<div className="grid grid-cols-1">
 			<Title title={"Productos en Orden de Compra"} />
 			<p className="text-custom-100 font-normal mb-3">
-				<TransitionAlerts mensaje={'Si se encuentra usando syncpro en un dispositivo móvil, debe dar doble click en la celda de la columna "Cantidad de producto" para editar la cantidad del mismo. Una vez hechos los cambios, se debe presionar fuera de la celda para que se guarde la información.'} />
+				<TransitionAlerts mensaje={'Si se encuentra usando syncpro en un dispositivo móvil, debe dar doble click en la celda de la columna "Cantidad de producto" para editar la cantidad del. Una vez hechos los cambios, se debe presionar fuera de la celda para que se guarde la información.'} />
 			</p>
 			{productsToOrderTable && (
 				<DataGrid
@@ -118,8 +119,9 @@ export const ProductsOrder = ({
 					pageSizeOptions={[5, 10, 20]}
 					disableRowSelectionOnClick
 					onCellEditStop={handleEditCellChange}
-					getRowClassName={getRowClassName}
 					
+					getRowClassName={getRowClassName}
+					onCellBlur 
 					// sortModel={[
 					// 	{
 					// 		field: "totalPerProduct", // Reemplaza esto con el campo de tu columna

@@ -133,6 +133,7 @@ export const SalesForm = ({
 						className={"w-full"}
 						required={true}
 						value={salesTax}
+						
 					/>
 				</div>
 

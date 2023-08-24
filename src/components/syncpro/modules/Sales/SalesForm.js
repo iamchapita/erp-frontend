@@ -9,6 +9,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { ProductsOrder } from "./ProductsOrder";
 import { loadProductsToSaleView } from "../../../../actions/product.actions";
+import { uploadpurchaseOrderAction } from "../../../../actions/sales.action";
 
 export const SalesForm = ({
 	formState,
@@ -35,7 +36,7 @@ export const SalesForm = ({
 
 	const handlePost = (e) => {
 		e.preventDefault();
-		
+		dispatch(uploadpurchaseOrderAction(formState, accessToken));
 		reset();
 	};
 
@@ -94,6 +95,14 @@ export const SalesForm = ({
 		<form onSubmit={handlePost} className="my-2">
 			<Title title={"Orden de Compra"} />
 			<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
+				
+
+				<div className="col-span-2">
+					<ProductsOrder
+						purchaseOrderProducts={purchaseOrderProducts}
+						setPurchaseOrderProducts={setPurchaseOrderProducts}
+					/>
+				</div>
 				<div className="">
 					<p className="text-custom-150 font-normal">Cliente: </p>
 					<AutocompleteComponent
@@ -112,14 +121,8 @@ export const SalesForm = ({
 					/>
 				</div>
 
-				<div className="col-span-2">
-					<ProductsOrder
-						purchaseOrderProducts={purchaseOrderProducts}
-						setPurchaseOrderProducts={setPurchaseOrderProducts}
-					/>
-				</div>
-
 				<div>
+					
 					<p className="text-custom-150 font-normal">
 						Impuesto(15%):{" "}
 					</p>
@@ -133,6 +136,8 @@ export const SalesForm = ({
 						value={salesTax}
 					/>
 				</div>
+
+				
 
 				<div>
 					<p className="text-custom-150 font-normal">

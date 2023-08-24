@@ -22,15 +22,26 @@ export const purchaseOrderLoaded = (purchaseOrders) => ({
 	payload: purchaseOrders,
 });
 
-// export const uploadpurchaseOrderAction = (table, transactInfo, token) => {
-// 	return async (dispatch, getState) => {
-// 		const { auth } = getState();
-// 		const data = { ...transactInfo, uid: auth.uid, actionOn: table };
+export const uploadpurchaseOrderAction = (table, transactInfo, token) => {
+	return async (dispatch, getState) => {
+		const { auth } = getState();
+		//convert taxExemptPrice, salesTax and total to float
+		table.taxExemptPrice = parseFloat(table.taxExemptPrice);
+		table.salesTax = parseFloat(table.salesTax);
+		table.total = parseFloat(table.total);
+		//idCustomer, idSeller, idTransactType
+		table.idCustomer = parseInt(table.idCustomer);
+		table.idSeller = parseInt(table.idSeller);
+		table.idTransactType = getTransactType(transactInfo);
+		table.status === "1" ? (table.status = 1) : (table.status = 0);
+		
+		FetchData("sales/addPurchaseOrder", token, "POST", table).then(
+			(data) => {
+				console.log('data', data);
+				dispatch(purchaseOrderActive(data));
+				dispatch(loadPurchaseOrder(token));
 
-// 		FetchData("purchaseOrder/addAction", token, "POST", data).then(
-// 			(data) => {
-// 				dispatch(purchaseOrderActive(data));
-// 			}
-// 		);
-// 	};
-// };
+			}
+		);
+	};
+};

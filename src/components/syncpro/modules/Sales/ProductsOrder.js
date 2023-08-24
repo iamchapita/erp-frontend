@@ -103,6 +103,7 @@ export const ProductsOrder = ({
 	return (
 		<div className="grid grid-cols-1">
 			<Title title={"Productos en Order de Compra"} />
+			<p className="text-custom-100 font-normal mb-3">Debe dar doble click en la celda de la columna "Cantidad de productos" para editar la cantidad de productos.</p>
 			{productsToOrderTable && (
 				<DataGrid
 					apiRef={apiRef}

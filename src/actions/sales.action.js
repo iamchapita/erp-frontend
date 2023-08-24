@@ -56,7 +56,7 @@ export const uploadpurchaseOrderAction = (table, transactInfo, token) => {
 								"La orden de compra ha sido creada con éxito",
 								"success"
 							);
-							dispatch(purchaseOrderActive(data));
+							dispatch(purchaseOrderActive(table));
 							dispatch(loadPurchaseOrder(token));
 						} else {
 							Swal.fire("Error", data.msg, "error");
@@ -67,5 +67,6 @@ export const uploadpurchaseOrderAction = (table, transactInfo, token) => {
 		});
 	};
 };
+
 
 

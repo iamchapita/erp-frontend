@@ -22,6 +22,7 @@ export const SalesPageHeader = () => {
 		<div className="grid grid-cols-1">
 			{data && (
 				<DataGrid
+				sortingOrder={["asc", "desc"]}
 					className="col-span-1"
 					autoHeight
 					density="compact"

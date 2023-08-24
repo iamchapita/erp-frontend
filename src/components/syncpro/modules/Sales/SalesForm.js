@@ -94,9 +94,8 @@ export const SalesForm = ({
 	return (
 		<form onSubmit={handlePost} className="my-2">
 			<Title title={"Orden de Compra"} />
-			<div className="[&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
+			<div className="flex flex-col [&>*]:my-2 [&>*]:md:m-2 [&>*]:[&>*]:mb-2 sm:grid grid-cols-1 md:grid-cols-2 [&>*]:items-center px-5 rounded bg-white sm:grid-cols-2">
 				
-
 				<div className="col-span-2">
 					<ProductsOrder
 						purchaseOrderProducts={purchaseOrderProducts}
